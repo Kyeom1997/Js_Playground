@@ -155,3 +155,96 @@ var c = a + b; //17
 #### 스네이크 케이스
 
 > num_people
+
+---
+
+<br>
+
+## 연산자 및 기타
+
+### 증감 연산자
+
+```
+var a;
+a++;
+a = 0;
+a++;
+1
+a--;
+0
+```
+
+<br>
+
+### 비교 연산자
+
+비교 연산자를 수행한 결과값은 Boolean입니다. 비교 연산자에는 `>, <, >=, <=, ===, !=` 등이 있습니다.
+
+```
+var a = 3;
+var b = 5;
+var c = "5";
+a > b;
+false;
+a < b;
+true;
+b === c;
+false;
+```
+
+<br>
+
+### 문자열의 길이 구하기
+
+```
+var a = "hello";
+a.length;
+
+5
+```
+
+`.`연산자는 객체의 속성을 가져올 때 사용하는 연산자입니다.
+
+<br>
+
+### 문자열 간단히 조작하기
+
+```
+var a = "KheLLo"
+a[0];
+"K"
+a[1] = "H"; //안 됨
+a.slice(1,4);
+"heL"
+a.toUpperCase();
+"KHELLO"
+a.toLowerCase();
+"khello"
+```
+
+<br>
+
+### undefined, null, NaN
+
+undefined : 값이 정의되지 않았다.
+null : 값이 비어있다.
+NaN(Not a Number) : 값이 아니다. === 계산 불가능
+
+### console.log()
+
+개발자 콘솔에 뭔가를 찍어주는 메소드입니다.
+
+```
+var a = 1;
+var b = "더하기";
+var c = 2;
+console.log(a + " " + b + " " + c + " = " + a + c);
+1 더하기 2 = 12
+```
+
+### alert()와 prompt() 사용해 보기
+
+```
+var ans = prompt("How are you?");
+alert(ans);
+```
