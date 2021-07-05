@@ -327,3 +327,117 @@ for(var i = 0; i <=100; i++) {
 1. n 회 코드 실행
 2. 특정 조건을 만족시킬 때까지 코드 실행
 3. 배열 안의 원소들 각각에 대해 코드 실행
+
+## break 와 continue
+
+<b>break는 반복문을 중간에 빠져나갈 때 사용합니다.</b> <br>
+
+```
+var str;
+while (true) {
+    str = prompt("아무거나 입력하세요");
+    document.write(str + "<br>");
+    if (str == "q") {
+        break;
+    }
+}
+document.write("Bye~");
+```
+
+<b> continue는 반복문의 처음으로 돌아갑니다. </b> <br>
+
+- while : 조건식 (i<10)으로 이동
+- for : 증감식 (i++)으로 이동
+
+```
+for(var i = 0;i < 10; i++) {
+    if (i == 5) {
+        continue;
+    }
+    console.log(i);
+}
+```
+
+## 이중 루프
+
+반복문 안에 반복문이 있는 걸 이중 루프라고 합니다. 종종 사용합니다.
+3중, 4중도 가능하지만 잘 사용하지 않습니다.
+
+```
+for (var i = 0; i < 2; i++) {
+    for (var j = 0; j < 3; j++) {
+        console.log(i + ", " +j);
+    }
+}
+```
+
+<br>
+<br>
+
+# 배열과 문자열
+## 배열 (Array)
+<br>
+자바 스크립트에서 가장 많이 사용하는 <b>자료구조</b>의 하나로 <br>
+주로 같은 종류의 값 여러 개를 묶어서 저장하고 관리하기 위해 사용합니다. <br>
+참고로 자바스크립트의 배열은 객체입니다.
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+## 배열 만들기
+
+```
+var scores = [50, 60, 70];
+console.log(scores);
+console.log(scores.length);
+```
+
+## 인덱스를 이용해서 배열의 원소 읽기
+```
+scores[0];
+scores[3];
+```
+
+## 배열에 값 쓰기
+```
+scores[0] = 100;
+scores[9] = 50;
+```
+
+## 배열의 타입 알아보기
+```
+typeof scores
+typeof scores[0]
+```
+
+## 배열 만들기 2
+```
+var a = [];
+a[0] = 2;
+a[1] = 4;
+```
+
+## 배열의 길이 구하기
+```
+scores.length;
+```
+
+## 배열의 마지막 원소 읽어오기
+```
+scores[scores.length - 1];
+```
+
+## 문자열과 배열
+- 문자열과 배열은 비슷한 성질을 많이 가지고 있습니다.
+- 문자열: Immutable
+- 배열: Mutable
+
+## 배열의 메소드들
+
+<b> push(), pop()
+- `push(value)` : 배열의 뒤 쪽에 새로운 원소를 삽입합니다.
+- `pop()`: 배열의 마지막 원소를 빼서 변수에 넣어 줍니다. 이 때 변수의 길이는 1 감소합니다.
+- 스택처럼 동작하는데 사용합니다.
+
+<b> shift(), unshift()
+- `push`, `pop`과 반대로 동작합니다.
+- `unshift(v)` : 배열의 맨 앞에 새로운 값을 추가합니다.
+- `shift()` : 배열의 앞에서 값을 빼서 변수에 넣어 줍니다.
