@@ -375,7 +375,9 @@ for (var i = 0; i < 2; i++) {
 <br>
 
 # 배열과 문자열
+
 ## 배열 (Array)
+
 <br>
 자바 스크립트에서 가장 많이 사용하는 <b>자료구조</b>의 하나로 <br>
 주로 같은 종류의 값 여러 개를 묶어서 저장하고 관리하기 위해 사용합니다. <br>
@@ -391,24 +393,28 @@ console.log(scores.length);
 ```
 
 ## 인덱스를 이용해서 배열의 원소 읽기
+
 ```
 scores[0];
 scores[3];
 ```
 
 ## 배열에 값 쓰기
+
 ```
 scores[0] = 100;
 scores[9] = 50;
 ```
 
 ## 배열의 타입 알아보기
+
 ```
 typeof scores
 typeof scores[0]
 ```
 
 ## 배열 만들기 2
+
 ```
 var a = [];
 a[0] = 2;
@@ -416,16 +422,19 @@ a[1] = 4;
 ```
 
 ## 배열의 길이 구하기
+
 ```
 scores.length;
 ```
 
 ## 배열의 마지막 원소 읽어오기
+
 ```
 scores[scores.length - 1];
 ```
 
 ## 문자열과 배열
+
 - 문자열과 배열은 비슷한 성질을 많이 가지고 있습니다.
 - 문자열: Immutable
 - 배열: Mutable
@@ -433,11 +442,13 @@ scores[scores.length - 1];
 ## 배열의 메소드들
 
 <b> push(), pop()
+
 - `push(value)` : 배열의 뒤 쪽에 새로운 원소를 삽입합니다.
 - `pop()`: 배열의 마지막 원소를 빼서 변수에 넣어 줍니다. 이 때 변수의 길이는 1 감소합니다.
 - 스택처럼 동작하는데 사용합니다.
 
 <b> shift(), unshift()
+
 - `push`, `pop`과 반대로 동작합니다.
 - `unshift(v)` : 배열의 맨 앞에 새로운 값을 추가합니다.
 - `shift()` : 배열의 앞에서 값을 빼서 변수에 넣어 줍니다.
@@ -445,6 +456,7 @@ scores[scores.length - 1];
 <br><br>
 
 # 함수의 기초
+
 ## 함수란
 
 수학의 함수와 상당히 유사합니다. 매개변수 -> (처리) -> 리턴값의 형태를 가집니다.
@@ -458,7 +470,7 @@ var foo = function(x) {
   return 2 * x + 3;
 }
 
-var y = foo(2); 
+var y = foo(2);
 y = foo(3);
 ```
 
@@ -492,4 +504,161 @@ var foo2 = function(name) {
 
 ```
 foo2("honux");
+```
+
+# 함수와 리턴 값
+
+## 리턴 값이 있는 함수 정의하기
+
+리턴 값이 있을 경우 함수를 호출해서 변수에 값을 넣을 수 있습니다.
+
+```
+var five = function () {
+  return 5;
+}
+
+var n = five();
+console.log(n);
+//5
+```
+
+## 리턴이 없는 함수를 변수에 할당하면?
+
+```
+var foo = function() {
+    console.log(5);
+}
+var n = foo();
+console.log(n);
+//undefined
+```
+
+## 아무 값도 없는 리턴 사용하기
+
+`return`으로 함수를 종료하는데 사용할 수 있다.
+
+```
+var test1 = function(text) {
+  if (text === "exit") {
+    return;
+  }
+  console.log("보이나요?");
+}
+
+test1("hoho");
+test1("exit");
+
+//undefined
+```
+
+## 함수를 사용하면
+
+- 가독성이 좋아짐
+- 유지보수를 잘하게 됨
+  <br><br>
+
+## 함수 어떻게 만들까?
+
+- 매개 변수와 리턴을 적극적으로 활용하자.
+- 줄 수가 지나치게 길어지면 함수로 빼자. (10줄 정도)
+- 인덴트가 지나치게 깊어져도 함수로 빼자.
+- 함수는 반드시 한 가지 일만 하도록 하자.
+  <br><br>
+
+## 2중 루프를 한 번에 빠져 나가기
+
+- `break` 명령은 한 번에 한 루프만 빠져나갑니다.
+- 함수의 `return` 을 이용하면 2중 루프를 한 번에 종료할 수 있습니다.
+  <br><br>
+
+# 객체의 기초
+
+## 객체란 무엇인가?
+
+- 현실의 물체에 대응되는 개념입니다.
+- 객체를 사용하면 변수와 함수를 묶어서 관리하게 됩니다.
+- 객체는 속성과 메소드를 가집니다.
+  <br><br>
+
+## 객체 만들기
+
+```
+p1 = {};
+```
+
+## 속성
+
+객체에 속한 변수
+
+```
+p1.name = "Kim Hyeong Kyeom"
+console.log(p1.name) //"Kim Hyeong Kyeom"
+```
+
+## 메소드
+
+객체에 속한 함수
+
+```
+p1.eat = function(food) {
+    console.log(this.name + " ate delicious " + food +"...");
+};
+
+p1.eat("Beef");
+// "Kim Hyeong Kyeom ate delicious Beef..."
+```
+
+## 메소드 대신에 일반 함수를 썼다면?
+
+```
+eat(p1, "Beef");
+```
+
+의미가 모호해진다. <br><br>
+
+## 객체 지향 프로그래밍
+
+- 유지보수가 쉬워진다.
+- 가독성이 높아진다.
+- 대형 프로그램을 짜기 쉬워진다.
+- 객체와 객체가 협력해서 일을 한다.
+- 객체는 일에 책임을 진다.
+- 객체는 객체에 메시지를 보낸다.
+- 객체는 자율적으로 일을 한다.
+  <br><br>
+
+## this 키워드
+
+메소드 안에서 사용시 함수를 소유한 객체를 가르킨다.
+
+```
+var p2 = {};
+p2.name = "crong";
+p2.weight = 80;
+p2.say = function(word) {
+    console.log(this.name + " says, " + word);
+};
+// this = p2
+```
+
+## 객체 만들기 2
+
+JSON 표기법을 이용해서 객체를 만들 수도 있습니다. 생성자 함수를 이용하는 방법도 있지만 다음에 다루겠습니다.
+
+```
+var m1 = {
+  "name": "Honux",
+  "hp": 100,
+  "power": 10,
+  "attack": function(target) {
+    target.hp -= this.power;
+  }
+};
+
+var c1 = {
+   type: "Coffee",
+   energy: 10
+};
+
+//m1.eat(c1);
 ```
