@@ -441,13 +441,13 @@ scores[scores.length - 1];
 
 ## 배열의 메소드들
 
-<b> push(), pop()
+<b> push(), pop() </b>
 
 - `push(value)` : 배열의 뒤 쪽에 새로운 원소를 삽입합니다.
 - `pop()`: 배열의 마지막 원소를 빼서 변수에 넣어 줍니다. 이 때 변수의 길이는 1 감소합니다.
 - 스택처럼 동작하는데 사용합니다.
 
-<b> shift(), unshift()
+<b> shift(), unshift() </b>
 
 - `push`, `pop`과 반대로 동작합니다.
 - `unshift(v)` : 배열의 맨 앞에 새로운 값을 추가합니다.
