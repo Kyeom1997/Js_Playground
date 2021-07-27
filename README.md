@@ -662,3 +662,53 @@ var c1 = {
 
 //m1.eat(c1);
 ```
+
+## 배열의 메소드 더 살펴보기
+
+### concat()
+
+concat: 배열 합치기, 문자열도 가능
+
+### join
+
+배열을 문자열로 바꿀 때 사용합니다.
+
+### indexOf(), lastIndexOf()
+
+배열이나 문자열안의 원소를 가지고 인덱스를 찾을 수 있음
+
+```
+var a = [10, 20, 30, 40, 10, 50]
+a.indexOf(10); //0
+a.indexOf(65535); //-1
+a.lastIndexOf(10); //4
+```
+
+### slice()
+
+사용법 : `slice(startIndex, endIndex)` 기존 배열을 잘라서 새로운 배열을 만듭니다. 기존 배열은 변하지 않습니다. starIndex 위치부터 endIndex 직전의 위치까지 자릅니다. endIndex의 원소는 포함되지 않습니다.
+
+```
+a = [1, 2, 3, 4, 5];
+a.slice(2,4); //[3,4]
+a; // [1, 2, 3, 4, 5]
+```
+
+### 문자열의 split()
+
+문자열을 문자의 배열로 나누고 싶을 때 사용하는 메소드입니다.
+
+```
+var s = "hello, world a-b-co, ltd";
+
+s.split("");
+//["h", "e", "l", "l", "o", ",", " ", "w", "o", "r", "l", "d", " ", "a", "-", "b", "-", "c", "o", ",", " ", "l", "t", "d"]
+
+s.split(","); //["hello", " world a-b-co", " ltd"]
+
+s.split("-"); //["hello, world a", "b", "co, ltd"]
+```
+
+# Switch case 문법
+
+변수에 저장된 값에 따라 각각 다른 코드를 실행하는 분기문입니다.
