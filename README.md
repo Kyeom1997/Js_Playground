@@ -371,6 +371,60 @@ for (var i = 0; i < 2; i++) {
 }
 ```
 
+# Switch case 문법
+
+변수에 저장된 값에 따라 각각 다른 코드를 실행하는 분기문입니다. 상황에 따라 `if`와 `else if`를 반복적으로 써야 하는 상황을 피하게 해줍니다.
+
+## 문법
+
+```
+var value;
+switch(value) {
+    case 값1:
+    //value == 값1일 경우 실행할 코드
+    break;
+    case 값2:
+    //value == 값2일 경우 실행할 코드
+    break;
+    //...
+    default:
+    //위쪽에 해당되지 않는 경우 실행할 코드
+}
+```
+
+## 예제
+
+점수가 10점이면 A, 9점이면 B, 그 외에는 C를 출력하는 코드를 작성하세요.
+
+### if로 구현
+
+```
+var score = prompt('점수를 입력하세요');
+if (score === 10) {
+    console.log('A');
+} else if (score == 9) {
+    console.log('B');
+} else {
+    console.log('C');
+}
+```
+
+### switch-case 로 구현
+
+```
+var score = prompt('점수를 입력하세요');
+switch (score) {
+    case 10:
+    console.log('A);
+    break;
+    case 9:
+    console.log('B');
+    break;
+    default:
+    console.log('C');
+}
+```
+
 <br>
 <br>
 
@@ -709,56 +763,44 @@ s.split(","); //["hello", " world a-b-co", " ltd"]
 s.split("-"); //["hello, world a", "b", "co, ltd"]
 ```
 
-# Switch case 문법
+# 객체의 생성자 살펴보기
 
-변수에 저장된 값에 따라 각각 다른 코드를 실행하는 분기문입니다. 상황에 따라 `if`와 `else if`를 반복적으로 써야 하는 상황을 피하게 해줍니다.
+### 생성자로 여러 객체를 쉽게 만들기
 
-## 문법
-
-```
-var value;
-switch(value) {
-    case 값1:
-    //value == 값1일 경우 실행할 코드
-    break;
-    case 값2:
-    //value == 값2일 경우 실행할 코드
-    break;
-    //...
-    default:
-    //위쪽에 해당되지 않는 경우 실행할 코드
-}
-```
-
-## 예제
-
-점수가 10점이면 A, 9점이면 B, 그 외에는 C를 출력하는 코드를 작성하세요.
-
-### if로 구현
+비슷한 객체를 여러 개 만들 때는 객체를 생성하는 함수를 이용합니다. 이 때 객체를 생성하는 함수를 생성자라고 합니다. 생성자는 관례상 대문자로 시작하는 경우가 많습니다.
 
 ```
-var score = prompt('점수를 입력하세요');
-if (score === 10) {
-    console.log('A');
-} else if (score == 9) {
-    console.log('B');
-} else {
-    console.log('C');
-}
+//휴면 클래스를 정의하는 함수 = 생성자
+var Human = function(name, hp, power) {
+this.name = name;
+this.hp = hp;
+this.power = power;
+this.attack = function(target) {
+target.hp -= this.power;
+};
+this.show = function() {
+console.log("%s %d %d %d",
+this.name, this.hp, this.mp, this.power);
+};
+};
 ```
 
-### switch-case 로 구현
+## 생성자를 이용해서 객체 만들기
+
+생성자를 이용해서 객체를 만들 때는 `new` 키워드를 사용합니다.
 
 ```
-var score = prompt('점수를 입력하세요');
-switch (score) {
-    case 10:
-    console.log('A);
-    break;
-    case 9:
-    console.log('B');
-    break;
-    default:
-    console.log('C');
-}
+var m1 = new Human("Honux", 100, 10);
+var m2 = new Human("Crong", 999, 1);
+m1.attack(m2);
+m2.attack(m1);
+m1.show();
+m2.show();
 ```
+
+위 코드에서 m1은 객체 또는 인스턴스라고 합니다. m1은 그리고 참조 변수입니다. 참조 변수에 대해서는 다음에 다시 설명합니다. <br><br>
+
+## 생성자를 사용하는 이유
+
+- 객체를 하나만 만들 때는 간단히 json 표기법으로 만듭니다.
+- 여러 객체를 만들 때는 생성자를 통해서 만듭니다.
