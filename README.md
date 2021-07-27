@@ -711,4 +711,54 @@ s.split("-"); //["hello, world a", "b", "co, ltd"]
 
 # Switch case 문법
 
-변수에 저장된 값에 따라 각각 다른 코드를 실행하는 분기문입니다.
+변수에 저장된 값에 따라 각각 다른 코드를 실행하는 분기문입니다. 상황에 따라 `if`와 `else if`를 반복적으로 써야 하는 상황을 피하게 해줍니다.
+
+## 문법
+
+```
+var value;
+switch(value) {
+    case 값1:
+    //value == 값1일 경우 실행할 코드
+    break;
+    case 값2:
+    //value == 값2일 경우 실행할 코드
+    break;
+    //...
+    default:
+    //위쪽에 해당되지 않는 경우 실행할 코드
+}
+```
+
+## 예제
+
+점수가 10점이면 A, 9점이면 B, 그 외에는 C를 출력하는 코드를 작성하세요.
+
+### if로 구현
+
+```
+var score = prompt('점수를 입력하세요');
+if (score === 10) {
+    console.log('A');
+} else if (score == 9) {
+    console.log('B');
+} else {
+    console.log('C');
+}
+```
+
+### switch-case 로 구현
+
+```
+var score = prompt('점수를 입력하세요');
+switch (score) {
+    case 10:
+    console.log('A);
+    break;
+    case 9:
+    console.log('B');
+    break;
+    default:
+    console.log('C');
+}
+```
