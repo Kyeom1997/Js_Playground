@@ -17,20 +17,20 @@
 
 #### 자료형의 종류
 
-```
-Number
-String
-Boolean
-Null
-Undefined
+```js
+Number;
+String;
+Boolean;
+Null;
+Undefined;
 ```
 
 <br>
 그리고 하나 더 객체가 있습니다.
 <br><br>
 
-```
-Object
+```js
+Object;
 ```
 
 ---
@@ -40,7 +40,7 @@ Object
 <br>
 정수와 실수 모두 Number 타입입니다.
 
-```
+```js
 5;
 3.0;
 -4.8;
@@ -53,7 +53,7 @@ Object
 <br>
 사칙연산, 괄호, 나머지 등이 있습니다.
 
-```
+```js
  +, -, /, *, ( ), %
 ```
 
@@ -63,7 +63,7 @@ Object
 
 <br>
 
-```
+```js
 "I am String";
 "Hello" + "World";
 ```
@@ -79,12 +79,13 @@ Object
 데이터 유형을 알려주는 중요한 연산자
 <br><br>
 
-```typeof 5;
-"number"
+```js
+typeof 5;
+("number");
 typeof -4.8;
-"number"
+("number");
 typeof "5";
-"string"
+("string");
 ```
 
 <br>
@@ -93,7 +94,7 @@ typeof "5";
 
 <br>
 
-```
+```js
 true;
 false;
 5 > 3;
@@ -112,7 +113,7 @@ false;
 논리 연산자에는 &&, ||, ! 등이 있습니다.
 <br><br>
 
-```
+```js
 true;
 !true;
 true && false;
@@ -144,7 +145,7 @@ true;
 변수를 사용하기 위해서는 먼저 선언이 필요합니다.
 <br><br>
 
-```
+```js
 var a;
 ```
 
@@ -162,7 +163,7 @@ var a;
 여러가지 방식이 있습니다.
 <br><br>
 
-```
+```js
 var a = 7;
 var b = 10;
 var c = a + b; //17
@@ -202,14 +203,14 @@ var c = a + b; //17
 
 <br>
 
-```
+```js
 var a;
 a++;
 a = 0;
 a++;
-1
+1;
 a--;
-0
+0;
 ```
 
 <br>
@@ -220,7 +221,7 @@ a--;
 비교 연산자를 수행한 결과값은 Boolean입니다. 비교 연산자에는 `>, <, >=, <=, ===, !=` 등이 있습니다.
 <br><br>
 
-```
+```js
 var a = 3;
 var b = 5;
 var c = "5";
@@ -238,11 +239,11 @@ false;
 
 <br>
 
-```
+```js
 var a = "hello";
 a.length;
 
-5
+5;
 ```
 
 <br>
@@ -254,17 +255,17 @@ a.length;
 
 <br>
 
-```
-var a = "KheLLo"
+```js
+var a = "KheLLo";
 a[0];
-"K"
+("K");
 a[1] = "H"; //안 됨
-a.slice(1,4);
-"heL"
+a.slice(1, 4);
+("heL");
 a.toUpperCase();
-"KHELLO"
+("KHELLO");
 a.toLowerCase();
-"khello"
+("khello");
 ```
 
 <br>
@@ -283,7 +284,7 @@ a.toLowerCase();
 개발자 콘솔에 뭔가를 찍어주는 메소드입니다.
 <br><br>
 
-```
+```js
 var a = 1;
 var b = "더하기";
 var c = 2;
@@ -297,7 +298,7 @@ console.log(a + " " + b + " " + c + " = " + a + c);
 
 <br>
 
-```
+```js
 var ans = prompt("How are you?");
 alert(ans);
 ```
@@ -314,7 +315,7 @@ alert(ans);
 
 <br>
 
-```
+```js
 if (조건식) {
   //조건식이 참일 경우 실행될 구문
 }
@@ -328,7 +329,7 @@ if (조건식) {
 
 <br>
 
-```
+```js
 if (조건식) {
   //조건식이 참일 경우 실행될 구문
 } else {
@@ -342,10 +343,10 @@ if (조건식) {
 
 <br>
 
-```
+```js
 if (조건식1) {
   //조건식이 참일 경우 실행
-} else if(조건식2)  {
+} else if (조건식2) {
   //조건식1은 거짓이고 2는 참일 경우
 } else {
   //거짓일 경우 실행
@@ -360,17 +361,17 @@ if (조건식1) {
 반복문은 비슷한 일을 반복적으로 처리하기 위한 명령문입니다.
 <br><br>
 
-```
-while(조건) {
+```js
+while (조건) {
   console.log("참일때 실행됨");
 }
 ```
 
 ---
 
-```
+```js
 var n = 1;
-while(n <=100) {
+while (n <= 100) {
   console.log("Hi" + n);
   n++;
 }
@@ -384,8 +385,8 @@ while(n <=100) {
 
 <br>
 
-```
-for(var i = 0; i <=100; i++) {
+```js
+for (var i = 0; i <= 100; i++) {
   console.log(i);
 }
 ```
@@ -407,14 +408,14 @@ for(var i = 0; i <=100; i++) {
 
 <b>break는 반복문을 중간에 빠져나갈 때 사용합니다.</b> <br><br>
 
-```
+```js
 var str;
 while (true) {
-    str = prompt("아무거나 입력하세요");
-    document.write(str + "<br>");
-    if (str == "q") {
-        break;
-    }
+  str = prompt("아무거나 입력하세요");
+  document.write(str + "<br>");
+  if (str == "q") {
+    break;
+  }
 }
 document.write("Bye~");
 ```
@@ -427,12 +428,12 @@ document.write("Bye~");
 - for : 증감식 (i++)으로 이동
   <br><br>
 
-```
-for(var i = 0;i < 10; i++) {
-    if (i == 5) {
-        continue;
-    }
-    console.log(i);
+```js
+for (var i = 0; i < 10; i++) {
+  if (i == 5) {
+    continue;
+  }
+  console.log(i);
 }
 ```
 
@@ -445,11 +446,11 @@ for(var i = 0;i < 10; i++) {
 3중, 4중도 가능하지만 잘 사용하지 않습니다.
 <br><br>
 
-```
+```js
 for (var i = 0; i < 2; i++) {
-    for (var j = 0; j < 3; j++) {
-        console.log(i + ", " +j);
-    }
+  for (var j = 0; j < 3; j++) {
+    console.log(i + ", " + j);
+  }
 }
 ```
 
@@ -465,18 +466,18 @@ for (var i = 0; i < 2; i++) {
 
 ## 문법
 
-```
+```js
 var value;
-switch(value) {
-    case 값1:
+switch (value) {
+  case 값1:
     //value == 값1일 경우 실행할 코드
     break;
-    case 값2:
+  case 값2:
     //value == 값2일 경우 실행할 코드
     break;
-    //...
-    default:
-    //위쪽에 해당되지 않는 경우 실행할 코드
+  //...
+  default:
+  //위쪽에 해당되지 않는 경우 실행할 코드
 }
 ```
 
@@ -486,20 +487,20 @@ switch(value) {
 
 ### if로 구현
 
-```
-var score = prompt('점수를 입력하세요');
+```js
+var score = prompt("점수를 입력하세요");
 if (score === 10) {
-    console.log('A');
+  console.log("A");
 } else if (score == 9) {
-    console.log('B');
+  console.log("B");
 } else {
-    console.log('C');
+  console.log("C");
 }
 ```
 
 ### switch-case 로 구현
 
-```
+```js
 var score = prompt('점수를 입력하세요');
 switch (score) {
     case 10:
@@ -531,7 +532,7 @@ https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Ar
 
 ## 배열 만들기
 
-```
+```js
 var scores = [50, 60, 70];
 console.log(scores);
 console.log(scores.length);
@@ -539,28 +540,28 @@ console.log(scores.length);
 
 ## 인덱스를 이용해서 배열의 원소 읽기
 
-```
+```js
 scores[0];
 scores[3];
 ```
 
 ## 배열에 값 쓰기
 
-```
+```js
 scores[0] = 100;
 scores[9] = 50;
 ```
 
 ## 배열의 타입 알아보기
 
-```
-typeof scores
-typeof scores[0]
+```js
+typeof scores;
+typeof scores[0];
 ```
 
 ## 배열 만들기 2
 
-```
+```js
 var a = [];
 a[0] = 2;
 a[1] = 4;
@@ -568,13 +569,13 @@ a[1] = 4;
 
 ## 배열의 길이 구하기
 
-```
+```js
 scores.length;
 ```
 
 ## 배열의 마지막 원소 읽어오기
 
-```
+```js
 scores[scores.length - 1];
 ```
 
@@ -610,7 +611,7 @@ scores[scores.length - 1];
 
 수학의 함수와 상당히 유사합니다. 매개변수 -> (처리) -> 리턴값의 형태를 가집니다.
 
-```
+```js
 f(x) = 2x + 3
 f(2) = 7
 f(3) = 9
@@ -627,31 +628,31 @@ y = foo(3);
 
 매개 변수도 없고, 리턴값도 없는 가장 단순한 형태의 함수를 만들어 봅시다. 출력과 리턴은 전혀 다르다는 걸 기억하세요.
 
-```
-var foo = function() {
+```js
+var foo = function () {
   console.log("I am function");
-}
+};
 ```
 
 ## 함수 호출
 
 함수를 사용하는 것을 함수 호출(call)이라고 합니다. <b?>함수 이름 + 괄호</b>가 필요합니다.
 
-```
+```js
 foo();
 ```
 
 ## 매개변수가 있는 함수 정의하기
 
-```
-var foo2 = function(name) {
+```js
+var foo2 = function (name) {
   console.log("hello" + name);
-}
+};
 ```
 
 ## 매개변수가 있는 함수 사용해 보기
 
-```
+```js
 foo2("honux");
 ```
 
@@ -661,10 +662,10 @@ foo2("honux");
 
 리턴 값이 있을 경우 함수를 호출해서 변수에 값을 넣을 수 있습니다.
 
-```
+```js
 var five = function () {
   return 5;
-}
+};
 
 var n = five();
 console.log(n);
@@ -673,10 +674,10 @@ console.log(n);
 
 ## 리턴이 없는 함수를 변수에 할당하면?
 
-```
-var foo = function() {
-    console.log(5);
-}
+```js
+var foo = function () {
+  console.log(5);
+};
 var n = foo();
 console.log(n);
 //undefined
@@ -686,13 +687,13 @@ console.log(n);
 
 `return`으로 함수를 종료하는데 사용할 수 있다.
 
-```
-var test1 = function(text) {
+```js
+var test1 = function (text) {
   if (text === "exit") {
     return;
   }
   console.log("보이나요?");
-}
+};
 
 test1("hoho");
 test1("exit");
@@ -743,18 +744,18 @@ p1 = {};
 
 객체에 속한 변수
 
-```
-p1.name = "Kim Hyeong Kyeom"
-console.log(p1.name) //"Kim Hyeong Kyeom"
+```js
+p1.name = "Kim Hyeong Kyeom";
+console.log(p1.name); //"Kim Hyeong Kyeom"
 ```
 
 ## 메소드
 
 객체에 속한 함수
 
-```
-p1.eat = function(food) {
-    console.log(this.name + " ate delicious " + food +"...");
+```js
+p1.eat = function (food) {
+  console.log(this.name + " ate delicious " + food + "...");
 };
 
 p1.eat("Beef");
@@ -763,7 +764,7 @@ p1.eat("Beef");
 
 ## 메소드 대신에 일반 함수를 썼다면?
 
-```
+```js
 eat(p1, "Beef");
 ```
 
@@ -784,12 +785,12 @@ eat(p1, "Beef");
 
 메소드 안에서 사용시 함수를 소유한 객체를 가르킨다.
 
-```
+```js
 var p2 = {};
 p2.name = "crong";
 p2.weight = 80;
-p2.say = function(word) {
-    console.log(this.name + " says, " + word);
+p2.say = function (word) {
+  console.log(this.name + " says, " + word);
 };
 // this = p2
 ```
@@ -798,19 +799,19 @@ p2.say = function(word) {
 
 JSON 표기법을 이용해서 객체를 만들 수도 있습니다. 생성자 함수를 이용하는 방법도 있지만 다음에 다루겠습니다.
 
-```
+```js
 var m1 = {
-  "name": "Honux",
-  "hp": 100,
-  "power": 10,
-  "attack": function(target) {
+  name: "Honux",
+  hp: 100,
+  power: 10,
+  attack: function (target) {
     target.hp -= this.power;
-  }
+  },
 };
 
 var c1 = {
-   type: "Coffee",
-   energy: 10
+  type: "Coffee",
+  energy: 10,
 };
 
 //m1.eat(c1);
@@ -830,8 +831,8 @@ concat: 배열 합치기, 문자열도 가능
 
 배열이나 문자열안의 원소를 가지고 인덱스를 찾을 수 있음
 
-```
-var a = [10, 20, 30, 40, 10, 50]
+```js
+var a = [10, 20, 30, 40, 10, 50];
 a.indexOf(10); //0
 a.indexOf(65535); //-1
 a.lastIndexOf(10); //4
@@ -841,9 +842,9 @@ a.lastIndexOf(10); //4
 
 사용법 : `slice(startIndex, endIndex)` 기존 배열을 잘라서 새로운 배열을 만듭니다. 기존 배열은 변하지 않습니다. starIndex 위치부터 endIndex 직전의 위치까지 자릅니다. endIndex의 원소는 포함되지 않습니다.
 
-```
+```js
 a = [1, 2, 3, 4, 5];
-a.slice(2,4); //[3,4]
+a.slice(2, 4); //[3,4]
 a; // [1, 2, 3, 4, 5]
 ```
 
@@ -851,7 +852,7 @@ a; // [1, 2, 3, 4, 5]
 
 문자열을 문자의 배열로 나누고 싶을 때 사용하는 메소드입니다.
 
-```
+```js
 var s = "hello, world a-b-co, ltd";
 
 s.split("");
@@ -874,19 +875,18 @@ s.split("-"); //["hello, world a", "b", "co, ltd"]
 
 비슷한 객체를 여러 개 만들 때는 객체를 생성하는 함수를 이용합니다. 이 때 객체를 생성하는 함수를 생성자라고 합니다. 생성자는 관례상 대문자로 시작하는 경우가 많습니다.
 
-```
+```js
 //휴면 클래스를 정의하는 함수 = 생성자
-var Human = function(name, hp, power) {
-this.name = name;
-this.hp = hp;
-this.power = power;
-this.attack = function(target) {
-target.hp -= this.power;
-};
-this.show = function() {
-console.log("%s %d %d %d",
-this.name, this.hp, this.mp, this.power);
-};
+var Human = function (name, hp, power) {
+  this.name = name;
+  this.hp = hp;
+  this.power = power;
+  this.attack = function (target) {
+    target.hp -= this.power;
+  };
+  this.show = function () {
+    console.log("%s %d %d %d", this.name, this.hp, this.mp, this.power);
+  };
 };
 ```
 
@@ -894,7 +894,7 @@ this.name, this.hp, this.mp, this.power);
 
 생성자를 이용해서 객체를 만들 때는 `new` 키워드를 사용합니다.
 
-```
+```js
 var m1 = new Human("Honux", 100, 10);
 var m2 = new Human("Crong", 999, 1);
 m1.attack(m2);
@@ -932,12 +932,12 @@ m2.show();
 일반 변수는 <b>값만</b> 저장하고 다른 변수에 언제나 독립적으로 존재합니다.
 <br><br>
 
-```
+```js
 var a = 5;
 var b = a;
-a === b //true
-b = 10
-a === b //false
+a === b; //true
+b = 10;
+a === b; //false
 ```
 
 <br>
@@ -950,8 +950,8 @@ a === b //false
 참조 변수라는 것은 객체에 대한 별명 같은 것입니다. 같은 사람을 이름으로도 부르고, 별명으로도 부르고, 다양한 호칭으로 부르는 것과 조금 비슷합니다. 우리가 객체를 만들면 객체가 생기고 변수에는 그 객체의 참조를 할당하는 것입니다. 무슨 말인지 잘 모르겠죠? 이상하게 들리겠지만 아래 코드를 먼저 실행해 보세요.
 <br><br>
 
-```
-var m1 = {name: "honux", age: 25};
+```js
+var m1 = { name: "honux", age: 25 };
 var m2 = m1;
 m1 === m2; // true
 m2.name = "crong";
@@ -973,11 +973,11 @@ m1 === m2; // true
 
 <br>
 
-```
-var foo_v = function(v) {
-    v = v * 2;
-    console.log(v);
-}
+```js
+var foo_v = function (v) {
+  v = v * 2;
+  console.log(v);
+};
 
 var a = 10;
 foo_v(a); // 20
@@ -990,13 +990,13 @@ console.log(a); // 10
 
 <br>
 
-```
-var foo_r = function(ref) {
-    ref.v = ref.v * 2;
-    console.log(ref);
-}
+```js
+var foo_r = function (ref) {
+  ref.v = ref.v * 2;
+  console.log(ref);
+};
 
-var p = {name: "Dora", v: 99};
+var p = { name: "Dora", v: 99 };
 foo_r(p); // {name: "Dora", v: 198}
 console.log(p); // {name: "Dora", v: 198}
 ```
@@ -1025,7 +1025,7 @@ console.log(p); // {name: "Dora", v: 198}
 [프로토타입 MDN 참조 링크](https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/Object_prototypes)
 <br><br>
 
-```
+```js
 function Human(name, hp, mp, power) {
   this.name = name; //m1.name = name;
   this.hp = hp;
@@ -1033,8 +1033,8 @@ function Human(name, hp, mp, power) {
   this.power = power;
 }
 
-Human.prototype.attack = function(target) {
-    target.hp -= this.power;
+Human.prototype.attack = function (target) {
+  target.hp -= this.power;
 };
 ```
 
@@ -1046,9 +1046,9 @@ Human.prototype.attack = function(target) {
 객체의 속성값이 배열이 될 수 있습니다. 배열 안에 값들이 객체가 될 수 있습니다.
 <br><br>
 
-```
-var m1 = {'no': 1, 'scores': [100, 99]};
-var m2 = {'no': 2, 'scores': [100, 99]};
+```js
+var m1 = { no: 1, scores: [100, 99] };
+var m2 = { no: 2, scores: [100, 99] };
 var arr1 = [m1, m2];
 ```
 
@@ -1071,4 +1071,108 @@ var arr1 = [m1, m2];
 ## HTML
 
 <br>
-Hyper
+
+- HyperText Markup Language
+- WWW의 3 요소 중 하나
+- 팀 버너스리에 의해 만들어 졌다.
+  <br><br>
+
+## 엘리먼트(Element)
+
+<br>
+
+- 여는 태그와 닫는 태그로 이루어짐
+- 태그 사이에 콘텐츠를 가짐
+- 태그 안에 속성과 속성의 값을 가짐
+- 닫는 태그가 없는 태그도 있다. (img, br, input)
+  <br><br>
+
+## 속성 (Attributes)
+
+<br>
+객체의 속성과 비슷하게 엘리먼트도 속성을 가질 수 있습니다.
+
+```html
+<a href="http://codesquad.kr" title="코드스쿼드"></a>
+```
+
+<br>
+
+## 블록 엘리먼트
+
+<br>
+
+`p, h1, div` 처럼 줄이 바뀌는 엘리먼트
+<br><br>
+
+## 인라인 엘리먼트
+
+<br>
+
+`span, img, input, button, a` 처럼 줄바뀜이 없는 엘리먼트
+<br><br>
+
+---
+
+<br>
+
+# DOM(Document Object Model)
+
+<br>
+
+- 문서를 객체를 이용해서 계층 구조로 표현함
+- 표준 : W3CDOM
+- 구현체 : Gecko, Webkit 등
+  <br><br>
+
+## html 객체
+
+<br>
+HTML 문서도 객체로 간주된다.
+<br><Br>
+
+- window : 최상위 객체
+- document : DOM의 최상위 객체면서 window의 하위 객체
+  <br><br>
+
+```
+var list = document.getElementsByTagName('h1');
+list[0].innerHTML;
+list[0].innerHTML = "Hello";
+```
+
+<br>
+
+```
+var list = document.getElementById('main');
+main.innerHTML = "Hello";
+```
+
+<br>
+
+## JS로 DOM 제어하기
+
+<br>
+모든 HTML 엘리먼트는 객체이므로 다른 객체와 마찬가지로 JS로 제어가 가능합니다.
+<br><br>
+
+### DOM 객체의 값 바꾸기
+
+<br>
+
+```js
+var element = document.getElementById("id");
+element.innerHTML = "값";
+```
+
+<br>
+
+```html
+<h2>My First Page</h2>
+<p id="test"></p>
+
+<script>
+  var p = document.getElementById("test");
+  p.innerHTML = "Hello World!";
+</script>
+```
