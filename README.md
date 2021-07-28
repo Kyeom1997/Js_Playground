@@ -1176,3 +1176,17 @@ element.innerHTML = "값";
   p.innerHTML = "Hello World!";
 </script>
 ```
+
+<br>
+
+---
+
+<br>
+
+# 변수의 Scope
+
+## Scope란?
+
+<br>
+
+- 변수의 유효 범위
