@@ -1421,3 +1421,101 @@ function fibo_d(n) {
 
 <br>
 이런 방법을 다이나믹 프로그래밍(또는 memoization) 기법이라고 합니다.
+
+Javascript에서 사용되는 변수 선언 방식인 `var`, `let`, `const`의 차이점에 대해 알아보자.
+
+# 재선언, 재할당
+
+> #### 재선언, 재할당이란?
+>
+> 자바스크립트(Javascript)는 매니지드 언어(managed language)이기 때문에 개발자가 직접 메모리를 제어하지 못한다. 따라서 개발자가 직접 메모리 주소를 통해 값을 저장하고 참조할 필요가 없고 변수를 통해 안전하게 값에 접근이 가능하다. <br><br> 여기서 `var`, `let`, `const` 키워드를 사용하여 변수명을 자바스크립트 엔진에 알리는 것을 선언(declaration) 이라고 한다. 자바스크립트에서의 변수 선언은 `선언 -> 초기화` 단계를 거쳐서 수행된다. <br><br> 할당이란, 변수에 값을 저장하는 것으로 변수에 값을 할당할 때에는 할당 연산자(=)를 사용한다.
+
+```js
+var name; //선언
+var name = "kyeom"; //할당
+var name = "hangkem"; //재선언
+name = "hangkemi"; //재할당
+```
+
+### var
+
+```js
+var name = "kyeom";
+console.log(name); // kyeom
+
+var name = "hangkem";
+console.log(name); // hangkem
+
+name = "hangkemi";
+console.log(name); // hangkemi
+```
+
+var의 경우에는 변수의 재선언, 재할당을 했음에도 에러없이 정상적으로 각각 다른 결과값이 출력된다.
+
+### let
+
+```js
+let name = "kyeom";
+console.log(name); // kyeom
+
+let name = "hangkem";
+console.log(name);
+// Uncaught SyntaxError: Identifier 'name' has already been declared
+
+name = "hangkem";
+console.log(name); // hangkem
+```
+
+let은 재선언은 불가능하지만, 변수에 재할당이 가능하다.
+
+### const
+
+```js
+const name = "kyeom";
+console.log(name); // kyeom
+
+const name = "hangkem";
+console.log(name);
+// Uncaught SyntaxError: Identifier 'name' has already been declared
+
+name = "hangkem";
+console.log(name);
+//Uncaught TypeError: Assignment to constant variable.
+```
+
+const는 변수 재선언, 변수 재할당 모두 불가능하다. 여기서 `let`과 `const`의 차이점은 `immtuable`, 즉 `let`은 변경이 가능한 값이지만, `const`는 변경이 불가능한 값이라는 점을 알 수 있다.
+
+# Hoisting?🤔
+
+호이스팅(Hoisting)이란, 자바스크립트 코드를 인터프리터가 로드할 때, 변수의 정의가 그 범위에 따라 선언과 할당으로 분리되어 변수의 선언을 항상 컨텍스트 내의 최상위로 끌어올리는 것을 의미한다. 이는 오로지 변수에만 해당되는 것은 아니고 함수도 가능하며, 자바스크립트에서 함수의 호출을 첫 줄에서 하고 마지막 줄에 함수를 정의해도 문제없이 작동되도록 하는 유용한 특성이다. 하지만, 이 `호이스팅` 때문에 `var`에서 치명적인 오류가 발생하는 경우가 있다.
+
+```js
+a = "kyeom";
+var a;
+```
+
+가령, 이러한 코드가 있다고 하면 `var`에서는 선언 단계와 초기화 단계가 한번에 이루어지기 때문에 오류가 발생하지 않게 된다.
+
+```js
+a = "kyeom";
+let a; // Uncaught ReferenceError: Cannot access 'a' before initialization
+```
+
+하지만, `let`으로 선언된 변수를 선언문 이전에 참조하게 되면, `var`로 선언된 변수와는 다르게 ReferenceError(참조 에러)가 발생하게 된다. 이는 `let`으로 선언된 변수가 스코프의 시작에서 변수의 선언까지 TDZ(temporal dead zone)에 빠지기 때문이다. ![](https://images.velog.io/images/hang_kem_0531/post/d2cbe390-976f-47d7-91c0-815b37912864/image.png)
+
+`const`는 더 엄격한데, `let`은 선언을 먼저하고 나중에 변수에 값을 할당하는 것이 가능하지만, `const`는 선언과 동시에 변수에 값을 할당 해야한다.
+
+# 결론
+
+ES6 이후로는 실제 현업에서 `var`로 변수를 선언하는 것은 거의 사용되지 않고 있다. 그렇다면 남은 것은 `let`과 `const`인데, 앞서 말한 것 처럼 둘 사이의 차이점은 `immutable`이라고 할 수 있다. 그렇기 때문에, 변수 선언에는 대부분 `const`를 사용하고, 재할당이 필요한 경우에만 `let` 을 사용해 변수를 선언하는 것이 좋다.
+
+그리고 객체를 재할당하는 경우는 생각보다 흔하지 않다. `const` 를 사용하면 의도치 않은 재할당을 방지해 주기 때문에 보다 안전하다.
+
+---
+
+### 참조문서
+
+https://gist.github.com/LeoHeo/7c2a2a6dbcf80becaaa1e61e90091e5d
+https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90
+https://developer.mozilla.org/ko/docs/Glossary/Hoisting
+https://ui.toast.com/weekly-pick/ko_20191014
