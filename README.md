@@ -1596,3 +1596,65 @@ a + b;
 ```js
 return a + b;
 ```
+
+# About ES6
+
+# Introduction
+
+ECMASCript(ES)란, Ecma International이 ECMA-262 기술 규격에 따라 정의하고 있는 표준화된 스크립트 프로그래밍 언어를 말한다. 자바스크립트를 표준화하기 위해 만들어졌다. 현재 2021년 11월 기준, 2019년 6월에 출판된 ES2019까지의 ECMASCript가 나와있지만 오늘 알아볼 ECMASCript는 바로 2015년 6월에 출판된 ECMASCript의 5판, **ES6**이다.
+
+## 왜 ES6인가?
+
+ES10 까지 나온 현재, 왜 우리는 ES6에 주목해야 할까? 그것은 바로 ES6가 새로운 언어 기능이 포함된 주요 업데이트였으며, 2009년도에 표준화된 ES5 이후로 언어 기능에 대한 첫 업데이트였기 때문이다. 그렇기 때문에 ES6에서는 ES5 이하 명세에서 문제가 되었던 부분들이 해결되었고, 이는 가독성 및 유지보수성 향상으로 이어졌다. React나 Vue와 같은 유명 라이브러리들도 이에 맞춰 개발 환경을 ES6로 바꾸게 되었다. 그럼 지금부터, 대표적인 ES6 문법들에 대하여 알아보자.
+
+## ES6 문법
+
+### const and let
+
+`const`와 `let`은, 앞서 작성했던 문서인 [var, let, const의 차이점](https://velog.io/@hang_kem_0531/JS-var-let-const%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)에서 알아볼 수 있듯이, 변수 선언을 위한 ES6의 새로운 문법이다. 이 둘은 모두 블럭 범위이며, `var`과 다르게 재선언을 할 수 없다는 차이점이 있다.
+
+다만, `let`은 재할당이 가능하지만, `const`는 재할당이 불가능하다는 차이점 역시 존재한다. ES6에서 `const`와 `let`이 등장한 이후로, `var`을 변수를 선언할 때 거의 사용되지 않게 되었다.
+
+### Arrow functions(화살표 함수)
+
+ES6에서는 복잡하고 조금은 깨끗하지 않게 느껴졌던 전통적인 함수표현 (`function(){}`)에 대한 대안으로 Arrow Function을 도입하였다. 다만 이것인 전통적인 함수표현의 대안이라고 해도 몇가지의 제한점이 있으며 모든 상황에 사용할 수는 없다.
+
+- this나 super에 대한 바인딩이 없고, methods 로 사용될 수 없다.
+- new.target 키워드가 없다.
+- 일반적으로 스코프를 지정할 때 사용하는 call, apply, bind methods를 이용할 수 없다.
+- 생성자(Constructor)로 사용할 수 없다.
+- yield를 화살표 함수 내부에서 사용할 수 없다.
+
+> #### this 바인딩
+>
+> 화살표 함수가 기존의 function을 대체할 수 없는 이유 중 대표적인 예시가 서로 가리키고 있는 this 값이 다르다는 것이다. 다음의 예를 살펴보자.
+
+```js
+function BlackDog() {
+  this.name = "흰둥이";
+  return {
+    name: "검둥이",
+    bark: function () {
+      console.log(this.name + ": 멍멍!");
+    },
+  };
+}
+const blackDog = new BlackDog();
+blackDog.bark(); //검둥이: 멍멍!
+```
+
+```js
+function WhiteDog() {
+  this.name = "흰둥이";
+  return {
+    name: "검둥이",
+    bark: () => {
+      console.log(this.name + ": 멍멍!");
+    },
+  };
+}
+const whiteDog = new WhiteDog();
+whiteDog.bark(); //흰둥이: 멍멍!
+```
+
+이와 같이 function()을 사용했을 때는 검둥이가 나타나고, 화살표 함수를 사용했을 때는 흰둥이가 나타나게 된다. 일반 함수는 자신이 종속된 객체를 this로 가리키며, 화살표 함수는 자신이 종속된 인스턴스를 가리키게 된다.
