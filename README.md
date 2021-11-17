@@ -1811,3 +1811,42 @@ myPromise(true).then(
   }
 );
 ```
+
+​
+
+## preventDefaults와 stopPropagation의 차이
+
+JS에서 이벤트 전파를 막는 메서드 중에는 `preventDefaults` 말고도 `stopPropagation` 이라는 메서드가 존재한다. 여기서 `preventDefaults` 와 `stopPropagation` 의 차이는 바로 `stopPropagation`은 이벤트 버블링을 중단시킬 수 있다는 것이다.
+​
+
+> #### 이벤트 버블링(Event Bubbling)이란?
+>
+> 이벤트 버블링은 특정 화면 요소에서 이벤트가 발생했을 때 해당 이벤트가 더 상위의 화면 요소들로 전달되어 가는 특성을 의미한다.
+
+```html
+<body>
+  <div class="one">
+    <div class="two">
+      <div class="three"></div>
+    </div>
+  </div>
+</body>
+```
+
+```js
+const divs = document.querySelectorAll("div");
+divs.forEach(function (div) {
+  div.addEventListener("click", logEvent);
+});
+function logEvent(event) {
+  console.log(event.currentTarget.className);
+}
+```
+
+이렇게 3개의 div 태그에 클릭시 logEvent를 발생시키는 함수를 등록하고 최하위 div 태그를 누르면 다음과 같이 실행된다.
+![](https://images.velog.io/images/hang_kem_0531/post/5775c6b6-c40f-439f-9fe9-cf83006529a1/image.png)
+div 태그 한 개만 클릭했을 뿐인데 3개의 이벤트가 발생되는 이유는 브라우저가 이벤트를 감지하는 방식 때문이다. 브라우저는 특정 화면 요소에서 이벤트가 발생했을 때 그 이벤트를 최상위에 있는 화면 요소까지 이벤트를 전파시킨다. 이와 같은 하위에서 상위 요소로의 이벤트 전파 방식을 이벤트 버블링이라고 한다.
+![](https://images.velog.io/images/hang_kem_0531/post/1c3e7d62-0eed-4d40-8cf9-2aab7fca4c8e/image.png)
+​
+이와 같이 `event.preventDefault()`는 단순히 html에서 표준으로 제공하는 태그의 기본 이벤트 발생을 막는 메서드라면, `event.stopPropagation()`은 말 그대로 상위 엘리먼트로의 이벤트 전파, 즉 이벤트 버블링을 막는다는 차이를 확인할 수 있다. 그렇기 때문에 이벤트가 상위 DOM으로 전파되지 않게 하기 위해서는 `event.stopPropagation`을 사용해야 한다.
+​
