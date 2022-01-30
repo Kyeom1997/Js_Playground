@@ -3890,7 +3890,7 @@ console.log(person); // {name: "Kim"}
 
 ---
 
-객체 리터럴에 의한 객체 생성 방식은 가장 일반적이고 간단한 객체 생성 방식이다. 객체는 객체 리터럴 이외에도 다양한 방법으로 생성할 수 있다. 
+객체 리터럴에 의한 객체 생성 방식은 가장 일반적이고 간단한 객체 생성 방식이다. 객체는 객체 리터럴 이외에도 다양한 방법으로 생성할 수 있다.
 
 <h3> Object 생성자 함수 </h3>
 
@@ -3901,9 +3901,9 @@ new 연산자와 함께 Object 생성자 함수를 호출하면 빈 객체를 �
 const person = new Object();
 
 // 프로퍼티 추가
-person.name = 'Kyeom';
+person.name = "Kyeom";
 person.sayHello = function () {
-  console.log('Hello! My name is ' + this.name);
+  console.log("Hello! My name is " + this.name);
 };
 
 console.log(person); // {name: "Kyeom", sayHello: f}
@@ -3916,7 +3916,7 @@ person.sayHello(); // Hello! My name is Kyeom
 
 ```js
 // String 생성자 함수에 의한 String 객체 생성
-const strObj = new String('Kyeom');
+const strObj = new String("Kyeom");
 console.log(typeof strObj); // object
 console.log(strObj); // String {"Kyeom"}
 
@@ -3931,7 +3931,7 @@ console.log(typeof boolObj); // object
 console.log(boolObj); // Boolean {true}
 
 // Function 생성자 함수에 의한 Function 객체(함수) 생성
-const func = new Function('x', 'return x * x');
+const func = new Function("x", "return x * x");
 console.log(typeof func); // function
 console.log(func); // f anonymous(x)
 
@@ -3966,7 +3966,7 @@ const circle1 = {
   radius: 5,
   getDiameter() {
     return 2 * this.radius;
-  }
+  },
 };
 
 console.log(circle1.getDiameter()); // 10
@@ -3975,7 +3975,7 @@ const circle2 = {
   radius: 10,
   getDiameter() {
     return 2 * this.radius;
-  }
+  },
 };
 
 console.log(circle2.getDiameter()); // 20
@@ -4000,8 +4000,8 @@ function Circle(radius) {
 }
 
 // 인스턴스의 생성
-const circle1 = new Circle(5); 
-const circle2 = new Circle(10); 
+const circle1 = new Circle(5);
+const circle2 = new Circle(10);
 
 console.log(circle1.getDiameter()); // 10
 console.log(circle2.getDiameter()); // 20
@@ -4036,7 +4036,7 @@ function Circle(radius) {
 }
 
 // 인스턴스 생성
-const circle1 = new Circle(5); 
+const circle1 = new Circle(5);
 ```
 
 생성자 함수 내부의 코드를 살펴보면 this에 프로퍼티를 추가하고 필요에 따라 전달된 인수를 프로퍼티의 초기값으로서 할당하여 인스턴스를 초기화한다. 하지만 인스턴스를 생성하고 반환하는 코드는 보이지 않는다.
@@ -4044,16 +4044,16 @@ const circle1 = new Circle(5);
 자바스크립트 엔진은 암묵적인 처리를 통해 인스턴스를 생성하고 반환한다. new 연산자와 함꼐 생성자 함수를 호출하면 자바스크립트 엔진은 다음과 같은 과정을 거쳐 암묵적으로 인스턴스를 생성하고 인스턴스를 초기화한 후 암묵적으로 인스턴스를 반환한다.
 
 1. **인스턴스 생성과 this 바인딩**
-암묵적으로 빈 객체가 생성된다. 이 빈 객체가 바로 생성자 함수가 생성한 인스턴스다. 그리고 암묵적으로 생성된 빈 객체, 즉 인스턴스는 this에 바인딩된다. 생성자 함수 내부의 this가 생성자 함수가 생성할 인스턴스를 가치키는 이유가 바로 이것이다. 이 처리는 함수 몸체의 코드가 한 줄씩 실행되는 런타임 이전에 실행된다.
+   암묵적으로 빈 객체가 생성된다. 이 빈 객체가 바로 생성자 함수가 생성한 인스턴스다. 그리고 암묵적으로 생성된 빈 객체, 즉 인스턴스는 this에 바인딩된다. 생성자 함수 내부의 this가 생성자 함수가 생성할 인스턴스를 가치키는 이유가 바로 이것이다. 이 처리는 함수 몸체의 코드가 한 줄씩 실행되는 런타임 이전에 실행된다.
 
 > **바인딩** <br>
-바인딩이란 식별자와 값을 연결하는 과정을 의미한다. 예를 들어, 변수 선언은 변수 이름(식별자)와 확보된 메모리 공간의 주소를 바인딩하는 것이다. this 바인딩은 this와 this가 가리킬 객체를 바인딩 하는 것이다.
+> 바인딩이란 식별자와 값을 연결하는 과정을 의미한다. 예를 들어, 변수 선언은 변수 이름(식별자)와 확보된 메모리 공간의 주소를 바인딩하는 것이다. this 바인딩은 this와 this가 가리킬 객체를 바인딩 하는 것이다.
 
 ```js
 function Circle(radius) {
   // 1. 암묵적으로 인스턴스가 생성되고 this에 바인딩된다.
   console.log(this); // Circle {}
-  
+
   this.radius = radius;
   this.getDiameter = function () {
     return 2 * this.radius;
@@ -4062,12 +4062,12 @@ function Circle(radius) {
 ```
 
 2. **인스턴스 초기화**
-생성자 함수에 기술되어 있는 코드가 한 줄씩 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티나 메서드를 추가하고 생성자 함수가 인수로 전달받은 초기값을 인스턴스 프로퍼티에 할당하여 초기화하거나 고정값을 할당한다.
+   생성자 함수에 기술되어 있는 코드가 한 줄씩 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티나 메서드를 추가하고 생성자 함수가 인수로 전달받은 초기값을 인스턴스 프로퍼티에 할당하여 초기화하거나 고정값을 할당한다.
 
 ```js
 function Circle(radius) {
   // 1. 암묵적으로 인스턴스가 생성되고 this에 바인딩된다.
-  
+
   // 2. this에 바인딩되어 있는 인스턴스를 초기화한다.
   this.radius = radius;
   this.getDiameter = function () {
@@ -4077,18 +4077,18 @@ function Circle(radius) {
 ```
 
 3. **인스턴스 반환**
-생성자 함수 내부의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
+   생성자 함수 내부의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
 
 ```js
 function Circle(radius) {
   // 1. 암묵적으로 인스턴스가 생성되고 this에 바인딩된다.
-  
+
   // 2. this에 바인딩되어 있는 인스턴스를 초기화한다.
   this.radius = radius;
   this.getDiameter = function () {
     return 2 * this.radius;
   };
-  
+
   // 3. 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
 }
 
@@ -4102,13 +4102,13 @@ console.log(circle); // Circle {radius: 1, getDiameter: f}
 ```js
 function Circle(radius) {
   // 1. 암묵적으로 인스턴스가 생성되고 this에 바인딩된다.
-  
+
   // 2. this에 바인딩되어 있는 인스턴스를 초기화한다.
   this.radius = radius;
   this.getDiameter = function () {
     return 2 * this.radius;
   };
-  
+
   // 3. 암묵적으로 this를 반환한다.
   // 명시적으로 객체를 반환하면 암묵적인 this 반환이 무시된다.
   return {};
@@ -4124,13 +4124,13 @@ console.log(circle); // {}
 ```js
 function Circle(radius) {
   // 1. 암묵적으로 인스턴스가 생성되고 this에 바인딩된다.
-  
+
   // 2. this에 바인딩되어 있는 인스턴스를 초기화한다.
   this.radius = radius;
   this.getDiameter = function () {
     return 2 * this.radius;
   };
-  
+
   // 3. 암묵적으로 this를 반환한다.
   // 명시적으로 원시 값을 반환하면 원시 값 반환은 무시되고 암묵적으로 this가 반환된다.
   return 100;
@@ -4158,7 +4158,7 @@ foo.prop = 10;
 
 // 함수는 객체이므로 메서드를 소유할 수 있다.
 foo.method = function () {
-console.log(this.prop);
+  console.log(this.prop);
 };
 
 foo.method(); // 10
@@ -4168,8 +4168,8 @@ foo.method(); // 10
 
 함수가 일반 함수로서 호출되면 함수 객체의 내부 메서드 [[Call]]이 호출되고 new 연산자와 함께 생성자 함수로서 호출되면 내부 메서드 [[Construct]]가 호출된다.
 
-```js 
-function foo () {}
+```js
+function foo() {}
 
 // 일반적인 함수로서 호출: [[Call]]이 호출
 foo();
@@ -4200,7 +4200,7 @@ function foo() {}
 const bar = function () {};
 // 프로퍼티 x의 값으로 할당된 것은 일반 함수로 정의된 함수다. 이는 메서드로 인정하지 않는다.
 const baz = {
-  x: function() {}
+  x: function () {},
 };
 
 // 일반 함수로 정의된 함수만이 constructor다.
@@ -4215,7 +4215,7 @@ new arrow(); // TypeErrorL arrow is not a constructor
 
 // 메서드 정의: ES6의 메서드 축약 표현만 메서드로 인정한다.
 const obk = {
-  x() {}
+  x() {},
 };
 
 new obj.x(); // TypeError: obj.x is not a constructor
@@ -4244,7 +4244,7 @@ new obj.x(); // TypeError: obj.x is not a constructor
 자바스크립트의 함수는 다음 예제와 같이 위의 조건을 모두 만족하므로 일급 객체다.
 
 ```js
-// 1. 함수는 무명의 리털로 생성할 수 있다. 
+// 1. 함수는 무명의 리털로 생성할 수 있다.
 // 2. 함수는 변수에 저장할 수 있다.
 // 런타임(할당 단계)에 함수 리터럴이 평가되어 함수 객체가 생성되고 변수에 할당된다.
 const increase = function (num) {
@@ -4262,7 +4262,7 @@ const auxs = { increase, decrease };
 // 4. 함수의 반환값으로 사용할 수 있다.
 function makeCounter(aux) {
   let num = 0;
-  
+
   return function () {
     num = aux(num);
     return num;
@@ -4281,7 +4281,7 @@ console.log(decreaser()); // 2
 
 함수가 일급 객체라는 것은 함수를 객체와 동일하게 사용할 수 있다는 의미다. 객체는 값이므로 함수는 값과 동일하게 취급할 수 있다. 따라서 함수는 값을 사용할 수 있는 곳(변수 할당문, 객체의 프로퍼티 값, 배열의 요소, 함수 호출의 인수, 함수 반환문)이라면 어디서든지 리터럴로 정의할 수 있으며 런타임에 함수 객체로 평가된다.
 
-일급 객체로서 함수가 가지는 가장 큰 특징은 일반 객체와 같이 함수의 매개변수에 전달할 수 있으며, 함수의 반환값으로 사용할 수도 있다는 것이다. 이는 함수형 프로그래밍을 가능케 하는 자바스크립트의 장점 중 하나다. 
+일급 객체로서 함수가 가지는 가장 큰 특징은 일반 객체와 같이 함수의 매개변수에 전달할 수 있으며, 함수의 반환값으로 사용할 수도 있다는 것이다. 이는 함수형 프로그래밍을 가능케 하는 자바스크립트의 장점 중 하나다.
 
 함수는 객체이지만 일반 객체와는 차이가 있다. 일반 객체는 호출할 수 없지만 함수 객체는 호출할 수 있고, 일반 객체에는 없는 함수 고유의 프로퍼티를 소유한다.
 
@@ -4301,5 +4301,113 @@ console.dir(square);
 
 ![](https://images.velog.io/images/hang_kem_0531/post/d65b0ff8-3873-446a-b409-373f8027b04a/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.jpg)
 
+square 함수의 모든 프로퍼티의 프로퍼티 어트리뷰트를 Object.getOwnPropertyDescriptors 메서드로 확인해 보면 다음과 같다.
 
+```js
+function square(number) {
+  return number * number;
+}
 
+console.log(Object.getOwnPropertyDescriptors(square));
+/*
+{
+  length: {value: 1, writable: false, enumerable: false, configurable: true},
+  name: {value: "square", writable: false, enumerable: false, configurable: true},
+  arguments: {value: null, writable: false, enumerable: false, configurable: false},
+  caller: {value: null, writable: false, enumerable: false, configurable: false},
+  prototype: {value: {...}, writable: true, enumerable: false, configurable: false}
+}
+*/
+
+// __proto__는 square 함수의 프로퍼티가 아니다.
+console.log(Object.getOwnPropertyDescriptor(square, "__proto__")); // undefined
+
+// __proto__는 Object.prototype 객체의 접근자 프로퍼티다.
+// square 함수는 Object.prototype 객체로부터 __proto__ 접근자 프로퍼티를 상속받는다.
+console.log(Object.getOwnPropertyDescriptor(Object.prototype, "__proto__"));
+// {get: ƒ, set: ƒ, enumerable: false, configurable: true}
+```
+
+이처럼 arguments, caller, length, name, prototype 프로퍼티는 모두 함수 객체의 데이터 프로퍼티다. 이들 프로퍼티는 일반 객체에는 없는 함수 객체 고유의 프로퍼티다. 하지만 `__proto__`는 접근자 프로퍼티이며, 함수 객체 고유의 프로퍼티가 아니라 Object.prototype 객체의 프로퍼티를 상속받은 것을 알 수 있다. Object.prototype 객체의 프로퍼티는 모든 객체가 상속받아 사용할 수 있다. 함수 객체의 프로퍼티에 대해 하나씩 살펴보도록 하자.
+
+<h4> arguments 프로퍼티 </h4>
+
+함수 객체의 arguments 프로퍼티 값은 arguments 객체다. arguments 객체는 함수 호출 시 전달된 인수들의 정보를 담고 있는 순회 가능한 유사 배열 객체이며, 함수 내부에서 지역 변수처럼 사용된다. 즉, 함수 외부에서는 참조할 수 없다.
+
+자바스크립트는 함수의 매개변수와 인수의 개수가 일치하는지 확인하지 않기 때문에, 함수 호출 시 매개변수 개수만큼 인수를 전달하지 않아도 에러가 발생하지 않는다.
+
+```js
+function multiply(x, y) {
+  console.log(arguments);
+  return x * y;
+}
+
+console.log(multiply()); // NaN
+console.log(multiply(1)); // NaN
+console.log(multiply(1, 2)); // 2
+console.log(multiply(1, 2, 3)); // 2
+```
+
+선언된 매개변수의 개수보다 인수를 적게 전달했을 경우, 인수가 전달되지 않은 매개변수는 undefined로 초기화된 상태를 유지한다. 매개변수의 개수보다 인수를 더 많이 전달한 경우, 초과된 인수는 무시된다. 그렇다고 초과된 인수가 그냥 버려지는 것은 아니다. 모든 인수는 암묵적으로 arguments 객체의 프로퍼티로 보관된다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/84928aa6-49fe-4bd7-8445-2fa517832158/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.jpg)
+
+arguments 객체는 인수를 프로퍼티 값으로 소유하며 프로퍼티 키는 인수의 순서를 나타낸다. arguments 객체의 callee 프로퍼티는 호출되어 arguments 객체를 생성한 함수, 즉 함수 자신을 가리키고 arguments 객체의 length 프로퍼티는 인수의 개수를 가리킨다.
+
+선언된 매개변수의 개수와 함수를 호출할 때 전달하는 인수의 개수를 확인하지 않는 자바스크립트의 특성 때문에 함수가 호출되면 인수 개수를 확인하고 이에 따라 함수의 동작을 달리 정의할 필요가 있을 수 있다. 이때 유용하게 사용되는 것이 arguments 객체다.
+
+<h4> length 프로퍼티 </h4>
+
+함수 객체의 length 프로퍼티는 함수를 정의할 때 선언한 매개변수의 개수를 가리킨다.
+
+```js
+function foo() {}
+console.log(foo.length); // 0
+
+function bar(x) {
+  return x;
+}
+console.log(bar.length); // 1
+
+function baz(x, y) {
+  return x * y;
+}
+console.log(baz.length); // 2
+```
+
+arguments 객체의 length 프로퍼티와 함수 객체의 length 프로퍼티의 값은 arguments 의 프로퍼티는 인자의 개수를 가리키고, 함수의 프로퍼티는 매개변수의 개수를 가리키기 떄문에 다를 수 있으므로 주의해야 한다.
+
+<h4> name 프로퍼티 </h4>
+
+함수 객체의 name 프로퍼티는 함수 이름을 나타낸다.
+
+```js
+// 기명 함수 표현식
+var namedFunc = function foo() {};
+console.log(namedFunc.name); // foo
+
+// 익명 함수 표현식
+var anonymousFunc = function () {};
+// ES6 : name 프로퍼티는 함수 객체를 가리키는 변수 이름을 값으로 갖는다.
+console.log(anonymousFunc.name); // anonymousFunc
+
+// 함수 선언문
+function bar() {}
+console.log(bar.name); // bar
+```
+
+함수 이름과 함수 객체를 가리키는 식별자는 의미가 다르다. 함수를 호출할 때는 함수 이름이 아닌 함수 객체를 가리키는 식별자로 호출한다.
+
+<h4> prototype 프로퍼티 </h4>
+
+prototype 프로퍼티는 생성자 함수로 호출할 수 있는 함수 객체, 즉 constructor 만이 소유하는 프로퍼티다. 일반 객체와 생성자 함수로 호출할 수 없는 non-constructor에는 prototype 프로퍼티가 없다.
+
+```js
+// 함수 객체는 prototype 프로퍼티를 소유한다.
+(function () {}.hasOwnProperty("prototype")); // true
+
+// 일반 객체는 prototype 프로퍼티를 소유하지 않는다.
+({}.hasOwnProperty("prototype")); // false
+```
+
+prototype 프로퍼티는 함수가 객체를 생성하는 생성자 함수로 호출될 때 생성자 함수가 생성할 인스턴스의 프로토타입 객체를 가리킨다.
