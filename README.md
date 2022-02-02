@@ -4561,3 +4561,28 @@ const person = { name: "Lee" };
 ```
 
 ![](https://images.velog.io/images/hang_kem_0531/post/a4a969aa-bb4d-4de9-800a-084d535b8b37/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.jpg)
+
+이는 `__proto__` 접근자 프로퍼티를 통해 person 객체의 [[Prototype]] 내부 슬롯이 가리키는 객체인 Object.prototype에 접근한 결과를 크롬 브라우저가 콘솔에 표시한 것이다. 이처럼 모든 객체는 `__proto__` 접근자 프로퍼티를 통해 프로토타입을 가리키는 [[Prototype]] 내부 슬롯에 접근할 수 있다.
+
+**`__proto__`는 접근자 프로퍼티다.**
+
+내부 슬롯은 프로퍼티가 아니다. 따라서 자바스크립트는 원칙적으로 내부 슬롯과 내부 메서드에 직접적으로 접근하거나 호출할 수 있는 방법을 제공하지 않는다. 단, 일부 슬롯과 내부 메서드에 한하여 간접적으로 접근할 수 있는 수단을 제공하기는 한다. [[Prototype]] 내부 슬롯에도 직접 접근할 수 없으며 `__proto__` 접근자 프로퍼티를 통해 간접적으로 프로토타입에 접근할 수 있다.
+
+접근자 프로퍼티는 자체적으로는 값을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수(accessor function), 즉 [[Get]], [[Set]] 프로퍼티 어트리뷰트로 구성된 프로퍼티다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/3052f254-e05c-4f5f-8e48-d752d4755624/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.jpg)
+
+Object.prototype의 접근자 프로퍼티인 `__proto__`는 getter/setter 함수라고 부르는 접근자 함수를 통해 [[Prototype]] 내부 슬롯의 값, 즉 프로토타입을 취득하거나 할당한다. `__proto__` 접근자 프로퍼티를 통해 프로토타입에 접근하면 내부적으로 `__proto__`의 getter 함수인 [[Get]]이 호출된다. `__proto__` 접근자 프로퍼티를 통해 새로운 프로토타입을 할당하면 setter 함수인 [[Set]]이 호출된다.
+
+```js
+const obj = {};
+const parent = { x: 1 };
+
+// getter 함수인 get __proto__가 호출되어 obj 객체의 프로토타입을 취득
+obj.__proto__;
+
+// setter 함수인 set __proto__가 호출되어 obj 객체의 프로토타입을 교체
+obj.__proto__ = parent;
+
+console.log(obj.x); // 1
+```
