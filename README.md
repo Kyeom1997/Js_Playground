@@ -4604,3 +4604,52 @@ console.log(Object.getOwnPropertyDescriptor(Object.prototype, "__proto__"));
 // 모든 객체는 Object.prototype의 접근자 프로퍼티 __proto__를 상속받아 사용할 수 있다.
 console.log({}.__proto__ === Object.prototype); // true
 ```
+
+**`__proto__` 접근자 프로퍼티를 통해 프로토타입에 접근하는 이유**
+
+[[Prototype]] 내부 슬롯의 값, 즉 프로토타입에 접근하기 위해 접근자 프로퍼티를 사용하는 이유는 상호 참조에 의해 프로토타입 체인이 생성되는 것을 방지하기 위해서다.
+
+```js
+const parent = {};
+const child = {};
+
+// child의 프로토타입을 parent로 설정
+child.__proto__ = parent;
+// parent의 프로토타입을 child로 설정
+parent.__proto__ = child; // TypeError: Cyclic __proto__ value
+```
+
+위 예제에서는 parent 객체를 child 객체의 프로토타입으로 설정한 후, child 객체를 parent 객체의 프로토타입으로 설정했다. 이러한 코드가 에러 없이 정상적으로 처리되면 서로가 자신의 프로토타입이 되는 비정상적인 프로토타입 체인이 만들어지기 때문에 에러를 발생시킨다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/41c3c1ef-8e45-4ee1-9c17-663e78e84ed0/image.png)
+
+프로토타입 체인은 단방향 링크드 리스트로 구현되어야 한다. 즉, 프로퍼티 검색 방향이 한쪽 방향으로만 흘러가야한다. 순환 참조하는 프로토타입 체인이 만들어지면 프로토타입 체인 종점이 존재하지 않기 때문에 프로토타입 체인에서 프로퍼티를 검색할 때 무한 루프에 빠진다.
+
+**`__proto__` 접근자 프로퍼티를 코드 내에서 직접 사용하는 것은 권장하지 않는다.**
+
+코드 내에서 `__proto__` 접근자 프로퍼티를 직접 사용하는 것은 권장하지 않는다. 모든 객체가 `__proto__` 접근자 프로퍼티를 사용할 수 있는 것은 아니기 때문이다. 직접 상속을 통해 다음과 같이 Object.prototype을 상속받지 않는 객체를 생성할 수도 있기 때문에 `__proto__` 접근자 프로퍼티를 사용할 수 없는 경우가 있다.
+
+```js
+// obj는 프로토타입 체인의 종점이다. 따라서 Object.__proto__를 상속받을 수 없다.
+const obj = Object.create(null);
+
+// obj는 Object.__proto__를 상속받을 수 없다.
+console.log(obj.__proto__); // undefined
+
+// 따라서 __proto__보다 Object.getPrototypeOf 메서드를 사용하는 편이 좋다.
+console.log(Object.getPrototypeOf(obj)); // null
+```
+
+따라서 `__proto__` 접근자 프로퍼티 대신 프로토타입의 참조를 취득하고 싶은 경우에는 Object.getPrototypeOf 메서드를 사용하고, 프로토타입을 교체하고 싶은 경우에는 Object.setPrototypeOf 메서드를 사용할 것을 권장한다.
+
+```js
+const obj = {};
+const parent = { x: 1 };
+
+// obj 객체의 프로토타입을 취득
+Object.getPrototypeOf(obj); // obj.__proto__;
+// obj 객체의 프로토타입을 교체
+Object.setPrototypeOf(obj, parent); // obj.__proto__ = parent;
+
+console.log(obj.x); // 1
+```
