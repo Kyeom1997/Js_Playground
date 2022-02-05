@@ -4653,3 +4653,72 @@ Object.setPrototypeOf(obj, parent); // obj.__proto__ = parent;
 
 console.log(obj.x); // 1
 ```
+
+<h4> 함수 객체의 prototype 프로퍼티 </h4>
+
+**함수 객체만이 소유하는 prototype 프로퍼티는 생성자 함수가 생성할 인스턴스의 프로토타입을 가리킨다.**
+
+```js
+// 함수 객체는 prototype 프로퍼티를 소유한다.
+(function () {}.hasOwnProperty("prototype")); // true
+
+// 일반 객체는 prototype 프로퍼티를 소유하지 않는다.
+({}.hasOwnProperty("prototype")); // false
+```
+
+prototype 프로퍼티는 생성자 함수가 생성할 객체(인스턴스)의 프로토타입을 가리킨다. 따라서 생성자 함수로서 호출할 수 없는 함수, 즉 non-constructor인 화살표 함수와 ES6 메서드 축약 표현으로 정의한 메서드는 prototype 프로퍼티를 소유하지 않으며 프로토타입도 생성하지 않는다.
+
+```js
+// 화살표 함수는 non-constructor다.
+const Person = (name) => {
+  this.name = name;
+};
+
+// non-constructor는 prototype 프로퍼티를 소유하지 않는다.
+console.log(Person.hasOwnProperty("prototype")); // false
+
+// non-constructor는 프로토타입을 생성하지 않는다.
+console.log(Person.prototype); // undefined
+
+// ES6의 메서드 축약 표현으로 정의한 메서드는 non-constructor다.
+const obj = {
+  foo() {},
+};
+
+console.log(obj.foo.hasOwnProperty("prototype")); // false
+console.log(obj.foo.prototype); // undefined
+```
+
+**모든 객체가 가지고 있는(엄밀히 말하면 Object.prototype으로부터 상속받은) **proto** 접근자 프로퍼티와 함수 객체만이 가지고 있는 prototype 프로퍼티는 결국 동일한 프로토타입을 가리킨다.** 하지만 이들 프로퍼티를 사용하는 주체가 다르다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/477e344b-3485-4f27-a3de-f113a02d16e9/image.png)
+
+```js
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+const me = new Person("Kyeom");
+
+// 결국 Person.prototype과 me.__proto__는 결국 동일한 프로토타입을 가리킨다.
+console.log(Person.prototype === me.__proto__); // true
+```
+
+<h4> 프로토타입의 constructor 프로퍼티와 생성자 함수 </h4>
+
+모든 프로토타입은 constructor 프로퍼티를 갖는다. 이 constructor 프로퍼티는 prototype 프로퍼티로 자신을 참조하고 있는 생성자 함수를 가리킨다. 이 연결은 생성자 함수가 생성될 때, 즉 함수 객체가 생성될 때 이뤄진다.
+
+```js
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+const me = new Person("Kyeom");
+
+// me 객체의 생성자 함수는 Person이다.
+console.log(me.constructor === Person); // true
+```
+
+위 예제에서 Person 생성자 함수는 me 객체를 생성했다. 이때 me 객체는 프로토타입의 constructor 프로퍼티를 통해 생성자 함수와 연결된다. me 객체에는 constructor 프로퍼티가 없지만 me 객체의 프로토타입인 Person.prototype에는 constructor 프로퍼티가 있다. 따라서 me 객체는 프로토타입인 Person.prototype의 constructor 프로퍼티를 상속받아 사용할 수 있다.
