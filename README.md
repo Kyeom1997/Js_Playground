@@ -5078,3 +5078,124 @@ console.log(typeof str); // string
 이때 문자열 래퍼 객체인 String 생성자 함수의 인스턴스는 String.prototype의 메서드를 상속받아 사용할 수 있다.
 
 그 후 래퍼 객체의 처리가 종료되면 래퍼 객체의 [[StringData]] 내부 슬롯에 할당된 원시값으로 원래의 상태, 즉 식별자가 원시값을 갖도록 되돌리고 래퍼 객체는 가비지 컬렉션의 대상이 된다.
+
+```js
+const num = 1.5;
+
+// 원시 타입인 숫자가 래퍼 객체인 Number 객체로 변환된다.
+console.log(num.toFixed()); // 2
+
+// 래퍼 객체로 프로퍼티에 접근하거나 메서드를 호출한 후, 다시 원시값으로 되돌린다.
+console.log(typeof num, num); // number 1.5
+```
+
+불리언 값도 문자열이나 숫자와 마찬가지이지만 불리언 값으로 메서드를 호출하는 경우는 없으므로 그다지 유용하지는 않다.
+
+이처럼 문자열, 숫자, 불리언, 심벌은 암묵적으로 생성되는 래퍼 객체에 의해 마치 객체처럼 사용되며, 표준 빌트인 객체인 String, Number, Boolean, Symbol의 프로토타입 메서드 또는 프로퍼티를 참조할 수 있다. 따라서 String, Number, Boolean 생성자 함수를 new 연산자와 함께 호출하여 문자열, 숫자, 불리언 인스턴스를 생성할 필요가 없으며 권장하지도 않는다.
+
+문자열, 숫자, 불리언, 심벌 이외의 원시값, 즉 null과 undefined는 래퍼 객체를 생성하지 않는다. 따라서 null과 undefined 값을 객체처럼 사용하면 에러가 발생한다.
+
+---
+
+<h3> 전역 객체 </h3>
+
+전역 객체는 코드가 실행되기 이전 단계에 자바스크립트 엔진에 의해 어떤 객체보다도 먼저 생성되는 특수한 객체이며, 어떤 객체에도 속하지 않은 최상위 객체다.
+
+전역 객체는 자바스크립트 환경에 따라 지칭하는 이름이 제각각이다. 브라우저 환경에서는 window(또는 self, this, frames)가 전역 객체를 가리키지만 Node.js 환경에서는 global이 전역 객체를 가리킨다.
+
+전역 객체는 표준 빌트인 객체(Object, String, Number, Function, Array 등)와 환경에 따란 호스트 객체(클라이언트 Web API 또는 Node.js의 호스트 API), 그리고 var 키워드로 선언한 전역 변수와 전역 함수를 프로퍼티로 갖는다.
+
+즉, 전역 객체는 계층적 구조상 어떤 객체에도 속하지 않은 모든 빌트인 객체의 최상위 객체다. 단, 프로토타입 상속 관계상에서 최상위 객체라는 의미는 아니며, 어떤 객체의 프로퍼티도 아니며 객체의 계층적 구조상 표준 빌트인 객체와 호스트 객체를 프로퍼티로 소유한다는 것을 말한다.
+
+전역 객체의 특징은 다음과 같다.
+
+- 전역 객체는 개발자가 의도적으로 생성할 수 없다. 즉, 전역 객체를 생성할 수 있는 생성자 함수가 제공되지 않는다.
+
+- 전역 객체의 프로퍼티를 참조할 때 window(또는 global)를 생략할 수 있다.
+
+```js
+// 문자열 'F'를 16진수로 해석하여 10진수로 변환하여 반환한다.
+window.parseInt("F", 16); // 15
+
+// window.parseInt는 parseInt로 호출할 수 있다.
+parseInt("F", 16); // 15
+
+window.parseInt === parseInt; // true
+```
+
+- 전역 객체는 Object, String, Number, Boolean, Function, Array, RegExp, Date, Math, Promise 같은 모든 표준 빌트인 객체를 프로퍼티로 가지고 있다.
+
+- 자바스크립트 실행 환경에 따라 추가적으로 프로퍼티와 메서드를 갖는다. 브라우저 환경에서는 DOM, BOM, Canvas, XMLHttpRequest, fetch, requestAnimationFrame, SVG, Web Storage, Web Component, Web Worker 같은 클라이언트 사이드 Web API를 호스트 객체로 제공하고 Node.js 환경에서는 Node.js 고유의 API를 호스트 객체로 제공한다.
+
+- var 키워드로 선언한 전역 변수와 선언하지 않은 변수에 값을 할당한 암묵적 전역, 그리고 전역 함수는 전역 객체의 프로퍼티가 된다.
+
+```js
+// var 키워드로 선언한 전역 변수
+var foo = 1;
+console.log(window.foo); // 1
+
+// 선언하지 않은 변수에 값을 암묵적 전역. bar는 전역 변수가 아니라 전역 객체의 프로퍼티다.
+bar = 2; // window.bar = 2
+console.log(window.bar); // 2
+
+// 전역 함수
+function baz() {
+  return 3;
+}
+console.log(window.baz()); // 3
+```
+
+- let이나 const 키워드로 선언한 전역 변수는 전역 객체의 프로퍼티가 아니다. 즉, window.foo와 같이 접근할 수 없다. let이나 const 키워드로 선언한 전역 변수는 보이지 않는 개념적인 블록(전역 렉시컬 환경의 선언적 환경 레코드) 내에 존재하게 된다.
+
+```js
+let foo = 123;
+console.log(window.foo); // undefined
+```
+
+- 브라우저 환경의 모든 자바스크립트 코드는 하나의 전역 객체 window를 공유한다. 여러 개의 script 태그를 통해 자바스크립트 코드를 분리해도 하나의 전역 객체 window를 공유하는 것은 변함이 없다. 이는 분리되어 있는 자바스크립트 코드가 하나의 전역을 공유한다는 의미다.
+
+전역 객체는 몇 가지 프로퍼티와 메서드를 가지고 있다. 전역 객체의 프로퍼티와 메서드는 전역 객체를 가리키는 식별자, 즉 window나 global을 생략하여 참조/호출할 수 있으므로 전역 변수와 전역 함수처럼 사용할 수 있다.
+
+<h4> 빌트인 전역 프로퍼티 </h4>
+
+빌트인 전역 프로퍼티는 전역 객체의 프로퍼티를 의미한다. 주로 애플리케이션 전역에서 사용하는 값을 제공한다.
+
+**Infinity**
+
+Infinity 프로퍼티는 무한대를 나타내는 숫자값 Infinity를 갖는다.
+
+```js
+// 전역 프로퍼티는 window를 생략하고 참조할 수 있다.
+console.log(window.Infinity === Infinity); // true
+
+// 양의 무한대
+console.log(3 / 0); // Infinity
+// 음의 무한대
+console.log(-3 / 0); // -Infinity
+// Infinity는 숫자값이다.
+console.log(typeof Infinity); // number
+```
+
+**NaN**
+
+NaN 프로퍼티는 숫자가 아님(Not-a-Number)을 나타내는 숫자값 NaN을 갖는다. NaN 프로퍼티는 Number.NaN 프로퍼티와 같다.
+
+```js
+console.log(window.NaN); // NaN
+
+console.log(Number("xyz")); // NaN
+console.log(1 * "string"); // NaN
+console.log(typeof NaN); // number
+```
+
+**undefined**
+
+undefined 프로퍼티는 원시 타입 undefined를 값으로 갖는다.
+
+<h4> 빌트인 전역 함수 </h4>
+
+빌트인 전역 함수는 애플리케이션 전역에서 호출할 수 있는 빌트인 함수로서 전역 객체의 메서드다.
+
+**eval**
+
+eval 함수는 자바스크립트 코드를 나타내는 문자열을 인수로 전달받는다. 전달받은 문자열 코드가 표현식이라면 eval 함수는 문자열 코드를 런타임에 평가하여 값을 생성하고, 전달받은 인수가 표현식이 아닌 문이라면 eval 함수는 문자열 코드를 런타임에 실행한다. 문자열 코드가 여러 개의 문으로 이루어져 있다면 모든 문을 실행한다.
