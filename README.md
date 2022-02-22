@@ -6591,3 +6591,107 @@ console.log(counter(increase)); // 2
 console.log(counter(decrease)); // 1
 console.log(counter(decrease)); // 0
 ```
+
+---
+
+<h3> 캡슐화와 정보 은닉 </h3>
+
+캡슐화(Encapsulation)는 객체의 상태를 나타내는 프로퍼티와 프로퍼티를 참조하고 조작할 수 있는 동작인 메서드를 하나로 묶는 것을 말한다. 캡슐화는 객체의 특정 프로퍼티나 메서드를 감출 목적으로 사용하기도 하는데 이를 정보 은닉이라 한다.
+
+정보 은닉은 외부에 공개할 필요가 없는 구현의 일부를 외부에 공개되지 않도록 감추어 적절치 못한 접근으로부터 객체의 상태가 변경되는 것을 방지해 정보를 보호하고, 객체 간의 상호 의존성, 즉 결합도를 낮추는 효과가 있다.
+
+대부분의 객체지향 프로그래밍 언어는 클래스를 정의하고 그 클래스를 구성하는 멤버(프로퍼티와 메서드)에 대하여 public, private, protected 같은 접근 제한자를 선언하여 공개 범위를 한정할 수 있다. public으로 선언된 프로퍼티와 메서드는 클래스 외부에서 참조할 수 있지만 private로 선언된 경우는 클래스 외부에서 참조할 수 없다.
+
+자바스크립트는 public, private, protected 같은 접근 제한자를 제공하지 않는다. 따라서 자바스크립트 객체의 모든 프로퍼티와 메서드는 기본적으로 외부에 공개되어 있다. 즉, 객체의 모든 프로퍼티와 메서드는 기본적으로 public 하다.
+
+```js
+function Person(name, age) {
+  this.name = name; // public
+  let _age = age; // private
+
+  // 인스턴스 메서드
+  this.sayHi = function () {
+    console.log(`Hi! My name is ${this.name}. I am ${_age}. `);
+  };
+}
+
+const me = new Person('Kyeom', 26);
+me.sayHi(): // Hi! My name is Kyeom. I am 26.
+console.log(me.name); // Kyeom
+console.log(me._age); // undefined
+
+const you = new Person('Lee', 20);
+you.sayHi(); // Hi! My name is Lee. I am 20.
+console.log(you.name); // Lee
+console.log(you._age); // undefined
+```
+
+위 예제의 name 프로퍼티는 현재 외부로 공개되어 있어서 자유롭게 참조하거나 변경할 수 있다. 즉, name 프로퍼티는 public하다. 하지만 \_age 변수는 Person 생성자 함수의 지역 변수이므로 Person 생성자 함수 외부에서 참조하거나 변경할 수 없다. 즉, \_age 변수는 private하다.
+
+하지만 위 예제의 sayHi 메서드는 인스턴스 메서드이므로 Person 객체가 생성될 때마다 중복 생성된다. sayHi 메서드를 프로토타입 메서드로 변경하여 sayHi 메서드의 중복 생성을 방지해 보자.
+
+```js
+function Person(name, age) {
+  this.name = name; // public
+  let _age = age; // private
+}
+
+// 프로토타입 메서드
+Person.prototype.sayHi = function () {
+  // Person 생성자 함수의 지역 변수 _age를 참조할 수 없다.
+  console.log(`Hi! My name is ${this.name}. I am ${_age}.`);
+};
+```
+
+이때 Person.prototype.sayHi 메서드 내에서 Person 생성자 함수의 지역 변수 \_age를 참조할 수 없는 문제가 발생한다. 따라서 다음과 같이 즉시 실행 함수를 사용하여 Person 생성자 함수와 Person.prototype.sayHi 메서드를 하나의 함수 내에 모아 보자.
+
+```js
+const Person = (function () {
+  let _age = 0; // private
+
+  // 생성자 함수
+  function Person(name, age) {
+    this.name = name; // public
+    _age = age;
+  }
+
+  // 프로로타입 메서드
+  Person.prototype.sayHi = function () {
+    console.log(`Hi! My name is ${this.name}. I am ${_age}. `);
+  };
+
+  // 생성자 함수를 반환
+  return Person;
+}());
+
+const me = new Person('Kyeom', 26);
+me.sayHi(): // Hi! My name is Kyeom. I am 26.
+console.log(me.name); // Kyeom
+console.log(me._age); // undefined
+
+const you = new Person('Lee', 20);
+you.sayHi(); // Hi! My name is Lee. I am 20.
+console.log(you.name); // Lee
+console.log(you._age); // undefined
+```
+
+위 패턴을 사용하면 public, private, protected 같은 접근 제한자를 제공하지 않는 자바스크립트에서도 정보 은닉이 가능한 것처럼 보인다. 즉시 실행 함수가 반환하는 Person 생성자 함수와 Person 생성자 함수의 인스턴스가 상속받아 호출할 Person.prototype.sayHi 메서드는 즉시 실행 함수가 종료된 이후 호출된다. 하지만 Person 생성자 함수와 sayHi 메서드는 이미 종료되어 소멸한 즉시 실행 함수의 지역 변수 \_age를 참조할 수 있는 클로저다.
+
+하지만 위 코드도 문제가 있다. Person 생성자 함수가 여러 개의 인스턴스를 생성할 경우 다음과 같이 \_age 변수의 상태가 유지되지 않는다는 것이다.
+
+```js
+const me = new Person("Kyeom", 26);
+me.sayHi(); // Hi! My name is Kyeom. I am 26.
+
+const you = new Person("Lee", 20);
+you.sayHi(); // Hi! My name is Lee. I am 20.
+
+// _age 변수 값이 변경된다
+me.sayHi(); // Hi! My name is Kyeom. I am 30.
+```
+
+이는 Person.prototype.sayHi 메서드가 단 한번 생성되는 클로저이기 때문에 발생하는 현상이다. Person.prototype.sayHi 메서드는 즉시 실행 함수가 호출될 때 생성된다. 이때 Person.prototype.sayHi 메서드는 자신의 상위 스코프인 즉시 실행 함수의 실행 컨텍스트의 렉시컬 환경의 참조를 [[Environment]]에 저장하여 기억한다. 따라서 Person 생성자 함수의 모든 인스턴스가 상속을 통해 호출할 수 있는 Person.prototype.sayHi 메서드의 상위 스코프는 어떤 인스턴스로 호출하더라도 하나의 동일한 상위 스코프를 사용하게 된다. 이러한 이유로 Person 생성자 함수가 여러 개의 인스턴스를 생성할 경우 위와 같이 \_age 변수의 상태가 유지되지 않는다.
+
+이처럼 자바스크립트는 정보 은닉을 완전하게 지원하지 않는다. 인스턴스 메서드를 사용한다면 자유 변수를 통해 private를 흉내 낼 수는 있지만 프로토타입 메서드를 사용하면 이마저도 불가능해진다. ES6의 Symbol 또는 WeakMap을 사용하여 private한 프로퍼티를 흉내 내기도 했으나 근본적인 해결책이 되지는 않는다.
+
+다행히도 현재, TC39 프로세스의 stage 3(candidate)에는 클래스에 private 필드를 정의할 수 있는 새로운 표준 사양이 제안되어 있다.
