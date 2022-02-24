@@ -6753,3 +6753,524 @@ ES6에서 도입된 클래스는 기존 프로토타입 기반 객체지향 프�
 생성자 함수와 클래스는 프로토타입 기반의 객체지향을 구현했다는 점에서 매우 유사하다. 하지만 클래스는 생성자 함수 기반의 객체 생성 방식보다 견고하고 명료하다. 특히 클래스의 extends와 super 키워드는 상속 관계 구현을 더욱 간결하고 명료하게 한다.
 
 따라서 클래스를 프로토타입 기반 객체 생성 패턴의 단순한 문법적 설탕이라고 보기보다는 **새로운 객체 생성 메커니즘**으로 보는 것이 좀 더 합당하다.
+
+---
+
+<h3> 클래스 정의 </h3>
+
+클래스는 class 키워드를 사용하여 정의한다. 클래스 이름은 생성자 함수와 마찬가지로 파스칼 케이스를 사용하는 것이 일반적이다. 파스칼 케이스를 사용하지 않아도 에러가 발생하지는 않는다.
+
+```js
+// 클래스 선언문
+class Person {}
+```
+
+일반적이지는 않지만 함수와 마찬가지로 표현식으로 클래스를 정의할 수도 있다. 이때 클래스는 함수와 마찬가지로 이름을 가질 수도 있고, 갖지 않을 수도 있다.
+
+```js
+// 익명 클래스 표현식
+const Person = class {};
+
+// 기명 클래스 표현식
+const Person = class MyClass {};
+```
+
+클래스를 표현식으로 정의할 수 있다는 것은 클래스가 값으로 사용할 수 있는 일급 객체라는 것을 의미한다. 즉, 클래스는 일급 객체로서 다음과 같은 특징을 갖는다.
+
+- 무명의 리터럴로 생성할 수 있다. 즉, 런타임에 생성이 가능하다.
+
+- 변수나 자료구조(객체, 배열 등)에 저장할 수 있다.
+
+- 함수의 매개변수에게 전달할 수 있다.
+
+- 함수의 반환값으로 사용할 수 있다.
+
+좀 더 자세히 말하자면 클래스는 함수다. 따라서 클래스는 값처럼 사용할 수 있는 일급 객체다. 이에 대해서는 차차 알아보도록 하자.
+
+클래스 몸체에는 0개 이상의 메서드만 정의할 수 있다. 클래스 몸체에서 정의할 수 있는 메서드는 constructor(생성자), 프로토타입 메서드, 정적 메서드의 세 가지가 있다.
+
+```js
+// 클래스 선언문
+class Person {
+  // 생성자
+  constructor(name) {
+    // 인스턴스 생성 및 초기화
+    this.name = name; // name 프로퍼티는 public하다.
+  }
+
+  // 프로토타입 메서드
+  sayHi() {
+    console.log(`Hi! My name is ${this.name}`);
+  }
+
+  // 정적 메서드
+  static sayHello() {
+    console.log("Hello!");
+  }
+}
+
+// 인스턴스 생성
+const me = new Person("Kyeom");
+
+// 인스턴스의 프로퍼티 참조
+console.log(me.name); // Kyeom
+// 프로토타입 메서드 호출
+me.sayHi(); // Hi! My name is Kyeom
+// 정적 메서드 호출
+Person.sayHello(); // Hello!
+```
+
+---
+
+<h3> 클래스 호이스팅 </h3>
+
+클래스는 함수로 평가된다.
+
+```js
+// 클래스 선언문
+class Person {}
+
+console.log(typeof Person); // function
+```
+
+클래스 선언문으로 정의한 클래스는 함수 선언문과 같이 소스코드 평가 과정, 즉 런타임 이전에 먼저 평가되어 함수 객체를 생성한다. 이때 클래스가 평가되어 생성된 함수 객체는 생성자 함수로서 호출할 수 있는 함수, 즉 constructor다. 생성자 함수로서 호출할 수 있는 함수는 함수 정의가 평가되어 함수 객체를 생성하는 시점에 프로토타입도 더불어 생성된다. 프로토타입과 생성자 함수는 단독으로 존재할 수 없고 언제나 쌍으로 존재하기 때문이다.
+
+단, 클래스는 클래스 정의 이전에 참조할 수 없다.
+
+```js
+console.log(Person);
+// ReferenceError: Cannot access 'Person' before initialization
+
+// 클래스 선언문
+class Person {}
+```
+
+클래스 선언문은 마치 호이스팅이 발생하지 않는 것처럼 보이나 그렇지 않다. 다음 예제를 살펴보자.
+
+```js
+const Person = "";
+
+{
+  // 호이스팅이 발생하지 않는다면 ''이 출력되어야 한다.
+  console.log(Person);
+  // ReferenceError: Cannot access 'Person' before initialization
+
+  // 클래스 선언문
+  class Person {}
+}
+```
+
+클래스 선언문도 변수 선언, 함수 정의와 마찬가지로 호이스팅이 발생한다. 단, 클래스는 let, const 키워드로 선언한 변수처럼 호이스팅된다. 따라서 클래스 선언문 이전에 일시적 사각지대에 빠지기 때문에 호이스팅이 발생하지 않는 것처럼 동작한다.
+
+var, let, const, function, function\*, class 키워드를 사용하여 선언된 모든 식별자는 호이스팅된다. 모든 선언문은 런타임 이전에 먼저 실행되기 때문이다.
+
+---
+
+<h3> 인스턴스 생성 </h3>
+
+클래스는 생성자 함수이며 new 연산자와 함께 호출되어 인스턴스를 생성한다.
+
+```js
+class Person {}
+
+// 인스턴스 생성
+const me = new Person();
+console.log(me); // Person {}
+```
+
+함수는 new 연산자의 사용 여부에 따라 일반 함수로 호출되거나 인스턴스 생성을 위한 생성자 함수로 호출되지만 클래스는 인스턴스를 생성하는 것이 유일한 존재 이유이므로 반드시 new 연산자와 함께 호출해야 한다.
+
+```js
+class Person {}
+
+// 클래스를 new 연산자 없이 호출하면 타입 에러가 발생한다.
+const me = Person();
+// TypeError: Class constructor Foo cannot be invoked without 'new'
+```
+
+클래스 표현식으로 정의된 클래스의 경우 다음 예제와 같이 클래스를 가리키는 식별자(Person)을 사용해 인스턴스를 생성하지 않고 기명 클래스 표현식의 클래스 이름(MyClass)을 사용해 인스턴스를 생성하면 에러가 발생한다.
+
+```js
+const Person = class MyClass {};
+
+// 함수 표현식과 마찬가지로 클래스를 가리키는 식별자로 인스턴스를 생성해야 한다.
+const me = new Person();
+
+// 클래스 이름 MyClass는 함수와 동일하게 클래스 몸체 내부에서만 유효한 식별자다.
+console.log(MyClass); // ReferenceError: MyClass is not defined
+
+const you = new MyClass(); // ReferenceError: MyClass is not defined
+```
+
+이는 기명 함수 표현식과 마찬가지로 클래스 표현식에서 사용한 클래스 이름은 외부 코드에서 접근 불가능하기 때문이다.
+
+---
+
+<h3> 메서드 </h3>
+
+클래스 몸체에는 0개 이상의 메서드만 선언할 수 있다. 클래스 몸체에서 정의할 수 있는 메서드는 constructor(생성자), 프로토타입 메서드, 정적 메서드의 세 가지가 있다.
+
+<h4> constructor </h4>
+
+constructor는 인스턴스를 생성하고 초기화하기 위한 특수한 메서드다. constructor는 이름을 변경할 수 없다.
+
+```js
+class Person {
+  // 생성자
+  constructor(name) {
+    // 인스턴스 생성 및 초기화
+    this.name = name;
+  }
+}
+```
+
+앞에서 살펴보았듯이 클래스는 인스턴스를 생성하기 위한 생성자 함수다.
+
+```js
+// 클래스는 함수다.
+console.log(typeof Person); // function
+console.dir(Person);
+```
+
+![](https://images.velog.io/images/hang_kem_0531/post/0eb0cd30-f567-474d-80f7-633f41202d86/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.png)
+
+이처럼 클래스는 평가되어 함수 객체가 된다. 클래스도 함수 객체 고유의 프로퍼티를 모두 갖고 있다. 함수와 동일하게 프로토타입과 연결되어 있으며 자신의 스코프 체인을 구성한다.
+
+모든 함수 객체가 가지고 있는 prototype 프로퍼티가 가리키는 프로토타입 객체의 constructor 프로퍼티는 클래스 자신을 가리키고 있다. 이는 클래스가 인스턴스를 생성하는 생성자 함수라는 것을 의미한다. 즉, new 연산자와 함께 클래스를 호출하면 클래스는 인스턴스를 생성한다.
+
+이번에는 클래스가 생성한 인스턴스의 내부를 들여다보자.
+
+```js
+// 인스턴스 생성
+const me = new Person("Kyeom");
+console.log(me);
+```
+
+![](https://images.velog.io/images/hang_kem_0531/post/156f0060-d423-4d95-8149-4a7ed6a2a832/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.png)
+
+Person 클래스의 constructor 내부에서 this에 추가한 name 프로퍼티가 클래스가 생성한 인스턴스의 프로퍼티로 추가된 것을 확인할 수 있다. 즉, 생성자 함수와 마찬가지로 constructor 내부에서 this에 추가한 프로퍼티는 인스턴스 프로퍼티가 된다. constructor 내부의 this는 생성자 함수와 마찬가지로 클래스가 생성한 인스턴스를 가리킨다.
+
+```js
+// 클래스
+class Person {
+  // 생성자
+  constructor(name) {
+    // 인스턴스 생성 및 초기화
+    this.name = name;
+  }
+}
+
+// 생성자 함수
+function Person(name) {
+  // 인스턴스 생성 및 초기화
+  this.name = name;
+}
+```
+
+그런데 흥미로운 것은 클래스가 평가되어 생성된 함수 객체나 클래스가 생성한 인스턴스 어디에도 constructor 메서드가 보이지 않는다는 것이다. 이는 클래스 몸체에 정의한 constructor가 단순한 메서드가 아니라는 것을 의미한다.
+
+constructor는 메서드로 해석되는 것이 아니라 클래스가 평가되어 생성한 함수 객체 코드의 일부가 된다. 다시 말해, 클래스 정의가 평가되면 constructor의 기술된 동작을 하는 함수 객체가 생성된다.
+
+constructor는 생성자 함수와 유사하지만 몇 가지 차이가 있다.
+
+constructor는 클래스 내에 최대 한 개만 존재할 수 있다. 만약 클래스가 2개 이상의 constructor를 포함하면 문법 에러가 발생한다.
+
+```js
+class Person {
+  constructor() {}
+  constructor() {}
+}
+// SyntaxError: A class may only have one constructor
+```
+
+constructor는 생략할 수 있다.
+
+```js
+class Person {}
+```
+
+constructor를 생략하면 클래스에 다음과 같이 빈 constructor가 암묵적으로 정의된다. constructor를 생략한 클래스는 빈 constructor에 의해 빈 객체를 생성한다.
+
+```js
+class Person {
+  // constructor는 생략하면 아래와 같이 빈 constructor가 암묵적으로 정의된다.
+  constructor() {}
+}
+
+// 빈 객체가 생성된다.
+const me = new Person();
+console.log(me); // Person {}
+```
+
+프로퍼티가 추가되어 초기화된 인스턴스를 생성하려면 constructor 내부에서 this에 인스턴스 프로퍼티를 추가한다.
+
+```js
+class Person {
+  constructor() {
+    // 고정값으로 인스턴스 초기화
+    this.name = "Kyeom";
+    this.address = "Seoul";
+  }
+}
+
+// 인스턴스 프로퍼티가 추가된다.
+const me = new Person();
+console.log(me); // Person {name: "Kyeom",  address: "Seoul"}
+```
+
+인스턴스를 생성할 떄 클래스 외부에서 인스턴스 프로퍼티의 초기값을 전달하려면 다음과 같이 constructor에 매개변수를 선언하고 인스턴스를 생성할 때 초기값을 전달한다. 이때 초기값은 constructor의 매개변수에게 전달된다.
+
+```js
+class Person {
+  constructor(name, address) {
+    // 인수로 인스턴스 초기화
+    this.name = name;
+    this.address = address;
+  }
+}
+
+// 인수로 초기값을 전달한다. 초기값은 constructor에 전달된다.
+const me = new Person("Kyeom", "Seoul");
+console.log(me); // Person {name: "Kyeom", address: "Seoul"}
+```
+
+이처럼 constructor 내에서는 인스턴스의 생성과 동시에 인스턴스 프로퍼티 추가를 통해 인스턴스의 초기화를 실행한다. 따라서 인스턴스를 초기화하려면 constructor를 생략해서는 안 된다.
+
+constructor는 별도의 반환문을 갖지 않아야 한다. 이는 new 연산자와 함께 클래스가 호출되면 생성자 함수와 동일하게 암묵적으로 this, 즉 인스턴스를 반환하기 때문이다.
+
+만약 this가 아닌 다른 객체를 명시적으로 반환하면 this, 즉 인스턴스가 반환되지 못하고 return 문에 명시한 객체가 반환된다.
+
+```js
+class Person {
+  constructor(name) {
+    this.name = name;
+
+    // 명시적으로 객체를 반환하면 암묵적인 this 반환이 무시된다.
+    return {};
+  }
+}
+
+// constructor에서 명시적으로 반환한 빈 객체가 반환된다.
+const me = new Person("Kyeom");
+console.log(me); // {}
+```
+
+하지만 명시적으로 원시값을 반환하면 원시값 반환은 무시되고 암묵적으로 this가 반환된다.
+
+```js
+class Person {
+  constructor(name) {
+    this.name = name;
+
+    // 명시적으로 원시값을 반환하면 원시값 반환은 무시되고 암묵적으로 this가 반환된다.
+    return 100;
+  }
+}
+
+const me = new Person("Kyeom");
+console.log(me); // Person { name: "Kyeom" }
+```
+
+이처럼 constructor 내부에서 명시적으로 this가 아닌 다른 값을 반환하는 것은 클래스의 기본 동작을 훼손한다. 따라서 constructor 내부에서 return 문을 반드시 생략해야 한다.
+
+<h4> 프로토타입 메서드 </h4>
+
+생성자 함수를 사용하여 인스턴스를 생성하는 경우 프로토타입 메서드를 생성하기 위해서는 다음과 같이 명시적으로 프로토타입에 메서드를 추가해야 한다.
+
+```js
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+// 프로토타입 메서드
+Person.prototype.sayHi = function () {
+  console.log(`Hi! My name is ${this.name}`);
+};
+
+const me = new Person("Kyeom");
+me.sayHi(); // Hi! My name is Kyeom
+```
+
+클래스 몸체에서 정의한 메서드는 생성자 함수에 의한 객체 생성 방식과는 다르게 클래스의 prototype 프로퍼티에 메서드를 추가하지 않아도 기본적으로 프로토타입 메서드가 된다.
+
+```js
+class Person {
+  // 생성자
+  constructor(name) {
+    // 인스턴스 생성 및 초기화
+    this.name = name;
+  }
+
+  // 프로토타입 메서드
+  sayHi() {
+    console.log(`Hi! My name is ${this.name}`);
+  }
+}
+
+const me = new Person("Kyeom");
+me.sayHi(); // Hi! My name is Kyeom
+```
+
+생성자 함수와 마찬가지로 클래스가 생성한 인스턴스는 프로토타입 체인의 일원이 된다.
+
+```js
+// me 객체의 프로토타입은 Person.prototype이다.
+Object.getPrototypeOf(me) === Person.prototype; // true
+me instanceof Person; // true
+
+// Person.prototype의 프로토타입은 Object.prototype이다.
+Object.getPrototypeOf(Person.prototype) === Object.prototype; // true
+me instanceof Object; // true
+
+// me 객체의 constructore는 Person 클래스다.
+me.constructor === Person; // true
+```
+
+이처럼 클래스 몸체에서 정의한 메서드는 인스턴스의 프로토타입에 존재하는 프로토타입 메서드가 된다. 인스턴스는 프로토타입 메서드를 상속받아 사용할 수 있다.
+
+프로토타입 체인은 기존의 모든 객체 생성 방식뿐만 아니라 클래스에 의해 생성된 인스턴스에도 동일하게 적용된다. 생성자 함수의 역할을 클래스가 할 뿐이다.
+
+결국 클래스는 생성자 함수와 같이 인스턴스를 생성하는 생성자 함수라고 볼 수 있다. 다시 말해, 클래스는 생성자 함수와 마찬가지로 프로토타입 기반의 객체 생성 메커니즘이다.
+
+<h4> 정적 메서드 </h4>
+
+정적 메서드는 인스턴스를 생성하지 않아도 호출할 수 있는 메서드를 말한다.
+
+생성자 함수의 경우 정적 메서드를 생성하기 위해서는 다음과 같이 명시적으로 생성자 함수에 메서드를 추가해야 한다.
+
+```js
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+// 정적 메서드
+person.sayHi = function () {
+  console.log("Hi!");
+};
+
+// 정적 메서드 호출
+person.sayHi(); // Hi!
+```
+
+클래스에서는 메서드에 static 키워드를 붙이면 정적 메서드(클래스 메서드)가 된다.
+
+```js
+class Person {
+  // 생성자
+  constructor(name) {
+    // 인스턴스 생성 및 초기화
+    this.name = name;
+  }
+
+  // 정적 메서드
+  static sayHi() {
+    console.log("Hi!");
+  }
+}
+```
+
+이처럼 정적 메서드는 클래스에 바인딩된 메서드가 된다. 클래스는 함수 객체로 평가되므로 자신의 프로퍼티/메서드를 소유할 수 있다. 클래스는 클래스 정의(클래스 선언문이나 클래스 표현식)가 평가되는 시점에 함수 객체가 되므로 인스턴스와 달리 별다른 생성 과정이 필요 없다. 따라서 정적 메서드는 클래스 정의 이후 인스턴스를 생성하지 않아도 호출할 수 있다.
+
+정적 메서드는 프로토타입 메서드처럼 인스턴스로 호출하지 않고 클래스로 호출한다.
+
+```js
+// 정적 메서드는 클래스로 호출한다.
+// 정적 메서드는 인스턴스 없이도 호출할 수 있다.
+Person.sayHi(); // Hi!
+```
+
+정적 메서드는 인스턴스로 호출할 수 없다. 정적 메서드가 바인딩된 클래스는 인스턴스의 프로토타입 체인상에 존재하지 않기 때문이다. 다시 말해, 인스턴스의 프로토타입 체인 상에는 클래스가 존재하지 않기 때문에 인스턴스로 클래스의 메서드를 상속받을 수 없다.
+
+```js
+// 인스턴스 생성
+const me = new Person("Kyeom");
+me.sayHi(); // TypeError: me.sayHi is not a function
+```
+
+<h4> 정적 메서드와 프로토타입 메서드의 차이 </h4>
+
+정적 메서드와 프로토타입 메서드는 무엇이 다르며, 무엇을 기준으로 구분하여 정의해야 할지 생각해 보자. 정적 메서드와 프로토타입 메서드의 차이는 다음과 같다.
+
+1. 정적 메서드와 프로토타입 메서드는 자신이 속해 있는 프로토타입 체인이 다르다.
+
+2. 정적 메서드는 클래스로 호출하고 프로토타입 메서드는 인스턴스로 호출한다.
+
+3. 정적 메서드는 인스턴스 프로퍼티를 참조할 수 없지만 프로토타입 메서드는 인스턴스 프로퍼티를 참조할 수 있다.
+
+다음 예제를 살펴보자.
+
+```js
+class Square {
+  // 정적 메서드
+  static area(width, length) {
+    return width * height;
+  }
+}
+
+console.log(Square.area(10, 10)); // 100
+```
+
+정적 메서드 area는 2개의 인수를 전달받아 면적을 계산한다. 이때 정적 메서드 area는 인스턴스 프로퍼티를 참조하지 않는다. 만약 인스턴스 프로퍼티를 참조해야 한다면 정적 메서드 대신 프로토타입 메서드를 사용해야 한다.
+
+```js
+class Square {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+
+  // 프로토타입 메서드
+  area() {
+    return this.width * this.height;
+  }
+}
+
+const square = new Square(10, 10);
+console.log(square.area()); // 100
+```
+
+메서드 내부의 this는 메서드를 소유한 객체가 아니라 메서드를 호출한 객체, 즉 메서드 이름 앞의 마침표(.) 연산자 앞에 기술한 객체에 바인딩된다.
+
+프로토타입 메서드는 인스턴스로 호출해야 하므로 프로토타입 메서드 내부의 this는 프로토타입 메서드를 호출한 인스턴스를 가리킨다. 위 예제의 경우 square 객체로 프로토타입 메서드 area를 호출했기 때문에 area 내부의 this는 square 객체를 가리킨다.
+
+정적 메서드는 클래스로 호출해야 하므로 정적 메서드 내부의 this는 인스턴스가 아닌 클래스를 가리킨다. 즉, 프로토타입 메서드와 정적 메서드 내부의 this 바인딩이 다르다.
+
+따라서 메서드 내부에서 인스턴스 프로퍼티를 참조할 필요가 있다면 this를 사용해야 하며, 이러한 경우 프로토타입 메서드로 정의해야 한다. 하지만 메서드 내부에서 인스턴스 프로퍼티를 참조해야 할 필요가 없다면 this를 사용하지 않게 된다.
+
+물론 메서드 내부에서 this를 사용하지 않더라도 프로토타입 메서드로 정의할 수 있다. 하지만 반드시 인스턴스를 생성한 다음 인스턴스로 호출해야 하므로 this를 사용하지 않는 메서드는 정적 메서드로 정의하는 것이 좋다.
+
+---
+
+<h3> 클래스의 인스턴스 생성 과정 </h3>
+
+new 연산자와 함께 클래스를 호출하면 생성자 함수와 마찬가지로 클래스의 내부 메서드 [[Construct]]가 호출된다. 클래스는 new 연산자 없이 호출할 수 없다. 이때 다음과 같은 과정을 거쳐 인스턴스가 생성된다.
+
+1. 인스턴스 생성과 this 바인딩
+
+new 연산자와 함께 클래스를 호출하면 constructor의 내부 코드가 실행되기에 앞서 암묵적으로 빈 객체가 생성된다. 이 빈 객체가 바로 클래스가 생성한 인스턴스다. 이때 클래스가 생성한 인스턴스의 프로토타입으로 클래스의 prototype 프로퍼티가 가리키는 객체가 설정된다. 그리고 암묵적으로 생성된 빈 객체, 즉 인스턴스는 this에 바인딩된다. 따라서 constructor 내부의 this는 클래스가 생성한 인스턴스를 가리킨다.
+
+2. 인스턴스 초기화
+
+constructor의 내부 코드가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티 값을 초기화한다. 만약 constructor가 생략되었다면 이 과정도 생략된다.
+
+3. 인스턴스 반환
+
+클래스의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
+
+```js
+class Person {
+  // 생성자
+  constructor(name) {
+    // 1. 암묵적으로 인스턴스가 생성되고 this에 바인딩된다.
+    console.log(this); // Person {}
+    console.log(Object.getPrototypeOf(this) === Person.prototype); // true
+
+    // 2. this에 바인딩되어 있는 인스턴스를 초기화한다.
+    this.name = name;
+
+    // 3. 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
+  }
+}
+```
