@@ -7274,3 +7274,280 @@ class Person {
   }
 }
 ```
+
+---
+
+<h3> 프로퍼티 </h3>
+
+<h4> 인스턴스 프로퍼티 </h4>
+
+인스턴스 프로퍼티는 constructor 내부에서 정의해야 한다.
+
+```js
+class Person {
+  constructor(name) {
+    // 인스턴스 프로퍼티
+    this.name = name;
+  }
+}
+
+const me = new Person('Kyeom');
+console.log(me); // Person {name: "Kyeom"}
+```
+
+constructor 내부 코드가 실행되기 이전에 constructor 내부의 this에는 이미 클래스가 암묵적으로 생성한 인스턴스인 빈 객체가 바인딩되어 있다.
+
+생성자 함수에서 생성자 함수가 생성할 인스턴스의 프로퍼티를 정의하는 것과 마찬가지로 constructor 내부에서 this에 인스턴스 프로퍼티를 추가한다. 이로써 클래스가 암묵적으로 생성한 빈 객체, 즉 인스턴스에 프로퍼티가 추가되어 인스턴스가 초기화된다.
+
+```js
+class Person {
+  constructor(name) {
+    // 인스턴스 프로퍼티
+    this.name = name; // name 프로퍼티는 public하다.
+  }
+}
+
+const me = new Person('Kyeom');
+
+// name은 public하다.
+console.log(me.name); // Kyeom
+```
+
+constructor 내부에서 this에 추가한 프로퍼티는 언제나 클래스가 생성한 인스턴스의 프로퍼티가 된다. ES6의 클래스는 다른 객체지향 언어처럼 private, public, protected 키워드와 같은 접근 제한자를 지원하지 않는다. 따라서 인스턴스 프로퍼티는 언제나 public하다. 다행히도 private한 프로퍼티를 정의할 수 있는 사양이 현재 제안 중에 있다.
+
+<h4> 접근자 프로퍼티 </h4>
+
+접근자 프로퍼티는 자체적으로는 값([[Value]] 내부 슬롯)을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수로 구성된 프로퍼티다.
+
+```js
+const person = {
+  // 데이터 프로퍼티
+  firstName: 'Hyeong Kyeom',
+  lastName: 'Kim',
+  
+  // fullName은 접근자 함수로 구성된 접근자 프로퍼티다.
+  // getter 함수
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+  // setter 함수
+  set fullName(name) {
+    // 배열 디스트럭처링 할당
+    [this.firstName, this.lastName] = name.split(' ');
+  }
+};
+
+// 데이터 프로퍼티를 통한 프로퍼티 값의 참조.
+console.log(`${person.firstName} ${person.lastName}`); // Hyeong Kyeom Kim
+
+// 접근자 프로퍼티를 통한 프로퍼티 값의 저장
+// 접근자 프로퍼티 fullName에 값을 저장하면 setter 함수가 호출된다.
+person.fullName = 'Gaebal Lee';
+console.log(person); // {fistName: "Gaebal", lastName: "Lee"}
+
+// 접근자 프로퍼티를 통한 프로퍼티 값의 참조
+// 접근자 프로퍼티 fullName에 접근하면 getter 함수가 호출된다.
+console.log(person.fullName); // Gaebal Lee
+
+// fullName은 접근자 프로퍼티다.
+// 접근자 프로퍼티는 get, set, enumerable, configurable 프로퍼티 어트리뷰트를 갖는다.
+console.log(Object.getOwnPropertyDescriptor(person, 'fullName'));
+// {get: f, set: f, enumerable: true, configurable: true}
+```
+
+접근자 프로퍼티는 클래스에서도 사용할 수 있다. 위 예제의 객체 리터럴을 클래스로 표현하면 다음과 같다.
+
+```js
+class Person {
+  constructor(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  // fullName은 접근자 함수로 구성된 접근자 프로퍼티다.
+  // getter 함수
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+  // setter 함수
+  set fullName(name) {
+    [this.firstName, this.lastName] = name.split(" ");
+  }
+}
+
+const me = new Person("Hyeong Kyeom", "Kim");
+
+// 데이터 프로퍼티를 통한 프로퍼티 값의 참조.
+console.log(`${me.firstName} ${me.lastName}`); // Hyeong Kyeom Kim
+
+// 접근자 프로퍼티를 통한 프로퍼티 값의 저장
+// 접근자 프로퍼티 fullName에 값을 저장하면 setter 함수가 호출된다.
+me.fullName = "Gaebal Lee";
+console.log(me); // {firstName: "Gaebal", lastName: "Lee"}
+
+// 접근자 프로퍼티를 통한 프로퍼티 값의 참조
+// 접근자 프로퍼티 fullName에 접근하면 getter 함수가 호출된다.
+console.log(me.fullName); // Gaebal Lee
+
+// fullName은 접근자 프로퍼티다.
+// 접근자 프로퍼티는 get, set, enumerable, configurable 프로퍼티 어트리뷰트를 갖는다.
+console.log(Object.getOwnPropertyDescriptor(Person.prototype, "fullName"));
+// {get: ƒ, set: ƒ, enumerable: false, configurable: true}
+```
+
+접근자 프로퍼티는 자체적으로는 값을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수, 즉 getter 함수와 setter 함수로 구성되어 있다.
+
+getter는 인스턴스 프로퍼티에 접근할 때마다 프로퍼티 값을 조작하거나 별도의 행위가 필요할 때 사용한다. getter는 메서드 이름 앞에 get 키워드를 사용해 정의한다. setter는 인스턴스 프로퍼티에 값을 할당할 때마다 프로퍼티 값을 조작하거나 별도의 행위가 필요할 때 사용한다. setter는 메서드 이름 앞에 set 키워드를 사용해 정의한다.
+
+이때 getter와 setter 이름은 인스턴스 프로퍼티처럼 사용된다. 다시 말해 getter는 호출하는 것이 아니라 프로퍼티처럼 참조하는 형식으로 사용하며, 참조 시에 내부적으로 getter가 호출된다. setter도 호출하는 것이 아니라 프로퍼티처럼 값을 할당하는 형식으로 사용하며, 할당 시에 내부적으로 setter가 호출된다.
+
+getter는 이름 그대로 무언가를 취득할 때 사용하므로 반드시 무언가를 반환해야 하고 setter는 무언가를 프로퍼티에 할당해야 할 때 사용하므로 반드시 매개변수가 있어야 한다. setter는 단 하나의 값만 할당받기 때문에 단 하나의 매개변수만 선언할 수 있다.
+
+클래스의 메서드는 기본적으로 프로토타입 메서드가 된다. 따라서 클래스의 접근자 프로퍼티 또한 인스턴스 프로퍼티가 아닌 프로토타입의 프로퍼티가 된다.
+
+```js
+// Objet.getOwnPropertyNames는 비열거형(non-enumerable)을 포함한 모든 프로퍼티의 이름을 반환한다(상속 제외)
+Object.getOwnPropertyNames(me); // ["firstName", "lastName"]
+Object.getOwnPropertyNames(Object.getPrototypeOf(me)); // ["constructor", "fullName"]
+```
+
+<h4> 클래스 필드 정의 제안 </h4>
+
+먼저 클래스 필드가 무엇인지 살펴보자. 클래스 필드(필드 또는 멤버)는 클래스 기반 객체지향 언어에서 클래스가 생성할 인스턴스의 프로퍼티를 가리키는 용어다. 클래스 기반 객체지향 언어인 자바의 클래스 정의를 살펴보자. 자바의 클래스 필드는 마치 클래스 내부에서 변수처럼 사용된다.
+
+```java
+// 자바의 클래스 정의
+public class Person {
+  // ① 클래스 필드 정의
+  // 클래스 필드는 클래스 몸체에 this 없이 선언해야 한다.
+  private String firstName = "";
+  private String lastName = "";
+
+  // 생성자
+  Person(String firstName, String lastName) {
+    // ③ this는 언제나 클래스가 생성할 인스턴스를 가리킨다.
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  public String getFullName() {
+    // ② 클래스 필드 참조
+    // this 없이도 클래스 필드를 참조할 수 있다.
+    return firstName + " " + lastName;
+  }
+}
+```
+
+자바스크립트의 클래스에서 인스턴스 프로퍼티를 선언하고 초기화하려면 반드시 constructor 내부에서 this에 프로퍼티를 추가해야 한다. 하지만 자바의 클래스에서는 위 예제의 ①과 같이 클래스 필드를 마치 변수처럼 클래스 몸체에 this 없이 선언한다.
+
+또한 자바스크립트의 클래스에서 인스턴스 프로퍼티를 참조하려면 반드시 this를 사용하여 참조해야 한다. 하지만 자바의 클래스에서는 위 예제의 ②와 같이 this를 생략해도 클래스 필드를 참조할 수 있다.
+
+클래스 기반 객체지향 언어의 this는 언제나 클래스가 생성할 인스턴스를 가리킨다. 위 예제의 ③와 같이 this는 주로 클래스 필드가 생성자 또는 메서드의 매개변수 이름과 동일할 때 클래스 필드임을 명확히 하기 위해 사용한다.
+
+자바스크립트의 클래스 몸체에는 메서드만 선언할 수 있다. 따라서 클래스 몸체에 자바와 유사하게 클래스 필드를 선언하면 문법 에러가 발생한다.
+
+```js
+class Person {
+  // 클래스 필드 정의
+  name = 'Kyeom';
+}
+
+const me = new Person('Kyeom');
+```
+
+---
+
+<h3> 상속에 의한 클래스 확장 </h3>
+
+<h4> 클래스 상속과 생성자 함수 상속 </h4>
+
+상속에 의한 클래스 확장은 지금까지 살펴본 프로토타입 기반 상속과는 다른 개념이다. 프로토타입 기반 상속은 프로토타입 체인을 통해 다른 객체의 자산을 상속받는 개념이지만 **상속에 의한 클래스 확장은 기존 클래스를 상속받아 새로운 클래스를 확장하여 정의**하는 것이다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/a28c8ebe-fcd9-439a-a328-c5fecde791c2/image.png)
+
+(사진 출처 : https://publizm.github.io/posts/javascript/Class)
+
+클래스와 생성자 함수는 인스턴스를 생성할 수 있는 함수라는 점에서 매우 유사하다. 하지만 클래스는 상속을 통해 기존 클래스를 확장할 수 있는 문법이 기본적으로 제공되지만 생성자 함수는 그렇지 않다.
+
+예를 들어, 동물을 추상화한 Animal 클래스와 새와 사자를 추상화한 Bird, Lion 클래스를 각각 정의한다고 생각해보자. 새와 사자는 동물에 속하므로 동물의 속성을 갖는다. 하지만 새와 사자는 자신만의 고유한 속성도 갖는다. 이때 Animal 클래스는 동물의 속성을 표현하고 Bird, Lion 클래스는 상속을 통해 Animal 클래스의 속성을 그대로 사용하면서 자신만의 고유한 속성만 추가하여 확장할 수 있다.
+
+상속을 통해 Animal 클래스를 확장한 Bird 클래스를 구현해 보자.
+
+```js
+class Animal {
+  constructor(age, weight) {
+    this.age = age;
+    this.weight = weight;
+  }
+
+  eat() {
+    return "eat";
+  }
+
+  move() {
+    return "move";
+  }
+}
+
+// 상속을 통해 Animal 클래스를 확장한 Bird 클래스
+class Bird extends Animal {
+  fly() {
+    return "fly";
+  }
+}
+
+const bird = new Bird(1, 5);
+
+console.log(bird); // Bird {age: 1, weight: 5}
+console.log(bird instanceof Bird); // true
+console.log(bird instanceof Animal); // true (프로토타입 체인으로 얽혀있기 때문에)
+console.log(bird instanceof Object); // true (스코프의 최 상위에는 Object가 있다)
+
+console.log(bird.eat()); // eat
+console.log(bird.move()); // move
+console.log(bird.fly()); // fly
+```
+
+클래스는 상속을 통해 다른 클래스를 확장할 수 있는 문법인 extends 키워드가 기본적으로 제공된다. extends 키워드를 사용한 클래스 확장은 간편하고 직관적이다. 하지만 생성자 함수는 클래스와 같이 상속을 통해 다른 생성자 함수를 확장할 수 있는 문법이 제공되지 않는다.
+
+자바스크립트는 클래스 기반 언어가 아니므로 생성자 함수를 사용하여 클래스를 흉내 내려는 시도를 권장하지는 않지만 의사 클래스 상속 패턴을 사용하여 상속에 의한 클래스 확장을 흉내 내기도 했다.
+
+<h4> extends 키워드 </h4>
+
+상속을 통해 클래스를 확장하려면 extends 키워드를 사용하여 상속받을 클래스를 정의한다.
+
+```js
+// 수퍼(베이스/부모) 클래스
+class Base {}
+
+// 서브(파생/자식) 클래스
+class Derived extends Base {}
+```
+
+상속을 통해 확장된 클래스를 서브클래스라 부르고, 서브클래스에게 상속된 클래스를 수퍼클래스라 부른다. 서브클래스를 파생 클래스 또는 자식 클래스, 수퍼클래스를 베이스 클래스 또는 부모 클래스라고 부르기도 한다.
+
+extends 키워드의 역할은 수퍼클래스와 서브클래스 간의 상속 관계를 설정하는 것이다. 클래스도 프로토타입을 통해 상속 관계를 구현한다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/e0d9a3f1-5849-463a-9d50-f903c2cf187d/image.png)
+
+수퍼클래스와 서브클래스는 인스턴스의 프로토타입 체인뿐 아니라 클래스 간의 프로토타입 체인도 생성한다. 이를 통해 프로토타입 메서드, 정적 메서도 모두 상속이 가능하다.
+
+<h4> 동적 상속 </h4>
+
+extends 키워드는 클래스뿐만 아니라 생성자 함수를 상속받아 클래스를 확장할 수도 있다. 단, extends 키워드 앞에는 반드시 클래스가 와야 한다.
+
+```js
+// 생성자 함수
+function Base(a) {
+  this.a = a;
+}
+
+// 생성자 함수를 상속받는 서브클래스
+class Dervied extends Base {}
+
+const dervied = new Derived(1);
+console.log(derived); // Derived {a: 1}
+```
+
+extends 키워드 다음에는 클래스뿐만이 아니라 [[Construct]] 내부 메서드를 갖는 함수 객체로 평가될 수 있는 모든 표현식을 사용할 수 있다. 이를 통해 동적으로 상속받을 대상을 결정할 수 있다.
