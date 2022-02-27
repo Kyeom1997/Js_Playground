@@ -7551,3 +7551,220 @@ console.log(derived); // Derived {a: 1}
 ```
 
 extends 키워드 다음에는 클래스뿐만이 아니라 [[Construct]] 내부 메서드를 갖는 함수 객체로 평가될 수 있는 모든 표현식을 사용할 수 있다. 이를 통해 동적으로 상속받을 대상을 결정할 수 있다.
+
+<h4> 서브클래스의 constructor </h4>
+
+클래스에서 constructor를 생략하면 클래스에 다음과 같이 비어 있는 constructor가 암묵적으로 정의된다.
+
+```js
+constructor () {}
+```
+
+서브클래스에서 constructor를 생략하면 클래스에 다음과 같은 constructor가 암묵적으로 정의된다. args는 new 연산자와 함께 클래스를 호출할 때 전달한 인수의 리스트다.
+
+```js
+constructor(...args) { super(...args); }
+```
+
+super()는 수퍼클래스의 constructor(super-constructor)를 호출하여 인스턴스를 생성한다.
+
+> Rest 파라미터 <br>
+매개변수에 ...을 붙이면 Rest 파라미터가 된다. Rest 파라미터는 함수에 전달된 인수들의 목록을 배열로 전달받는다.
+
+다음 예제를 살펴보자. 수퍼클래스와 서브클래스 모두 constructor를 생략했다.
+
+```js
+// 수퍼클래스
+class Base {}
+
+// 서브클래스
+class Derived extends Base {}
+```
+
+위 예제의 클래스에는 다음과 같이 암묵적으로 constructor가 정의된다.
+
+```js
+// 수퍼클래스 
+class Base {
+  constructor () {}
+}
+
+// 서브클래스
+class Derived extends Base {
+  constructor(...args) { super(...args); }
+}
+
+const derived = new Derived();
+console.log(derived); // Derived {}
+```
+
+위 예제와 같이 수퍼클래스와 서브클래스 모두 constructor를 생략하면 빈 객체가 생성된다. 프로퍼티를 소유하는 인스턴스를 생성하려면 constructor 내부에서 인스턴스에 프로퍼티를 추가해야 한다.
+
+<h4> super 키워드 </h4>
+
+super 키워드는 함수처럼 호출할 수도 있고 this와 같이 식별자처럼 참조할 수 있는 특수한 키워드다. super는 다음과 같이 동작한다.
+
+- super를 호출하면 수퍼클래스의 constructor(super-constructor)를 호출한다.
+
+- super를 참조하면 수퍼클래스의 메서드를 호출할 수 있다.
+
+<h4> super 호출 </h4>
+
+**super를 호출하면 수퍼클래스의 constructor(super-constructor)를 호출한다.**
+
+다음 예제와 같이 수퍼클래스의 constructor 내부에서 추가한 프로퍼티를 그대로 갖는 인스턴스를 생성한다면 서브클래스의 constructor를 생략할 수 있다. 이때 new 연산자와 함께 서브클래스를 호출하면서 전달한 인수는 모두 서브클래스에 암묵적으로 정의된 constructor의 super 호출을 통해 수퍼클래스의 constructor에 전달된다.
+
+```js
+// 수퍼클래스
+class Base {
+  constructor(a, b) {
+    this.a = a;
+    this.b = b;
+  }
+}
+
+// 서브클래스
+class Derived extends Base {
+  // 다음과 같이 암묵적으로 constructor가 정의된다.
+  // constructor(...args) { super(...args); }
+}
+
+const derived = new Derived(1, 2);
+console.log(derived); // Derived {a: 1, b: 2}
+```
+
+다음 예제와 같이 수퍼클래스에서 추가한 프로퍼티와 서브클래스에서 추가한 프로퍼티를 갖는 인스턴스를 생성한다면 서브클래스의 constructor를 생략할 수 없다. 이때 new 연산자와 함께 서브클래스를 호출하면서 전달한 인수 중에서 수퍼클래스의 constructor에 전달할 필요가 있는 인수는 서브클래스의 constructor에서 호출하는 super를 통해 전달한다.
+
+```js
+// 수퍼클래스
+class Base {
+  constructor(a, b) {
+    // ④
+    this.a = a;
+    this.b = b;
+  }
+}
+
+// 서브클래스
+class Derived extends Base {
+  constructor(a, b, c) {
+    // ②
+    super(a, b); // ③
+    this.c = c;
+  }
+}
+
+const derived = new Derived(1, 2, 3); // ①
+console.log(derived); // Derived {a: 1, b: 2, c: 3}
+```
+
+new 연산자와 함께 Derived 클래스를 호출(①)하면서 전달한 인수 1, 2, 3은 Derived 클래스의 constructor(②)에 전달되고 super 호출(③)을 통해 Base 클래스의 constructor(④)에 일부가 전달된다.
+
+이처럼 인스턴스 초기화를 위해 전달한 인수는 수퍼클래스와 서브클래스에 배분되고 상속 관계의 두 클래스는 서로 협력하여 인스턴스를 생성한다.
+
+super를 호출할 때 주의할 사항은 다음과 같다.
+
+1. 서브클래스에서 constructor를 생략하지 않는 경우 서브클래스의 constructor에서는 반드시 super를 호출해야 한다.
+
+2. 서브클래스의 constructor에서 super를 호출하기 전에는 this를 참조할 수 없다.
+
+3. super는 반드시 서브클래스의 constructor에서만 호출한다. 서브클래스가 아닌 클래스의 constructor나 함수에서 super를 호출하면 에러가 발생한다.
+
+<h4> super 참조 </h4>
+
+**메서드 내에서 super를 참조하면 수퍼클래스의 메서드를 호출할 수 있다.**
+
+```js
+// 수퍼클래스
+class Base {
+  constructor(name) {
+    this.name = name;
+  }
+
+  sayHi() {
+    return `Hi! ${this.name}`;
+  }
+}
+
+// 서브클래스
+class Derived extends Base {
+  sayHi() {
+    // super.sayHi는 수퍼클래스의 프로토타입 메서드를 가리킨다.
+    return `${super.sayHi()}. how are you doing?`;
+  }
+}
+
+const derived = new Derived("Lee");
+console.log(derived.sayHi()); // Hi! Lee. how are you doing?
+```
+
+super 참조를 통해 수퍼클래스의 메서드를 참조하려면 super가 수퍼클래스의 메서드가 바인딩된 객체, 즉 수퍼클래스의 prototype 프로퍼티에 바인딩된 프로토타입을 참조할 수 있어야 한다.
+
+<h4> 상속 클래스의 인스턴스 생성 과정 </h4>
+
+상속 관계에 있는 두 클래스가 어떻게 협력하며 인스턴스를 생성하는지 살펴보도록 하자. 클래스가 단독으로 인스턴스를 생성하는 과정보다 상속 관계에 있는 두 클래스가 협력하며 인스턴스를 생성하는 과정은 좀 더 복잡하다.
+
+직사각형을 추상화한 Rectangle 클래스와 상속을 통해 Rectangle 클래스를 확장한 ColorRectangle 클래스를 정의해보자.
+
+```js
+// 수퍼클래스
+class Rectangle {
+  constructor(width, height) {
+    // constructor
+    this.width = width;
+    this.height = height;
+  }
+
+  // 프로토타입 메서드
+  getArea() {
+    return this.width * this.height;
+  }
+
+  toString() {
+    return `width = ${this.width}, height = ${this.height}`;
+  }
+}
+
+// 서브클래스
+class ColorRectangle extends Rectangle {
+  // extends 키워드를 통해 수퍼클래스를 상속받음
+  constructor(width, height, color) {
+    super(width, height);
+    this.color = color;
+  }
+
+  // 메서드 오버라이딩
+  toString() {
+    return super.toString() + `, color = ${this.color}`;
+  }
+}
+
+const colorRectangle = new ColorRectangle(2, 4, "red");
+console.log(colorRectangle); // ColorRectangle {width: 2, height: 4, color: "red"}
+
+// 상속을 통해 getArea 메서드를 호출
+console.log(colorRectangle.getArea()); // 8
+// 오버라이딩된 toString 메서드를 호출
+console.log(colorRectangle.toString()); // width = 2, height = 4, color = red
+```
+
+서브클래스 ColorRectangle이 new 연산자와 함께 호출되면 다음 과정을 통해 인스턴스를 생성한다.
+
+1. 서브클래스의 super 호출
+**서브클래스는 자신이 직접 인스턴스를 생성하지 않고 수퍼클래스에게 인스턴스 생성을 위임한다. 이것이 바로 서브클래스의 constructor에서 반드시 super를 호출해야 하는 이유다.**
+
+2. 수퍼클래스의 인스턴스 생성과 this 바인딩
+수퍼클래스의 constructor 내부의 코드가 실행되기 이전에 암묵적으로 빈 객체를 생선한다. 그리고 암묵적으로 생성된 빈 객체, 즉 인스턴스는 this에 바인딩된다. 이때 인스턴스는 수퍼클래스가 생성한 것이지만 new 연산자와 함께 호출된 클래스가 서브클래스이기 때문에 **인스턴스는 new.target이 가리키는 서브클래스가 생성한 것으로 처리된다.**
+
+3. 수퍼클래스의 인스턴스 초기화
+수퍼클래스의 constructor가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다.
+
+4. 서브클래스 constructor로의 복귀와 this 바인딩
+super의 호출이 종료되고 제어 흐름이 서브클래스 constructor로 돌아온다. **이때 super가 반환한 인스턴스가 this에 바인딩된다. 서브클래스는 별도의 인스턴스를 생성하지 않고 super가 반환한 인스턴스를 this에 바인딩하여 그대로 사용한다.** <br>
+**이처럼 super가 호출되지 않으면 인스턴스가 생성되지 않으며, this 바인딩도 할 수 없다. 서브클래스의 constructor에서 super를 호출하기 전에는 this를 참조할 수 없는 이유가 바로 이 때문이다.**
+
+5. 서브클래스의 인스턴스 초기화
+super 호출 이후, 서브클래스의 constructor에 기술되어 있는 인스턴스 초기화가 실행된다.
+
+6. 인스턴스 반환
+클래스의 모든 처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.
