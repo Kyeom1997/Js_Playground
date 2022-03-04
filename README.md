@@ -8706,7 +8706,7 @@ Array.isArray({});
 Array.isArray(null);
 Array.isArray(undefined);
 Array.isArray(1);
-Array.isArray('Array');
+Array.isArray("Array");
 Array.isArray(true);
 Array.isArray(false);
 Array.isArray({ 0: 1, length: 1 });
@@ -8716,9 +8716,8 @@ Array.isArray({ 0: 1, length: 1 });
 
 indexOf 메서드는 원본 배열에서 인수로 전달된 요소를 검색하여 인덱스를 반환한다.
 
-	- 원본 배열에 인수로 전달한 요소와 중복되는 요소가 여러 개 있다면 첫 번째로 검색된 요소의 인덱스를 반환한다.
+    - 원본 배열에 인수로 전달한 요소와 중복되는 요소가 여러 개 있다면 첫 번째로 검색된 요소의 인덱스를 반환한다.
     - 원본 배열에 인수로 전달한 요소가 존재하지 않으면 -1을 반환한다.
-    
 
 ```js
 const arr = [1, 2, 2, 3];
@@ -8878,7 +8877,7 @@ let result = [1, 2].concat([3, 4]);
 console.log(result); // [1, 2, 3, 4]
 
 // concat 메서드는 ES6의 스프레드 문법으로 대체할 수 있다.
-result = [...[1, 2], ... [3, 4]];
+result = [...[1, 2], ...[3, 4]];
 console.log(result); // [1, 2, 3, 4]
 ```
 
@@ -8982,7 +8981,7 @@ slice 메서드는 두 개의 매개변수를 갖는다.
 
 - start : 복사를 시작할 인덱스다. 음수인 경우 배열의 끝에서의 인덱스를 나타낸다. 예를 들어, slice(-2)는 배열의 마지막 두 개의 요소를 복사하여 배열로 반환한다.
 
-- end: 복사를 종료할 인덱스다. 이 인덱스에 해당하는 요소는 복사되지 않는다. end는 생략 가능하며 생략 시 기본값은 length 프로퍼티 값이다. 
+- end: 복사를 종료할 인덱스다. 이 인덱스에 해당하는 요소는 복사되지 않는다. end는 생략 가능하며 생략 시 기본값은 length 프로퍼티 값이다.
 
 ```js
 const arr = [1, 2, 3];
@@ -9019,7 +9018,7 @@ const arr = [1, 2, 3];
 arr.slice(-1); // [3]
 
 // 배열의 끝에서부터 요소를 두 개 복사하여 반환한다.
-arr. slice(-2); // [2, 3]
+arr.slice(-2); // [2, 3]
 ```
 
 slice 메서드의 인수를 모두 생략하면 원본 배열의 복사본을 생성하여 반환한다.
@@ -9037,10 +9036,10 @@ console.log(copy === arr); // false
 
 ```js
 const todos = [
-  { id: 1, content: 'HTML', completed: false },
-  { id: 2, content: 'CSS', completed: true },
-  { id: 3, content: 'Javascript', completed: false }
-  ];
+  { id: 1, content: "HTML", completed: false },
+  { id: 2, content: "CSS", completed: true },
+  { id: 3, content: "Javascript", completed: false },
+];
 
 // 얕은 복사(shallow copy)
 const _todos = todos.slice();
@@ -9054,7 +9053,7 @@ console.log(_todos[0] === todos[0]); // true
 ```
 
 > **얕은 복사와 깊은 복사** <br>
-객체를 프로퍼티 값으로 갖는 객체의 경우 얕은 복사는 한 단계까지만 복사하는 것을 말하고 깊은 복사는 객체에 중첩되어 있는 객체까지 모두 복사하는 것을 말한다.
+> 객체를 프로퍼티 값으로 갖는 객체의 경우 얕은 복사는 한 단계까지만 복사하는 것을 말하고 깊은 복사는 객체에 중첩되어 있는 객체까지 모두 복사하는 것을 말한다.
 
 <h4> Array.prototype.join </h4>
 
@@ -9068,10 +9067,10 @@ const arr = [1, 2, 3, 4];
 arr.join(); // '1,2,3,4';
 
 // 원본 배열 arr의 모든 요소를 문자열로 변환한 후, 빈 문자열로 연결한 문자열을 반환한다.
-arr.join(''); // '1234'
+arr.join(""); // '1234'
 
 // 원본 배열 arr의 모든 요소를 문자열로 변환한 후, 구분자 ':'로 연결한 문자열을 반환한다.
-arr.join(':'); // '1:2:3:4'
+arr.join(":"); // '1:2:3:4'
 ```
 
 <h4> Array.prototype.reverse </h4>
@@ -9133,7 +9132,7 @@ const arr = new Array(3);
 console.log(arr); // [empty x 3]
 
 // 인수로 전달받은 값 1을 배열의 처음부터 끝까지 요소로 채운다.
-const result = arr.fill(1)
+const result = arr.fill(1);
 
 // fill 메서드는 원본 배열을 직접 변경한다.
 console.log(arr); // [1, 1, 1]
@@ -9183,7 +9182,7 @@ ES10에서 도입된 flat 메서드는 인수로 전달한 깊이만큼 재귀�
 sort 메서드는 배열의 요소를 정렬한다. 원본 배열을 직접 변경하며 정렬된 배열을 반환한다. sort 메서드는 기본적으로 오름차순으로 요소를 정렬한다. 한글 문자열인 요소도 오름차순으로 정렬된다.
 
 ```js
-const fruits = ['Banana', 'Orange', 'Apple'];
+const fruits = ["Banana", "Orange", "Apple"];
 
 // 오름차순(ascending) 정렬
 fruits.sort();
@@ -9191,17 +9190,16 @@ fruits.sort();
 // sort 메서드는 원본 배열을 직접 변경한다.
 console.log(fruits); // ['Apple', 'Banana', 'Orange']
 
-const fruits2 = ['바나나', '오렌지', '사과']
+const fruits2 = ["바나나", "오렌지", "사과"];
 
 fruits2.sort();
 console.log(fruits2); // ['바나나', '사과', '오렌지]
-
 ```
 
 sort 메서드는 기본적으로 오름차순으로 요소를 정렬한다. 따라서 내림차순으로 요소를 정렬하려면 sort 메서드를 사용하여 오름차순으로 정렬한 후 reverse 메서드를 사용하여 요소의 순서를 뒤집는다.
 
 ```js
-const fruits = ['Banana', 'Orange', 'Apple'];
+const fruits = ["Banana", "Orange", "Apple"];
 
 // 오름차순(ascending) 정렬
 fruits.sort();
@@ -9237,7 +9235,7 @@ points.sort((a, b) => a - b);
 console.log(points); // [100, 40, 25, 10, 5, 2, 1]
 
 // 숫자 배열에서 최소/최대값 취득
-console.log(points[points.length - 1], points[0]) // 1 100
+console.log(points[points.length - 1], points[0]); // 1 100
 ```
 
 객체를 요소로 갖는 배열을 정렬하는 예제는 다음과 같다.
@@ -9292,8 +9290,9 @@ const numbers = [1, 2, 3];
 const pows = [];
 
 // forEach 메서드는 numbers 배열의 모든 요소를 순회하면서 콜백 함수를 반복 호출한다.
-numbers.forEach(item => pows.push(item ** 2));
-console.log(pows); [1, 4, 9]
+numbers.forEach((item) => pows.push(item ** 2));
+console.log(pows);
+[1, 4, 9];
 ```
 
 위 예제의 경우 forEach 메서드는 numbers 배열의 모든 요소를 순회하며 콜백 함수를 반복 호출한다. numbers 배열의 요소가 3개이므로 콜백 함수도 3번 호출된다. 이때 콜백 함수를 호출하는 forEach 메서드는 콜백 함수에 인수를 전달할 수 있다.
@@ -9340,14 +9339,13 @@ forEach 메서드의 두 번째 인수로 forEach 메서드의 콜백 함수 내
 class Numbers {
   numberArray = [];
 
-	multiply(arr) {
-  		arr.forEach(function (item) {
-    		// TypeError: Cannot read property 'numberArray' of undefined
-    		this.numberArray.push(item * item);
-  		});
-	}
+  multiply(arr) {
+    arr.forEach(function (item) {
+      // TypeError: Cannot read property 'numberArray' of undefined
+      this.numberArray.push(item * item);
+    });
+  }
 }
-
 
 const numbers = new Numbers();
 numbers.multiply([1, 2, 3]);
@@ -9361,11 +9359,11 @@ forEach 메서드의 콜백 함수 내부의 this와 multiply 메서드 내부�
 class Numbers {
   numberArray = [];
 
-	multiply(arr) {
-      arr.forEach(function (item) {
-        this.numberArray.push(item * item);
-      }, this); // forEach 메서드의 콜백 함수 내부에서 this로 사용할 객체를 전달
-    }
+  multiply(arr) {
+    arr.forEach(function (item) {
+      this.numberArray.push(item * item);
+    }, this); // forEach 메서드의 콜백 함수 내부에서 this로 사용할 객체를 전달
+  }
 }
 
 const numbers = new Numbers();
@@ -9379,21 +9377,22 @@ console.log(numbers.numberArray); // [1, 4, 9]
 class Numbers {
   numberArray = [];
 
-	multiply(arr) {
-      // 화살표 함수 내부에서 this를 참조하면 상위 스코프의 this를 그대로 참조한다.
-      arr.forEach(item => this.numberArray.push(item * item));
-    }
+  multiply(arr) {
+    // 화살표 함수 내부에서 this를 참조하면 상위 스코프의 this를 그대로 참조한다.
+    arr.forEach((item) => this.numberArray.push(item * item));
+  }
 }
 
 const numbers = new Numbers();
 numbers.multiply([1, 2, 3]);
-console.log(numbers.numberArray); [1, 4, 9]
+console.log(numbers.numberArray);
+[1, 4, 9];
 ```
 
 forEach 메서드의 동작을 이해하기 위해 forEach 메서드의 폴리필을 살펴보자.
 
 > **폴리필**
-최신 사양의 기능을 지원하지 않는 브라우저를 위해 누락된 최신 사양의 기능을 구현하여 추가하는 것을 폴리필이라 한다.
+> 최신 사양의 기능을 지원하지 않는 브라우저를 위해 누락된 최신 사양의 기능을 구현하여 추가하는 것을 폴리필이라 한다.
 
 ```js
 // 만약 Array.prototype에 forEach 메서드가 존재하지 않으면 폴리필을 추가한다.
@@ -9430,7 +9429,7 @@ const numbers = [1, 4, 9];
 
 // map 메서드는 numbers 배열의 모든 요소를 순회하면서 콜백 함수를 반복 호출한다.
 // 그리고 콜백 함수의 반환값들로 구성된 새로운 배열을 반환한다.
-const roots = numbers.map(item => Math.sqrt(item));
+const roots = numbers.map((item) => Math.sqrt(item));
 
 // 위 코드는 다음과 같다.
 // const roots = numbers.map(Math.sqrt);
@@ -9472,7 +9471,7 @@ const numbers = [1, 2, 3, 4, 5];
 // filter 메서드는 numbers 배열의 모든 요소를 순회하면서 콜백 함수를 반복 호출한다.
 // 그리고 콜백 함수의 반환값이 true인 요소로만 구성된 새로운 배열을 반환한다.
 // 다음의 경우 numbers 배열에서 홀수인 요소만 필터링한다(1은 true로 평가된다).
-const odds = numbers.filter(item => item % 2);
+const odds = numbers.filter((item) => item % 2);
 console.log(odds); // [1, 3, 5]
 ```
 
@@ -9488,21 +9487,21 @@ filter 메서드는 자신이 호출한 배열에서 특정 요소를 제거하�
 class Users {
   constructor() {
     this.users = [
-      { id: 1, name: 'Kyeom' },
-      { id: 2, name: 'Lee' }
-      ];
+      { id: 1, name: "Kyeom" },
+      { id: 2, name: "Lee" },
+    ];
   }
-  
+
   // 요소 추출
   findById(id) {
     // id가 일치하는 사용자만 반환한다.
-    return this.users.filter(user => user.id === id);
+    return this.users.filter((user) => user.id === id);
   }
-  
+
   // 요소 제거
   remove(id_) {
     // id가 일치하지 않는 사용자를 제거한다.
-    this.users = this.users.filter(user => user.id !== id);
+    this.users = this.users.filter((user) => user.id !== id);
   }
 }
 
@@ -9528,19 +9527,22 @@ reduce 메서드는 첫 번째 인수로 콜백 함수, 두 번째 인수로 초
 
 ```js
 // 1부터 4까지 누적을 구한다.
-const sum = [1, 2, 3, 4].reduce((accumulator, currentValue, index, array) => accumulator + currentValue, 0);
+const sum = [1, 2, 3, 4].reduce(
+  (accumulator, currentValue, index, array) => accumulator + currentValue,
+  0
+);
 
 console.log(sum); // 10
 ```
 
 reduce 메서드의 콜백 함수는 4개의 인수를 전달받아 배열의 length만큼 총 4회 호출된다. 이때 콜백 함수로 전달되는 인수와 콜백 함수의 반환값은 다음과 같다.
 
-|     구분     | accumulator | currentValue | index | array |       콜백 함수의 반환값        |
-| :----------: | :-----------------: | :-------------------------: | :---: | :-------------: | :-----------------------------: |
-| 첫 번째 순회 |     0 (초기값)      |              1              |   0   |    [1,2,3,4]    | 1 (accumulator + currentValue)  |
-| 두 번째 순회 |          1          |              2              |   1   |    [1,2,3,4]    | 3 (accumulator + currentValue)  |
-| 세 번째 순회 |          3          |              3              |   2   |    [1,2,3,4]    | 6 (accumulator + currentValue)  |
-| 4 번째 순회  |          6          |              4              |   3   |    [1,2,3,4]    | 10 (accumulator + currentValue) |
+|     구분     | accumulator | currentValue | index |   array   |       콜백 함수의 반환값        |
+| :----------: | :---------: | :----------: | :---: | :-------: | :-----------------------------: |
+| 첫 번째 순회 | 0 (초기값)  |      1       |   0   | [1,2,3,4] | 1 (accumulator + currentValue)  |
+| 두 번째 순회 |      1      |      2       |   1   | [1,2,3,4] | 3 (accumulator + currentValue)  |
+| 세 번째 순회 |      3      |      3       |   2   | [1,2,3,4] | 6 (accumulator + currentValue)  |
+| 4 번째 순회  |      6      |      4       |   3   | [1,2,3,4] | 10 (accumulator + currentValue) |
 
 이처럼 reduce 메서드는 초기값과 배열의 첫 번째 요소값을 콜백 함수에게 인수로 전달하면서 호출하고 다음 순회에는 콜백 함수의 반환값과 두 번째 요소값을 콜백 함수의 인수로 전달하면서 호출한다. 이러한 과정을 반복하여 **reduce 메서드는 하나의 결과값을 반환한다.**
 
@@ -9554,7 +9556,7 @@ const sum = [].reduce((acc, cur) => acc + cur);
 이처럼 빈 배열로 reduce 메서드를 호출하면 에러가 발생한다. 이때 reduce 메서드에 초기값을 전달하면 에러가 발생하지 않는다.
 
 ```js
-const sum = [].reduce((acc, cur) => acc + cur, 0); 
+const sum = [].reduce((acc, cur) => acc + cur, 0);
 console.log(sum); // 0
 ```
 
@@ -9632,10 +9634,10 @@ console.log(numObj); // Number {[[PrimitiveValue]]: 10}
 Number 생성자 함수의 인수로 숫자가 아닌 값을 전달하면 인수를 숫자로 강제 변환한 후, [[NumberData]] 내부 슬롯에 변환된 숫자를 할당한 Number 래퍼 객체를 생성한다. 인수를 숫자로 변환할 수 없다면 NaN을 [[NumberData]] 내부 슬롯에 할당한 Number 래퍼 객체를 생성한다.
 
 ```js
-let numObj = new Number('10');
+let numObj = new Number("10");
 console.log(numObj); // Number {[[PrimitiveValue]]: 10}
 
-numObj = new Number('Hello');
+numObj = new Number("Hello");
 console.log(numObj); // Number {[[PrimitiveValue]]: NaN}
 ```
 
@@ -9643,9 +9645,9 @@ new 연산자를 사용하지 않고 Number 생성자 함수를 호출하면 Num
 
 ```js
 // 문자열 타입 => 숫자 타입
-Number('0'); // 0
-Number('-1'); // -1
-Number('10.53'); // 10.53
+Number("0"); // 0
+Number("-1"); // -1
+Number("10.53"); // 10.53
 
 // 불리언 타입 => 숫자 타입
 Number(true); // 1
@@ -9663,7 +9665,7 @@ ES6에서 도입된 Number.EPSILON은 1과 1보다 큰 숫자 중에서 가장 �
 Number.EPSILON은 부동소수점으로 인해 발생하는 오차를 해결하기 위해 사용한다. 다음 예제는 Number.EPSILON을 사용하여 부동소수점을 비교하는 함수다.
 
 ```js
-function isEqual(a, b){
+function isEqual(a, b) {
   // a와 b를 뺀 값의 절대값이 Number.EPSILON보다 작으면 같은 수로 인정한다.
   return Math.abs(a - b) < Number.EPSILON;
 }
@@ -9710,7 +9712,7 @@ Number.MIN_SAFE_INTEGER; // -9007199254740991
 Number.POSITIVE_INFINITY는 양의 무한대를 나타내는 숫자값 Infinity와 같다.
 
 ```js
-Number.POSITIVE_INFINITY // Infinity
+Number.POSITIVE_INFINITY; // Infinity
 ```
 
 <h4> Number.NEGATIVE_INFINITY </h4>
@@ -9726,7 +9728,7 @@ Number.NEGATIVE_INFINITY; // -Infinity
 Number.NaN은 숫자가 아님(Not-a-Number)을 나타내는 숫자값이다. Number.NaN은 window.NaN과 같다.
 
 ```js
-Number.NaN // NaN
+Number.NaN; // NaN
 ```
 
 ---
@@ -9748,7 +9750,7 @@ Number.isFinite(Infinity); // false
 Number.isFinite(-Infinity); // false
 
 // 인수가 NaN이면 false를 반환한다.
-Number.isFinite(NaN) // false
+Number.isFinite(NaN); // false
 ```
 
 <h4> Number.isInteger </h4>
@@ -9757,19 +9759,19 @@ ES6에서 도입된 Number.isInteger 정적 메서드는 인수로 전달된 숫
 
 ```js
 // 인수가 정수이면 true를 반환한다.
-Number.isInteger(0) // true
-Number.isInteger(123) // true
-Number.isInteger(-123) // true
+Number.isInteger(0); // true
+Number.isInteger(123); // true
+Number.isInteger(-123); // true
 
 // 0.5는 정수가 아니다
-Number.isInteger(0.5) // false
+Number.isInteger(0.5); // false
 // '123'을 숫자로 암묵적 타입 변환하지 않는다.
-Number.isInteger('123') // false
+Number.isInteger("123"); // false
 // false를 숫자로 암묵적 타입 변환하지 않는다.
-Number.isInteger(false) // false
+Number.isInteger(false); // false
 // Infinity / -Infinity는 정수가 아니다.
-Number.isInteger(Infinity) // false
-Number.isInteger(-Infinity) // false
+Number.isInteger(Infinity); // false
+Number.isInteger(-Infinity); // false
 ```
 
 <h4> Number.isNaN </h4>
@@ -9799,7 +9801,7 @@ Number.isSafeInteger(1000000000000001); // false
 Number.isSafeInteger(0.5); // false
 
 // '123'을 숫자로 암묵적 타입 변환하지 않는다.
-Number.isSafeInteger('123'); // false
+Number.isSafeInteger("123"); // false
 ```
 
 <h4> Number.prototype.toExponential </h4>
@@ -9825,4 +9827,143 @@ toPrecision 메서드는 인수로 전달받은 전체 자릿수까지 유효하
 <h4> Number.prototype.toString </h4>
 
 toString 메서드는 숫자를 문자열로 변환하여 반환한다. 진법을 나타내는 2~36 사이의 정수값을 인수로 전달할 수 있다. 인수를 생략하면 기본값 10진법이 지정된다.
-g
+
+---
+
+<h2> 29장. Math </h2>
+
+표준 빌트인 객체인 Math는 수학적인 상수와 함수를 위한 프로퍼티와 메서드를 제공한다. Math는 생성자 함수가 아니다. 따라서 Math는 정적 프로퍼티와 정적 메서드만 제공한다.
+
+---
+
+<h3> Math 프로퍼티 </h3>
+
+<h4> Math.PI </h4>
+
+원주율 PI 값을 반환한다.
+
+```js
+Math.PI; // 3.141592653589793
+```
+
+---
+
+<h3> Math 메서드 </h3>
+
+<h4> Math.abs </h4>
+
+Math.abs 메서드는 인수로 전달된 숫자의 절대값을 반환한다. 절대값은 반드시 0 또는 양수이어야 한다.
+
+```js
+Math.abs(-1); // 1
+Math.abs("-1"); // 1
+Math.abs(""); // 0
+Math.abs([]); // 0
+Math.abs(null); // 0
+Math.abs(undefined); // NaN
+Math.abs({}); // NaN
+Math.abs("string"); // NaN
+Math.abs(); // NaN
+```
+
+<h4> Math.round </h4>
+
+Math.round 메서드는 인수로 전달된 숫자의 소수점 이하를 반올림한 정수를 반환한다.
+
+```js
+Math.round(1.4); // 1
+Math.round(1.6); // 2
+Math.round(-1.4); // -1
+Math.round(-1.6); // -2
+Math.round(1); // 1
+Math.round(); // NaN
+```
+
+<h4> Math.ceil </h4>
+
+Math.ceil 메서드는 인수로 전달된 숫자의 소수점 이하를 올림한 정수를 반환한다. 소수점 이하를 올림하면 더 큰 정수가 된다. 예를 들어 1.4의 소수점 이하를 올림하면 2가 되고, -1.4의 소수점 이하를 올림하면 -1이 된다.
+
+```js
+Math.ceil(1.4); // 2
+Math.ceil(1.6); // 2
+Math.ceil(-1.4); // -1
+Math.ceil(-1.6); // -1
+Math.ceil(1); // 1
+Math.ceil(); // NaN
+```
+
+<h4> Math.floor </h4>
+
+Math.floor 메서드는 인수로 전달된 숫자의 소수점 이하를 내림한 정수를 반환한다. 즉, Math.ceil 메서드의 반대 개념이다.
+
+<h4> Math.sqrt </h4>
+
+Math.sqrt 메서드는 인수로 전달된 숫자의 제곱근을 반환한다.
+
+```js
+Math.sqrt(9); // 3
+Math.sqrt(-9); // NaN
+Math.sqrt(2); // 1.414213562373095
+Math.sqrt(1); // 1
+Math.sqrt(0); // 0
+Math.sqrt(); // NaN
+```
+
+<h4> Math.random </h4>
+
+Math.random 메서드는 임의의 난수(랜덤 숫자)를 반환한다. Math.random 메서드가 반환한 난수는 0에서 1 미만의 실수다. 즉, 0은 포함되지만 1은 포함되지 않는다.
+
+```js
+Math.random(); // 0에서 1 미만의 랜덤 실수(0.8208720231391746)
+
+/*
+1에서 10 범위의 랜덤 정수 취득
+1) Math.random으로 0에서 1 미만의 랜덤 실수를 구한 다음, 10을 곱해 0에서 10 미만의 랜덤 실수를 구한다.
+2) 0에서 10 미만의 랜덤 실수에 1을 더해 1에서 10 범위의 랜덤 실수를 구한다.
+3) Math.floor로 1에서 10 범위의 랜덤 실수의 소수점 이하를 떼어 버린 다음 정수를 반환한다.
+*/
+const random = Math.floor(Math.random() * 10 + 1);
+console.log(random); // 1에서 10 범위의 정수
+```
+
+<h4> Math.pow </h4>
+
+Math.pow 메서드는 첫 번째 인수를 밑으로, 두 번째 인수를 지수로 거듭제곱한 결과를 반환한다.
+
+```js
+Math.pow(2, 8); // 256
+Math.pow(2, -1); // 0.5
+Math.pow(2); // NaN
+```
+
+<h4> Math.max </h4>
+
+Math.max 메서드는 전달받은 인수 중에서 가장 큰 수를 반환한다. 인수가 전달되지 않으면 -Infinity를 반환한다.
+
+```js
+Math.max(1); // 1
+Math.max(1, 2); // 2
+Math.max(1, 2, 3); // 3
+Math.max(); // Infinity
+```
+
+배열을 인수로 전달받아 배열의 요소 중에서 최대값을 구하려면 Function.prototype.apply 메서드 또는 스프레드 문법을 사용해야 한다.
+
+```js
+// 배열 요소 중에서 최대값 취득
+Math.max.apply(null, [1, 2, 3]); // 3
+
+// ES6 스프레드 문법
+Math.max(...[1, 2, 3]); // 3
+```
+
+<h4> Math.min </h4>
+
+Math.min 메서드는 전달받은 인수 중에서 가장 작은 수를 반환한다. 인수가 전달되지 않으면 Infinity를 반환한다.
+
+```js
+Math.min(1); // 1
+Math.min(1, 2); // 1
+Math.min(1, 2, 3); // 1
+Math.min(); // Infinity
+```
