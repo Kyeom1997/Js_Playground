@@ -9980,7 +9980,7 @@ Math.min(); // Infinity
 
 <h3> Date 생성자 함수 </h3>
 
-Date는 생성자 함수다. Date 생성자 함수로 생성한 Date 객체는 내부적으로 날짜와 시간을 나타내는 정수값을 갖는다. 모든 시간의 기점인 1970년 1월 1일 0시를 나타내는 Date 객체는 내부적으로 정수값 0을 가지며, 1970년 1월 1일 0시를 기점으로 하루가 지난 1970년 1월 2일 0시를 나타내는 Date 객체는 내부적으로 정수값 86,400,000(24h * 60m * 60s * 1000ms)을 갖는다.
+Date는 생성자 함수다. Date 생성자 함수로 생성한 Date 객체는 내부적으로 날짜와 시간을 나타내는 정수값을 갖는다. 모든 시간의 기점인 1970년 1월 1일 0시를 나타내는 Date 객체는 내부적으로 정수값 0을 가지며, 1970년 1월 1일 0시를 기점으로 하루가 지난 1970년 1월 2일 0시를 나타내는 Date 객체는 내부적으로 정수값 86,400,000(24h _ 60m _ 60s \* 1000ms)을 갖는다.
 
 Date 생성자 함수로 생성한 Date 객체는 기본적으로 현재 날짜와 시간을 나타내는 정수값을 가진다. 현재 날짜와 시간이 아닌 다른 날짜와 다른 시간을 다루고 싶은 경우 Date 생성자 함수에 명시적으로 해당 날짜와 시간 정보를 인수로 지정한다. Date 생성자 함수로 객체를 생성하는 방법은 다음과 같이 4가지가 있다.
 
@@ -10022,10 +10022,10 @@ new Date(86400000); // Fri Jan 02 1970 09:00:00 GMT+0900 (한국 표준시)
 Date 생성자 함수에 날짜와 시간을 나타내는 문자열을 인수로 전달하면 지정된 날짜와 시간을 나타내는 Date 객체를 반환한다. 이때 인수로 전달한 문자열은 Date.parse 메서드에 의해 해석 가능한 형식이어야 한다.
 
 ```js
-new Date('May 26, 2020 10:00:00');
+new Date("May 26, 2020 10:00:00");
 // Tue May 26 2020 10:00:00 GMT+0900 (한국 표준시)
 
-new Date('2020/03/26/10:00:00');
+new Date("2020/03/26/10:00:00");
 //Thu Mar 26 2020 10:00:00 GMT+0900 (한국 표준시)
 ```
 
@@ -10054,13 +10054,13 @@ new Date(now);
 
 ```js
 // UTC
-Date.parse('Jan 2, 1970 00:00:00 UTC'); // 86400000
+Date.parse("Jan 2, 1970 00:00:00 UTC"); // 86400000
 
 // KST
-Date.parse('Jan 2, 1970 09:00:00'); // 86400000
+Date.parse("Jan 2, 1970 09:00:00"); // 86400000
 
 // KST
-Date.parse('1970/01/02/09:00:00'); // 86400000
+Date.parse("1970/01/02/09:00:00"); // 86400000
 ```
 
 <h4> Date.UTC </h4>
@@ -10071,7 +10071,7 @@ Date.UTC 메서드는 new Date(year,month[, day, hour, minute, second, milliseco
 
 ```js
 Date.UTC(1970, 0, 2); // 86400000
-Date.UTC('1970/1/2'); // NaN
+Date.UTC("1970/1/2"); // NaN
 ```
 
 <h4> Date.prototype.getFullYear </h4>
@@ -10079,7 +10079,7 @@ Date.UTC('1970/1/2'); // NaN
 Date 객체의 연도를 나타내는 정수를 반환한다.
 
 ```js
-new Date('2020/07/24').getFullYear(); // 2020
+new Date("2020/07/24").getFullYear(); // 2020
 ```
 
 <h4> Date.prototype.setFullYear </h4>
@@ -10103,7 +10103,7 @@ today.getFullYear(); // 1900
 Date 객체의 월을 나타내는 0~11의 정수를 반환한다. 1월은 0, 12월은 11이다.
 
 ```js
-new Date('2020/07/24').getMonth(); // 6
+new Date("2020/07/24").getMonth(); // 6
 ```
 
 <h4> Date.prototype.setMonth </h4>
@@ -10127,7 +10127,7 @@ today.getMonth(); // 11
 Date 객체의 날짜(1 ~ 31)를 나타내는 정수를 반환한다.
 
 ```js
-new Date('2020/07/24').getDate(); // 24
+new Date("2020/07/24").getDate(); // 24
 ```
 
 <h4> Date.prototype.setDate </h4>
@@ -10147,7 +10147,7 @@ today.getDate(); // 1
 Date 객체의 요일(0 ~ 6)을 나타내는 정수를 반환한다.
 
 ```js
-new Date('2020/07/24').getDay(); // 5
+new Date("2020/07/24").getDay(); // 5
 ```
 
 <h4> Date.prototype.getHours </h4>
@@ -10155,7 +10155,7 @@ new Date('2020/07/24').getDay(); // 5
 Date 객체의 시간(0 ~ 23)을 나타내는 정수를 반환한다.
 
 ```js
-new Date('2020/07/24/12:00').getHours(); // 12
+new Date("2020/07/24/12:00").getHours(); // 12
 ```
 
 <h4> Date.prototype.setHours </h4>
@@ -10179,7 +10179,7 @@ today.getHours(); // 0
 Date 객체의 분(0 ~ 59)을 나타내는 정수를 반환한다.
 
 ```js
-new Date('2020/07/24/12:30').getMinutes(); // 30
+new Date("2020/07/24/12:30").getMinutes(); // 30
 ```
 
 <h4> Date.prototype.setMinutes </h4>
@@ -10190,7 +10190,7 @@ Date 객체에 분(0 ~ 59)을 나타내는 정수를 설정한다. 분 이외에
 const today = new Date();
 
 // 분 지정
-today.setMinutes(50); 
+today.setMinutes(50);
 today.getMinutes(); // 50
 
 // 분/초/밀리초 지정
@@ -10203,7 +10203,7 @@ today.getMinutes(); // 5
 Date 객체의 초(0 ~ 59)를 나타내는 정수를 반환한다.
 
 ```js
-new Date('2020/07/24/12:30:10').getSeconds(); // 10
+new Date("2020/07/24/12:30:10").getSeconds(); // 10
 ```
 
 <h4> Date.prototype.setSeconds </h4>
@@ -10227,7 +10227,7 @@ today.getSeconds(); // 10
 Date 객체의 밀리초(0 ~ 999)를 나타내는 정수를 반환한다.
 
 ```js
-new Date('2020/07/24/12:30:10:150').getMilliseconds(); // 150
+new Date("2020/07/24/12:30:10:150").getMilliseconds(); // 150
 ```
 
 <h4> Date.prototype.setMilliseconds </h4>
@@ -10242,3 +10242,103 @@ today.setMilliseconds(123);
 today.getMilliseconds(); // 123
 ```
 
+<h4> Date.prototype.getTime </h4>
+
+1970년 1월 1일 00:00:00(UTC)를 기점으로 Date 객체의 시간까지 경과된 밀리초를 반환한다.
+
+```js
+new Date("2020/07/24/12:30").getTime(); // 1595561400000
+```
+
+<h4> Date.prototype.setTime </h4>
+
+Date 객체에 1970년 1월 1일 00:00:00(UTC)를 기점으로 경과된 밀리초를 설정한다.
+
+```js
+const today = new Date();
+
+// 1970년 1월 1일 00:00:00(UTC)를 기점으로 경과된 밀리초 설정
+today.setTime(86400000); // 86400000은 1day를 나타낸다.
+console.log(today); // Fri Jan 02 1970 09:00:00 GMT+0900 (한국 표준시)
+```
+
+<h4> Date.prototype.getTimezoneOffset </h4>
+
+UTC와 Date 객체에 지정된 로캘(locale) 시간과의 차이를 분 단위로 반환한다. KST는 UTC에 9시간을 더한 시간이다. 즉, UTC = KST - 9h다.
+
+```js
+const today = new Date(); // today의 지정 로캘은 KST다.
+
+// UTC와 today의 지정 로캘 KST와의 차이는 -9시간이다.
+today.getTimezoneOffset() / 60; // -9
+```
+
+<h4> Date.prototype.toDateString </h4>
+
+사람이 읽을 수 있는 형식의 문자열로 Date 객체의 날짜를 반환한다.
+
+```js
+const today = new Date("2020/7/24/12:30");
+
+today.toString(); // 'Fri Jul 24 2020 12:30:00 GMT+0900 (한국 표준시)'
+today.toDateString(); // 'Fri Jul 24 2020'
+```
+
+<h4> Date.prototype.toTimeString </h4>
+
+사람이 읽을 수 있는 형식으로 Date 객체의 시간을 표현한 문자열을 반환한다.
+
+```js
+const today = new Date("2020/7/24/12:30");
+
+today.toString(); // 'Fri Jul 24 2020 12:30:00 GMT+0900 (한국 표준시)'
+today.toTimeString(); // '12:30:00 GMT+0900 (한국 표준시)'
+```
+
+---
+
+<h3> Date를 활용한 시계 예제 </h3>
+
+다음 예제는 현재 날짜와 시간을 초 단위로 반복 출력한다.
+
+```js
+(function printNow() {
+  const today = new Date();
+
+  const dayNames = [
+    "(일요일)",
+    "(월요일)",
+    "(화요일)",
+    "(수요일)",
+    "(목요일)",
+    "(금요일)",
+    "(토요일)",
+  ];
+
+  // getDay 메서드는 해당 요일(0 ~ 6)을 나타내는 정수를 반환한다.
+  const day = dayNames[today.getDay()];
+
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const date = today.getDate();
+  let hour = today.getHours();
+  let minute = today.getMinutes();
+  let seconds = today.getSeconds();
+  const ampm = hour >= 12 ? "PM" : "AM";
+
+  // 12시간제로 변경
+  hour %= 12;
+  hour = hour || 12; // hour가 0이면 12를 재할당
+
+  // 10 미만인 분과 초를 2자리로 변경
+  minute = minute < 10 ? "0" + minute : minute;
+  second = second < 10 ? "0" + second : second;
+
+  const now = `${year}년 ${month}월 ${date}일 ${day} ${hour}:${minute}:${second} ${ampm}`;
+
+  consoe.log(now);
+
+  // 1초마다 printNow 함수를 재귀 호출한다.
+  setTimeout(printNow, 1000);
+})();
+```
