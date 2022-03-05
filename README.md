@@ -9967,3 +9967,278 @@ Math.min(1, 2); // 1
 Math.min(1, 2, 3); // 1
 Math.min(); // Infinity
 ```
+
+---
+
+<h2> Date </h2>
+
+표준 빌트인 객체인 Date는 날짜와 시간(연, 월, 일, 시, 분, 초, 밀리초(millisecond/ms. 천분의 1초)을 위한 메서드를 제공하는 빌트인 객체이면서 생성자 함수다.
+
+현재 날짜와 시간은 자바스크립트 코드가 실행된 시스템의 시계에 의해 결정된다.
+
+---
+
+<h3> Date 생성자 함수 </h3>
+
+Date는 생성자 함수다. Date 생성자 함수로 생성한 Date 객체는 내부적으로 날짜와 시간을 나타내는 정수값을 갖는다. 모든 시간의 기점인 1970년 1월 1일 0시를 나타내는 Date 객체는 내부적으로 정수값 0을 가지며, 1970년 1월 1일 0시를 기점으로 하루가 지난 1970년 1월 2일 0시를 나타내는 Date 객체는 내부적으로 정수값 86,400,000(24h * 60m * 60s * 1000ms)을 갖는다.
+
+Date 생성자 함수로 생성한 Date 객체는 기본적으로 현재 날짜와 시간을 나타내는 정수값을 가진다. 현재 날짜와 시간이 아닌 다른 날짜와 다른 시간을 다루고 싶은 경우 Date 생성자 함수에 명시적으로 해당 날짜와 시간 정보를 인수로 지정한다. Date 생성자 함수로 객체를 생성하는 방법은 다음과 같이 4가지가 있다.
+
+<h4> new Date() </h4>
+
+Date 생성자 함수를 인수 없이 new 연산자와 함께 호출하면 현재 날짜와 시간을 가지는 Date 객체를 반환한다. Date 객체는 내부적으로 날짜와 시간을 나타내는 정수값을 갖지만 Date 객체를 콘솔에 출력하면 기본적으로 날짜와 시간 정보를 출력한다.
+
+```js
+new Date(); // Sat Mar 05 2022 22:42:51 GMT+0900 (한국 표준시)
+```
+
+Date 생성자 함수를 new 연산자 없이 호출하면 Date 객체를 반환하지 않고 날짜와 시간 정보를 나타내는 문자열을 반환한다.
+
+```js
+Date(); // 'Sat Mar 05 2022 22:43:33 GMT+0900 (한국 표준시)'
+```
+
+<h4> new Date(milliseconds) </h4>
+
+Date 생성자 함수에 숫자 타입의 밀리초를 인수로 전달하면 1970년 1월 1일 00:00:00(UTC)을 기점으로 인수로 전달된 밀리초만큼 경과한 날짜와 시간을 나타내는 Date 객체를 반환한다.
+
+```js
+// 한국 표준시 KST는 협정 세계시 UTC에 9시간을 더한 시간이다.
+new Date(0); // Thu Jan 01 1970 09:00:00 GMT+0900 (한국 표준시)
+
+/*
+86400000ms는 1day를 의미한다.
+1s = 1,000ms
+1m = 60s * 1,000ms = 60,000ms
+1h = 60m * 60,000ms = 3,600,000ms
+1d = 24h * 3,600,000ms = 86,400,000ms
+*/
+
+new Date(86400000); // Fri Jan 02 1970 09:00:00 GMT+0900 (한국 표준시)
+```
+
+<h4> new Date(dateString) </h4>
+
+Date 생성자 함수에 날짜와 시간을 나타내는 문자열을 인수로 전달하면 지정된 날짜와 시간을 나타내는 Date 객체를 반환한다. 이때 인수로 전달한 문자열은 Date.parse 메서드에 의해 해석 가능한 형식이어야 한다.
+
+```js
+new Date('May 26, 2020 10:00:00');
+// Tue May 26 2020 10:00:00 GMT+0900 (한국 표준시)
+
+new Date('2020/03/26/10:00:00');
+//Thu Mar 26 2020 10:00:00 GMT+0900 (한국 표준시)
+```
+
+<h4> new Date(year,month[, day, hour, minute, second, millisecond]) </h4>
+
+Date 생성자 함수에 연, 월, 일, 시, 분, 초, 밀리초를 의미하는 숫자를 인수로 전달하면 지정된 날짜와 시간을 나타내는 Date 객체를 반환한다. 이때 연, 월은 반드시 지정해야 한다. 지정하지 않은 옵션 정보는 0 또는 1로 초기화된다. 연, 월을 지정하지 않은 경우 1970년 1월 1일 00:00:00(UTC)을 나타내는 Date 객체를 반환한다.
+
+---
+
+<h3> Date 메서드 </h3>
+
+<h4> Date.now </h4>
+
+1970년 1월 1일 00:00:00(UTC)을 기점으로 현재 시간까지 경과한 밀리초를 숫자로 반환한다.
+
+```js
+const now = Date.now(); // 1646488707932
+
+new Date(now);
+//Sat Mar 05 2022 22:57:59 GMT+0900 (한국 표준시)
+```
+
+<h4> Date.parse </h4>
+
+1970년 1월 1일 00:00:00(UTC)을 기점으로 인수로 전달된 지정 시간까지의 밀리초를 숫자로 반환한다.
+
+```js
+// UTC
+Date.parse('Jan 2, 1970 00:00:00 UTC'); // 86400000
+
+// KST
+Date.parse('Jan 2, 1970 09:00:00'); // 86400000
+
+// KST
+Date.parse('1970/01/02/09:00:00'); // 86400000
+```
+
+<h4> Date.UTC </h4>
+
+1970년 1월 1일 00:00:00(UTC)을 기점으로 인수로 전달된 지정 시간까지의 밀리초를 숫자로 반환한다.
+
+Date.UTC 메서드는 new Date(year,month[, day, hour, minute, second, millisecond])와 같은 형식의 인수를 사용해야 한다. Date.UTC 메서드의 인수는 로컬 타임(KST)이 아닌 UTC로 인식된다. month는 월을 의미하는 0~11까지의 정수다. 0부터 시작하므로 주의가 필요하다.
+
+```js
+Date.UTC(1970, 0, 2); // 86400000
+Date.UTC('1970/1/2'); // NaN
+```
+
+<h4> Date.prototype.getFullYear </h4>
+
+Date 객체의 연도를 나타내는 정수를 반환한다.
+
+```js
+new Date('2020/07/24').getFullYear(); // 2020
+```
+
+<h4> Date.prototype.setFullYear </h4>
+
+Date 객체에 연도를 나타내는 정수를 설정한다. 연도 이외에 옵션으로 월, 일도 설정할 수 있다.
+
+```js
+const today = new Date();
+
+// 년도 지정
+today.setFullYear(2000);
+today.getFullYear(); // 2000
+
+// 년도/월/일 지정
+today.setFullYear(1900, 0, 1);
+today.getFullYear(); // 1900
+```
+
+<h4> Date.prototype.getMonth </h4>
+
+Date 객체의 월을 나타내는 0~11의 정수를 반환한다. 1월은 0, 12월은 11이다.
+
+```js
+new Date('2020/07/24').getMonth(); // 6
+```
+
+<h4> Date.prototype.setMonth </h4>
+
+Date 객체에 월을 나타내는 0 ~ 11의 정수를 설정한다. 1월은 0, 12월은 11이다. 월 이외에 옵션으로 일도 설정할 수 있다.
+
+```js
+const today = new Date();
+
+// 월 지정
+today.setMonth(0); // 1월
+today.getMonth(); // 0
+
+// 월/일 지정
+today.setMonth(11, 1); // 12월 1일
+today.getMonth(); // 11
+```
+
+<h4> Date.prototype.getDate </h4>
+
+Date 객체의 날짜(1 ~ 31)를 나타내는 정수를 반환한다.
+
+```js
+new Date('2020/07/24').getDate(); // 24
+```
+
+<h4> Date.prototype.setDate </h4>
+
+Date 객체의 날짜(1 ~ 31)를 나타내는 정수를 설정한다.
+
+```js
+const today = new Date();
+
+// 날짜 지정
+today.setDate(1);
+today.getDate(); // 1
+```
+
+<h4> Date.prototype.getDay </h4>
+
+Date 객체의 요일(0 ~ 6)을 나타내는 정수를 반환한다.
+
+```js
+new Date('2020/07/24').getDay(); // 5
+```
+
+<h4> Date.prototype.getHours </h4>
+
+Date 객체의 시간(0 ~ 23)을 나타내는 정수를 반환한다.
+
+```js
+new Date('2020/07/24/12:00').getHours(); // 12
+```
+
+<h4> Date.prototype.setHours </h4>
+
+Date 객체에 시간(0 ~ 23)을 나타내는 정수를 설정한다. 시간 이외에 옵션으로 분, 초, 밀리초도 설정할 수 있다.
+
+```js
+const today = new Date();
+
+// 시간 지정
+today.setHours(7);
+today.getHours(); // 7
+
+// 시간/분/초/밀리초 지정
+today.setHours(0, 0, 0, 0); // 00:00:00
+today.getHours(); // 0
+```
+
+<h4> Date.prototype.getMinutes </h4>
+
+Date 객체의 분(0 ~ 59)을 나타내는 정수를 반환한다.
+
+```js
+new Date('2020/07/24/12:30').getMinutes(); // 30
+```
+
+<h4> Date.prototype.setMinutes </h4>
+
+Date 객체에 분(0 ~ 59)을 나타내는 정수를 설정한다. 분 이외에 옵션으로 초, 밀리초도 설정할 수 있다.
+
+```js
+const today = new Date();
+
+// 분 지정
+today.setMinutes(50); 
+today.getMinutes(); // 50
+
+// 분/초/밀리초 지정
+today.setMinutes(5, 10, 999); // HH:05:10:999
+today.getMinutes(); // 5
+```
+
+<h4> Date.prototype.getSeconds </h4>
+
+Date 객체의 초(0 ~ 59)를 나타내는 정수를 반환한다.
+
+```js
+new Date('2020/07/24/12:30:10').getSeconds(); // 10
+```
+
+<h4> Date.prototype.setSeconds </h4>
+
+Date 객체에 초(0 ~ 59)를 나타내는 정수를 설정한다. 초 이외에 옵션으로 밀리초도 설정할 수 있다.
+
+```js
+const today = new Date();
+
+// 초 지정
+today.setSeconds(30);
+today.getSeconds(); // 30
+
+// 초/밀리초 지정
+today.setSeconds(10, 0); // HH:MM:10:000
+today.getSeconds(); // 10
+```
+
+<h4> Date.prototype.getMilliseconds </h4>
+
+Date 객체의 밀리초(0 ~ 999)를 나타내는 정수를 반환한다.
+
+```js
+new Date('2020/07/24/12:30:10:150').getMilliseconds(); // 150
+```
+
+<h4> Date.prototype.setMilliseconds </h4>
+
+Date 객체에 밀리초(0 ~ 999)를 나타내는 정수를 설정한다.
+
+```js
+const today = new Date();
+
+// 밀리초 지정
+today.setMilliseconds(123);
+today.getMilliseconds(); // 123
+```
+
