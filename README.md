@@ -10359,7 +10359,7 @@ today.toTimeString(); // '12:30:00 GMT+0900 (한국 표준시)'
 
 ```js
 // 사용자로부터 입력받은 휴대폰 전화번호
-const tel = '010-1234-567팔';
+const tel = "010-1234-567팔";
 
 // 정규 표현식 리터럴로 휴대폰 전화번호 패턴을 정의한다.
 const regExp = /^\d{3}-\d{4}-\d{4}$/;
@@ -10394,7 +10394,7 @@ regexp.test(target); // true
 RegExp 생성자 함수를 사용하여 RegExp 객체를 생성할 수도 있다.
 
 ```js
-const target = 'Is this all there is?';
+const target = "Is this all there is?";
 
 const regexp = new RegExp(/is/i); // ES6
 // const regexp = new RegExp(/is/, 'i');
@@ -10412,7 +10412,7 @@ regexp.test(target); // true
 exec 메서드는 인수로 전달받은 문자열에 대해 정규 표현식의 패턴을 검색하여 매칭 결과를 배열로 반환한다. 매칭 결과가 없는 경우 null을 반환한다.
 
 ```js
-const target = 'Is this all there is?';
+const target = "Is this all there is?";
 const regExp = /is/;
 
 regExp.exec(target);
@@ -10421,13 +10421,12 @@ regExp.exec(target);
 
 exec 메서드는 문자열 내의 모든 패턴을 검색하는 g 플래그를 지정해도 첫 번째 매칭 결과만 반환하므로 주의하기 바란다.
 
-
 <h4> RegExp.prototype.test </h4>
 
 test 메서드는 인수로 전달받은 문자열에 대해 정규 표현식의 패턴을 검색하여 매칭 결과를 불리언 값으로 반환한다.
 
 ```js
-const target = 'Is this all there is?';
+const target = "Is this all there is?";
 const regExp = /is/;
 
 regExp.test(target); // true
@@ -10438,7 +10437,7 @@ regExp.test(target); // true
 String 표준 빌트인 객체가 제공하는 match 메서드는 대상 문자열과 인수로 전달받은 정규 표현식과의 매칭 결과를 배열로 반환한다.
 
 ```js
-const target = 'Is this all there is?';
+const target = "Is this all there is?";
 const regExp = /is/;
 
 target.match(regExp);
@@ -10453,11 +10452,11 @@ exec 메서드는 문자열 내의 모든 패턴을 검색하는 g 플래그를 
 
 패턴과 함께 정규 표현식을 구성하는 플래그는 정규 표현식의 검색 방식을 설정하기 위해 사용한다. 플래그는 총 6개 있다. 그중 중요한 3개의 플래그를 살펴보자.
 
-| 플래그  | 의미  | 설명  |
-|:-:|:-:|:-:|
-| i  | Ignore case  | 대소문자를 구별하지 않고 패턴을 검색한다.  |
-| g  | Global  | 대상 문자열 내에서 패턴과 일치하는 모든 문자열을 전역 검색한다.  |
-| m  | Multi line  | 문자열의 행이 바뀌더라도 패턴 검색을 계속한다.  |
+| 플래그 |    의미     |                              설명                               |
+| :----: | :---------: | :-------------------------------------------------------------: |
+|   i    | Ignore case |            대소문자를 구별하지 않고 패턴을 검색한다.            |
+|   g    |   Global    | 대상 문자열 내에서 패턴과 일치하는 모든 문자열을 전역 검색한다. |
+|   m    | Multi line  |         문자열의 행이 바뀌더라도 패턴 검색을 계속한다.          |
 
 플래그는 옵션이므로 선택적으로 사용할 수 있으며, 순서와 상관없이 하나 이상의 플래그를 동시에 설정할 수도 있다. 어떠한 플래그도 사용하지 않은 경우 대소문자를 구별해서 패턴을 검색한다. 그리고 문자열에 패턴 검색 매칭 대상이 1개 이상 존재해도 첫 번째 매칭한 대상만 검색하고 종료한다.
 
@@ -10476,7 +10475,7 @@ exec 메서드는 문자열 내의 모든 패턴을 검색하는 g 플래그를 
 검색 대상 문자열과 플래그를 생략한 정규 표현식의 매칭 결과를 구하면 대소문자를 구별하여 정규 표현식에 매치한 첫 번째 결과만 반환한다.
 
 ```js
-const target = 'Is this all there is?';
+const target = "Is this all there is?";
 
 // 'is' 문자열과 매치하는 패턴. 플래그가 생략되었으므로 대소문자를 구별한다.
 const regExp = /is/;
@@ -10496,7 +10495,7 @@ target.match(regExp);
 .은 임의의 문자 한 개를 의미한다. 문자의 내용은 무엇이든 상관없다. 다음 예제의 경우 .을 3개 연속하여 패턴을 생성했으므로 문자의 내용과 상관없이 3자리 문자열과 매치한다.
 
 ```js
-const target = 'Is this all there is?';
+const target = "Is this all there is?";
 
 // 임의의 3자리 문자열을 대소문자를 구별하여 전역 검색한다.
 const regExp = /.../g;
@@ -10509,7 +10508,7 @@ target.match(regExp); // ["Is ", "this", "s a", "ll ", "the", "re ", "is?"]
 {m,n}은 앞선 패턴(다음 예제의 경우 A)이 최소 m번, 최대 n번 반복되는 문자열을 의미한다. 콤마 뒤에 공백이 있으면 정상 동작하지 않으므로 주의하기 바란다.
 
 ```js
-const target = 'A AA B BB Aa Bb AAA';
+const target = "A AA B BB Aa Bb AAA";
 
 // 'A'가 최소 1번, 최대 2번 반복되는 문자열을 전역 검색한다.
 const regExp = /A{1,2}/g;
@@ -10520,7 +10519,7 @@ target.match(regExp); // ["A", "AA", "A", "AA", "A"]
 {n}은 앞선 패턴이 n번 반복되는 문자열을 의미한다. 즉, {n}은 {n, n}과 같다.
 
 ```js
-const target = 'A AA B BB Aa Bb AAA';
+const target = "A AA B BB Aa Bb AAA";
 
 // 'A'가 2번 반복되는 문자열을 전역 검색한다.
 const regExp = /A{2}/g;
@@ -10531,7 +10530,7 @@ target.match(regExp); // ["AA", "AA"]
 {n,}은 앞선 패턴이 최소 n번 이상 반복되는 문자열을 의미한다.
 
 ```js
-const target = 'A AA B BB Aa Bb AAA';
+const target = "A AA B BB Aa Bb AAA";
 
 // 'A'가 최소 2번 이상 반복되는 문자열을 전역 검색한다.
 const regExp = /A{2,}/g;
@@ -10542,7 +10541,7 @@ target.match(regExp); // ["AA", "AAA"]
 +는 앞선 패턴이 최소 한번 이상 반복되는 문자열을 의미한다. 즉, +는 {1,}과 같다. 다음 예제의 경우 A+는 앞선 패턴 'A'가 한번 이상 반복되는 문자열, 즉 'A'만으로 이루어진 문자열 'A', 'AA', 'AAA', ... 와 매치한다.
 
 ```js
-const target = 'A AA B BB Aa Bb AAA';
+const target = "A AA B BB Aa Bb AAA";
 
 // 'A'가 최소 한 번 이상 반복되는 문자열('A', 'AA', 'AAA', ...)을 전역 검색한다.
 const regExp = /A+/g;
@@ -10553,7 +10552,7 @@ target.match(regExp); // ["A", "AA', "A", "AAA"]
 ?는 앞선 패턴이 최대 한 번(0번 포함) 이상 반복되는 문자열을 의미한다. 즉, ?는 {0, 1}과 같다. 다음 예제의 경우 /colou?r/는 'colo' 다음 'u'가 최대 한 번(0번 포함) 이상 반복되고 'r'이 이어지는 문자열 'color', 'colour'와 매치한다.
 
 ```js
-const target = 'color colour';
+const target = "color colour";
 
 // 'colo' 다음 'u'가 최대 한번(0번 포함) 이상 반복되고 'r'이 이어지는
 // 문자열 'color', 'colour'를 전역 검색한다.
@@ -10567,7 +10566,7 @@ target.match(regExp); // ["color", "colour"]
 |는 or의 의미를 갖는다. 다음 예제의 /A|B/는 'A' 또는 'B'를 의미한다.
 
 ```js
-const target = 'A AA B BB Aa Bb';
+const target = "A AA B BB Aa Bb";
 
 // 'A' 또는 'B'를 전역 검색한다.
 const regExp = /A|B/g;
@@ -10632,7 +10631,7 @@ target.match(regExp); // -> [" ", " ", ",", " $%&"]
 
 <h4> NOT 검색 </h4> 
   
-[...] 내의 ^은 not의 의미를 갖는다. 
+[...] 내의 ^은 not의 의미를 갖는다.
 
 ```js
 const target = "AA BB 12 Aa Bb";
@@ -10676,7 +10675,7 @@ regExp.test(target); // -> true
 <h4> 특정 단어로 시작하는지 검사 </h4>
 
 ```js
-const url = 'https://example.com';
+const url = "https://example.com";
 
 // 'http://' 또는 'https://'로 시작하는지 검사한다.
 /^https:?\/\//.test(url); // true
@@ -10689,7 +10688,7 @@ const url = 'https://example.com';
 <h4> 특정 단어로 끝나는지 검사 </h4>
 
 ```js
-const fileName = 'index.html';
+const fileName = "index.html";
 
 // 'html'로 끝나는지 검사한다.
 /html$/.test(fileName); // true
@@ -10698,7 +10697,7 @@ const fileName = 'index.html';
 <h4> 숫자로만 이루어진 문자열인지 검사 </h4>
 
 ```js
-const target = '12345';
+const target = "12345";
 
 // 숫자로만 이루어진 문자열인지 검사한다.
 /^\d+$/.test(target); // true
@@ -10707,7 +10706,7 @@ const target = '12345';
 <h4> 하나 이상의 공백으로 시작하는지 검사 </h4>
 
 ```js
-const target = ' Hi!';
+const target = " Hi!";
 
 // 하나 이상의 공백으로 시작하는지 검사한다.
 /^[\s]+/.test(target); // true
@@ -10716,7 +10715,7 @@ const target = ' Hi!';
 <h4> 아이디로 사용 가능한지 검사 </h4>
 
 ```js
-const id = 'abc123';
+const id = "abc123";
 
 // 알파벳 대소문자 또는 숫자로 시작하고 끝나며 4~10자리인지 검사한다.
 /^[A-Za-z0-9]{4,10}$/.test(id); // true
@@ -10733,10 +10732,10 @@ const email = 'goww1357@gmail.com'
 <h4> 핸드폰 번호 형식에 맞는지 검사 </h4>
 
 ```js
-const cellphone = '010-5033-1643';
+const cellphone = "010-5033-1643";
 
 /^\d{3}-\d{3,4}-\d{4}$/.test(cellphone); // true
-``` 
+```
 
 <h4> 특수 문자 포함 여부 검사 </h4>
 
@@ -10769,7 +10768,7 @@ console.log(strObj); // String {length: 0, [[PrimitiveValue]]: ""}
 String 생성자 함수의 인수로 문자열을 전달하면서 new 연산자와 함께 호출하면 [[StringData]] 내부 슬롯에 인수로 전달받은 문자열을 할당한 String 래퍼 객체를 생성한다.
 
 ```js
-const strObj = new String('Lee');
+const strObj = new String("Lee");
 console.log(strObj);
 // String {0: "L", 1: "e", 2: "e", length: 3, [[PrimitiveValue]]: "Lee"}
 ```
@@ -10783,7 +10782,7 @@ console.log(strObj[0]); // L
 단, 문자열은 원시 값이므로 변경할 수 없다. 이때 에러가 발생하지 않는다.
 
 ```js
-strObj[0] = 'S';
+strObj[0] = "S";
 console.log(strObj); // 'Lee'
 ```
 
@@ -10819,8 +10818,8 @@ String(false); // "false"
 length 프로퍼티는 문자열의 문자 개수를 반환한다.
 
 ```js
-'Hello'.length; // 5
-'안녕하세요!'.length; // 6
+"Hello".length; // 5
+"안녕하세요!".length; // 6
 ```
 
 String 래퍼 객체는 배열과 마찬가지로 length 프로퍼티를 갖는다. 그리고 인덱스를 나타내는 숫자를 프로퍼티 키로, 각 문자를 프로퍼티 값으로 가지므로 String 래퍼 객체는 유사 배열 객체다.
@@ -10834,7 +10833,7 @@ String 래퍼 객체는 배열과 마찬가지로 length 프로퍼티를 갖는�
 하지만 String 객체에는 원본 String 래퍼 객체(String 메서드를 호출한 String 래퍼 객체)를 직접 변경하는 메서드는 존재하지 않는다. 즉, String 객체의 메서드는 언제나 새로운 문자열을 반환한다. 문자열은 변경 불가능한 원시 값이기 때문에 **String 래퍼 객체도 읽기 전용 객체로 제공된다.**
 
 ```js
-const strObj = new String('Lee');
+const strObj = new String("Lee");
 
 console.log(Object.getOwnPropertyDescriptors(strObj));
 /* String 래퍼 객체는 읽기 전용 객체다. 즉, writable 프로퍼티 어트리뷰트 값이 false다.
@@ -10857,29 +10856,29 @@ console.log(Object.getOwnPropertyDescriptors(strObj));
 indexOf 메서드는 대상 문자열(메서드를 호출한 문자열)에서 인수로 전달받은 문자열을 검색하여 첫 번째 인덱스를 반환한다. 검색에 실패하면 -1을 반환한다.
 
 ```js
-const str = 'Hello World';
+const str = "Hello World";
 
 // 문자열 str에서 'l'을 검색하여 첫 번째 인덱스를 반환한다.
-str.indexOf('l'); // 2
+str.indexOf("l"); // 2
 
 // 문자열 str에서 'or'를 검색하여 첫 번째 인덱스를 반환한다.
-str.indexOf('or'); // 7
+str.indexOf("or"); // 7
 
 // 문자열 str에서 'x'를 검색하여 첫 번째 인덱스를 반환한다.
-str.indexOf('x'); // -1
+str.indexOf("x"); // -1
 ```
 
 indexOf 메서드의 2번째 인수로 검색을 시작할 인덱스를 전달할 수 있다.
 
 ```js
 // 문자열 str의 인덱스 3부터 'l'을 검색하여 첫 번째 인덱스를 반환한다.
-str.indexOf('l', 3 ); // 3
+str.indexOf("l", 3); // 3
 ```
 
 indexOf 메서드는 대상 문자열에 특정 문자열이 존재하는지 확인할 떄 유용하다.
 
 ```js
-if(str.indexOf('Hello') !== -1) {
+if (str.indexOf("Hello") !== -1) {
   // 문자열 str에 'Hello'가 포함되어 있는 경우에 처리할 내용
 }
 ```
@@ -10889,7 +10888,7 @@ if(str.indexOf('Hello') !== -1) {
 search 메서드는 대상 문자열에서 인수로 전달받은 정규 표현식과 매치하는 문자열을 검색하여 일치하는 문자열의 인덱스를 반환한다. 검색에 실패하면 -1을 반환한다.
 
 ```js
-const str = 'Hello world';
+const str = "Hello world";
 
 // 문자열 str에서 정규 표현식과 매치하는 문자열을 검색하여 일치하는 문자열의 인덱스를 반환한다.
 str.search(/o/); // 4
@@ -10901,11 +10900,11 @@ str.search(/x/); // -1
 ES6에서 도입된 includes 메서드는 대상 문자열에 인수로 전달받은 문자열이 포함되어 있는지 확인하여 그 결과를 true 또는 false로 반환한다. includes 메서드의 2번째 인수로 검색을 시작할 인덱스를 전달할 수 있다.
 
 ```js
-const str = 'Hello world';
+const str = "Hello world";
 
-str.includes('Hello'); // true
-str.includes(''); // true
-str.includes('x'); // false
+str.includes("Hello"); // true
+str.includes(""); // true
+str.includes("x"); // false
 str.includes(); // false
 ```
 
@@ -10914,12 +10913,12 @@ str.includes(); // false
 ES6에서 도입된 startsWith 메서드는 대상 문자열이 인수로 전달받은 문자열로 시작하는지 확인하여 그 결과를 true 또는 false로 반환한다. startsWith 메서드의 2번째 인수로 검색을 시작할 인덱스를 전달할 수 있다.
 
 ```js
-const str = 'Hello world';
+const str = "Hello world";
 
 // 문자열 str이 'He'로 시작하는지 확인
-str.startsWith('He'); // true
+str.startsWith("He"); // true
 // 문자열 str이 'x'로 시작하는지 확인
-str.startsWith('x'); // false
+str.startsWith("x"); // false
 ```
 
 <h4> String.prototype.endsWith </h4>
@@ -10931,7 +10930,7 @@ ES6에서 도입된 endsWith 메서드는 대상 문자열이 인수로 전달�
 charAt 메서드는 대상 문자열에서 인수로 전달받은 인덱스에 위치한 문자를 검색하여 반환한다.
 
 ```js
-const str = 'Hello';
+const str = "Hello";
 
 for (let i = 0; i < str.length; i++) {
   console.log(str.charAt(i)); // H e l l o
@@ -10950,7 +10949,7 @@ str.charAt(5); // ''
 substring 메서드는 대상 문자열에서 첫 번째 인수로 전달받은 인덱스에 위치하는 문자부터 두 번째 인수로 전달받은 인덱스에 위치하는 문자의 바로 이전 문자까지의 부분 문자열을 반환한다.
 
 ```js
-const str = 'Hello World';
+const str = "Hello World";
 
 // 인덱스 1부터 인덱스 4 이전까지의 부분 문자열을 반환한다.
 str.substring(1, 4); // ell
@@ -10961,7 +10960,7 @@ str.substring(1, 4); // ell
 substring 메서드의 두 번째 인수는 생략할 수 있다. 이때 첫 번째 인수로 전달한 인덱스에 위치하는 문자부터 마지막 문자까지 부분 문자열을 반환한다.
 
 ```js
-const str = 'Hello World'
+const str = "Hello World";
 
 // 인덱스 1부터 마지막 문자까지 부분 문자열을 반환한다.
 str.substring(1); // 'ello World'
@@ -10969,20 +10968,20 @@ str.substring(1); // 'ello World'
 
 substring 메서드의 첫 번째 인수는 두 번째 인수보다 작은 정수이어야 정상이다. 하지만 다음과 같이 인수를 전달하여도 정상 동작한다.
 
-	- 첫 번째 인수 > 두 번째 인수인 경우 두 인수는 교환된다.
+    - 첫 번째 인수 > 두 번째 인수인 경우 두 인수는 교환된다.
     - 인수 < 0 또는 NaN인 경우 0으로 취급된다.
     - 인수 > 문자열의 길이(str.length)인 경우 인수는 문자열의 길이(str.length)로 취급된다.
-    
+
 String.prototype.indexOf 메서드와 함께 사용하면 특정 문자열을 기준으로 앞뒤에 위치한 부분 문자열을 취득할 수 있다.
 
 ```js
-const str = 'Hello World';
+const str = "Hello World";
 
 // 스페이스를 기준으로 앞에 있는 부분 문자열 취득
-str.substring(0, str.indexOf(' ')); // 'Hello'
+str.substring(0, str.indexOf(" ")); // 'Hello'
 
 // 스페이스를 기준으로 뒤에 있는 부분 문자열 취득
-str.substring(str.indexOf(' ' ) + 1, str.length); // 'World'
+str.substring(str.indexOf(" ") + 1, str.length); // 'World'
 ```
 
 <h4> String.prototype.slice </h4>
@@ -11012,7 +11011,7 @@ str.slice(-5); // ⟶ 'world'
 toUpperCase 메서드는 대상 문자열을 모두 대문자로 변경한 문자열을 반환한다.
 
 ```js
-const str = 'Hello World!';
+const str = "Hello World!";
 
 str.toUpperCase(); // 'HELLO WORLD!'
 ```
@@ -11022,7 +11021,7 @@ str.toUpperCase(); // 'HELLO WORLD!'
 toLowerCase 메서드는 대상 문자열을 모두 소문자로 변경한 문자열을 반환한다.
 
 ```js
-const str = 'Hello World!';
+const str = "Hello World!";
 
 str.toLowercase(); // 'hello world!'
 ```
@@ -11032,7 +11031,7 @@ str.toLowercase(); // 'hello world!'
 trim 메서드는 대상 문자열 앞뒤에 공백 문자가 있을 경우 이를 제거한 문자열을 반환한다.
 
 ```js
-const str = '   foo   ';
+const str = "   foo   ";
 
 str.trim(); // 'foo'
 ```
@@ -11040,7 +11039,7 @@ str.trim(); // 'foo'
 String.prototype.replace 메서드에 정규 표현식을 인수로 전달하여 공백 문자를 제거할 수도 있다.
 
 ```js
-const str = '  foo  ';
+const str = "  foo  ";
 
 // 첫 번째 인수로 전달한 정규 표현식에 매치하는 문자열을 두 번째 인수로 전달한 문자열로 치환한다.
 str.replace(/\s/g, ""); // -> 'foo'
@@ -11053,7 +11052,7 @@ str.replace(/\s+$/g, ""); // -> '   foo'
 ES6에서 도입된 repeat 메서드는 대상 문자열을 인수로 전달받은 정수만큼 반복해 연결한 새로운 문자열을 반환한다. 인수로 전달받은 정수가 0이면 빈 문자열을 반환하고, 음수이면 RangeError를 발생시킨다. 인수를 생략하면 기본값 0이 설정된다.
 
 ```js
-const str = 'abc';
+const str = "abc";
 
 str.repeat(); // ''
 str.repeat(0); // ''
@@ -11068,19 +11067,19 @@ str.repeat(-1); // RangeError: Invalid count value
 replace 메서드는 대상 문자열에서 첫 번째 인수로 전달받은 문자열 또는 정규 표현식을 검색하여 두 번째 인수로 전달한 문자열로 치환한 문자열을 반환한다.
 
 ```js
-const str = 'Hello world';
+const str = "Hello world";
 
 // str에서 첫 번째 인수 'world'를 검색하여 두 번째 인수 'Lee'로 치환한다.
-str.replace('world', 'Lee'); // 'Hello Lee'
+str.replace("world", "Lee"); // 'Hello Lee'
 ```
 
 replace 메서드의 첫 번째 인수로 정규 표현식을 전달할 수도 있다.
 
 ```js
-const str = 'Hello Hello';
+const str = "Hello Hello";
 
 // 'hello'를 대소문자를 구별하지 않고 전역 검색한다.
-str.replace(/hello/gi, 'Lee'); // 'Lee Lee'
+str.replace(/hello/gi, "Lee"); // 'Lee Lee'
 ```
 
 카멜 케이스를 스네이크 케이스로, 스네이크 케이스를 카멜 케이스로 변경하는 함수는 다음과 같다.
@@ -11090,7 +11089,7 @@ str.replace(/hello/gi, 'Lee'); // 'Lee Lee'
 function camelToSnake(camelCase) {
   // /.[A-Z]/g는 임의의 한 문자와 대문자로 이루어진 문자열에 매치한다.
   // 치환 함수의 인수로 매치 결과가 전달되고, 치환 함수가 반환한 결과와 매치 결과를 치환한다.
-  return camelCase.replace(/.[A-Z]/g, match => {
+  return camelCase.replace(/.[A-Z]/g, (match) => {
     console.log(match); // 'oW'
     return match[0] + "_" + match[1].toLowerCase();
   });
@@ -11119,18 +11118,271 @@ snakeToCamel(snakeCase);
 split 메서드는 대상 문자열에서 첫 번째 인수로 전달한 문자열 또는 정규 표현식을 검색하여 문자열을 구분한 후 분리된 각 문자열로 이루어진 배열을 반환한다. 인수로 빈 문자열을 전달하면 각 문자를 모두 분리하고, 인수를 생략하면 대상 문자열 전체를 단일 요소로 하는 배열을 반환한다.
 
 ```js
-const str = 'How are you doing?';
+const str = "How are you doing?";
 
 // 공백으로 구분(단어로 구분)하여 배열로 반환한다.
-str.split(' '); // ["How", "are", "you", "doing?"]
+str.split(" "); // ["How", "are", "you", "doing?"]
 
 // \s는 여러 가지 공백 문자(스페이스, 탭 등)를 의미한다. 즉, [\t\r\n\v\f]와 같은 의미다.
 str.split(/\s/); // ["How", "are", "you", "doing?"]
 
 // 인수로 빈 문자열을 전달하면 각 문자를 모두 분리한다.
-str.split('');
+str.split("");
 // [ "H", "o", "w", "", "a", "r", "e", "", "y", "o, "u", "", "d", "o", "i", "n", "g", "?"]
 
 // 인수를 생략하면 대상 문자열 전체를 단일 요소로 하는 배열을 반환한다.
 str.split(); // ["How are you doing?"]
 ```
+
+---
+
+<h2> 33장. 7번째 데이터 타입 Symbol </h2>
+
+---
+
+<h3> 심벌이란? </h3>
+
+심벌(Symbol)은 ES6에서 도입된 7번째 데이터 타입으로 변경 불가능한 원시 타입의 값이다. 심벌 값은 다른 값과 중복되지 않는 유일무이한 값이다. 따라서 주로 이름의 충돌 위험이 없는 유일한 프로퍼티 키를 만들기 위해 사용한다.
+
+프로퍼티 키로 사용할 수 있는 값은 빈 문자열을 포함하는 모든 문자열 또는 심벌 값이다.
+
+---
+
+<h3> 심벌 값의 생성 </h3>
+
+<h4> Symbol 함수 </h4>
+
+심벌 값은 Symbol 함수를 호출하여 생성한다. 다른 원시값, 즉 문자열, 숫자, 불리언, undefined, null 타입의 값은 리터럴 표기법을 통해 값을 생성할 수 있지만 심벌 값은 Symbol 함수를 호출하여 생성해야 한다. 이때 생성된 심벌 값은 외부로 노출되지 않아 확인할 수 없으며, **다른 값과 절대 중복되지 않는 유일무이한 값이다.**
+
+```js
+// Symbol 함수를 호출하여 유일무이한 심벌 값을 생성한다.
+const mySymbol = Symbol();
+console.log(typeof mySymbol); // symbol
+
+// 심벌 값은 외부로 노출되지 않아 확인할 수 없다.
+console.log(mySymbol); // Symbol()
+```
+
+언뜻 보면 생성자 함수로 객체를 생성하는 것처럼 보이지만 Symbol 함수는 String, Number, Boolean 생성자 함수와는 달리 new 연산자와 함께 호출하지 않는다. new 연산자와 함께 생성자 함수 또는 클래스를 호출하면 객체(인스턴스)가 생성되지만 심벌 값은 변경 불가능한 원시 값이다.
+
+```js
+new Symbol(); // TypeError: Symbol is not a constructor
+```
+
+Symbol 함수에는 선택적으로 문자열을 인수로 전달할 수 있다. 이 문자열은 생성된 심벌 값에 대한 설명으로 디버깅 용도로만 사용되며, 심벌 값 생성에 어떠한 영향도 주지 않는다. 즉, 심벌 값에 대한 설명이 같더라도 생성된 심벌 값은 유일무이한 값이다.
+
+```js
+// 심벌 값에 대한 설명이 같더라도 유일무이한 심벌 값을 생성한다.
+const mySymbol1 = Symbol("mySymbol");
+const mySymbol2 = Symbol("mySymbol");
+
+console.log(mySymbol1 === mySymbol2); // false
+```
+
+심벌 값도 문자열, 숫자, 불리언과 같이 객체처럼 접근하면 암묵적으로 래퍼 객체를 생성한다. 다음 예제의 description 프로퍼티와 toString 메서드는 Symbol.prototype의 프로퍼티다.
+
+```js
+const mySymbol = Symbol("mySymbol");
+
+// 심벌도 래퍼 객체를 생성한다.
+console.log(mySymbol.description); // mySymbol
+console.log(mySymbol.toString()); // Symbol(mySymbol)
+```
+
+심벌 값은 암묵적으로 문자열이나 숫자 타입으로 변환되지 않는다. 단, 불리언 타입으로는 암묵적으로 타입 변환된다. 이를 통해 if 문 등에서 존재 확인이 가능하다.
+
+```js
+const mySymbol = Symbol();
+
+// 심벌 값은 암묵적으로 문자열이나 숫자 타입으로 변환되지 않는다.
+console.log(mySymbol + ""); // TypeError: Cannot convert a Symbol value to a string
+console.log(+mySymbol); // TypeError: Cannot convert a Symbol value to a string
+
+// 불리언 타입으로는 암묵적으로 타입 변환된다.
+console.log(!!mySymbol); // true
+
+// if 문 등에서 존재 확인이 가능하다.
+if (mySymbol) console.log("mySymbol is not empty.");
+```
+
+<h4> Symbol.for / Symbol.keyFor 메서드 </h4>
+
+Symbol.for 메서드는 인수로 전달받은 문자열을 키로 사용하여 키와 심벌 값의 쌍들이 저장되어 있는 전역 심벌 레지스트리에서 해당 키와 일치하는 심벌 값을 검색한다.
+
+    - 검색에 성공하면 새로운 심벌 값을 생성하지 않고 검색된 심벌 값을 반환한다.
+
+    - 검색에 실패하면 새로운 심벌 값을 생성하여 Symbol.for 메서드의 인수로 전달된 키로 전역 심벌 레지스트리에 저장한
+    후, 생성된 심벌 값을 반환한다.
+
+```js
+// 전역 심벌 레지스트리에 mySymbol이라는 키로 저장된 심벌 값이 없으면 새로운 심벌 값을 생성
+const s1 = Symbol.for("mySymbol");
+// 전역 심벌 레지스트리에 mySymbol이라는 키로 저장된 심벌 값이 있으면 해당 심벌 값을 반환
+const s2 = Symbol.for("mySymbol");
+
+console.log(s1 === s2); // true
+```
+
+Symbol 함수는 호출될 때마다 유일무이한 심벌 값을 생성한다. 이때 자바스크립트 엔진이 관리하는 심벌 값 저장소인 전역 심벌 레지스트리에서 심벌 값을 검색할 수 있는 키를 지정할 수 없으므로 전역 심벌 레지스트리에 등록되어 관리되지 않는다. 하지만 Symbol.for 메서드를 사용하면 애플리케이션 전역에서 중복되지 않는 유일무이한 상수인 심벌 값을 단 하나만 생성하여 전역 심벌 레지스트리를 통해 공유할 수 있다.
+
+Symbol.keyFor 메서드를 사용하면 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출할 수 있다.
+
+```js
+// 전역 심벌 레지스트리에 mySymbol이라는 키로 저장된 심벌 값이 없으면 새로운 심벌 값을 생성
+const s1 = Symbol.for("mySymbol");
+// 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출
+Symbol.keyFor(s1); // mySymbol
+
+// Symbol 함수를 호출하여 생성한 심벌 값은 전역 심벌 레지스트리에 등록되어 관리되지 않는다.
+const s2 = Symbol("foo");
+// 전역 심벌 레지스트리에 저장된 심벌 값의 키를 추출
+Symbol.keyFor(s2); // undefined
+```
+
+---
+
+<h3> 심벌과 상수 </h3>
+
+예를 들어, 4방향, 즉 위, 아래, 왼쪽, 오른쪽을 나타내는 상수를 정의한다고 생각해 보자.
+
+```js
+// 위, 아래, 왼쪽, 오른쪽을 나타내는 상수를 정의한다.
+// 이때 값 1, 2, 3, 4에는 특별한 의미가 없고 상수 이름에 의미가 있다.
+const Direction = {
+  UP: 1,
+  DOWN: 2,
+  LEFT: 3,
+  RIGHT: 4,
+};
+
+// 변수에 상수를 할당
+const myDirection = Direction.UP;
+
+if (myDirection === Direction.UP) {
+  console.log("You are going UP.");
+}
+```
+
+위 예제와 같이 값에는 특별한 의미가 없고 상수 이름 자체에 의미가 있는 경우가 있다. 이때 문제는 상수 값 1, 2, 3, 4가 변경될 수 있으며, 다른 변수 값과 중복될 수도 있다는 것이다. 이러한 경우 변경/중복될 가능성이 있는 무의미한 상수 대신 중복될 가능성이 없는 유일무이한 심벌 값을 사용할 수 있다.
+
+```js
+const Direction = {
+  UP: Symbol("up"),
+  DOWN: Symbol("down"),
+  LEFT: Symbol("left"),
+  RIGHT: Symbol("right"),
+};
+
+const myDirection = Direction.UP;
+
+if (myDirection === Direction.UP) {
+  console.log("You are going UP.");
+}
+```
+
+---
+
+<h3> 심벌과 프로퍼티 키 </h3>
+
+객체의 프로퍼티 키는 빈 문자열을 포함하는 모든 문자열 또는 심벌 값으로 만들 수 있으며, 동적으로 생성할 수도 있다.
+
+심벌 값으로 프로퍼티 키를 동적 생성하여 프로퍼티를 만들어 보자. 심벌 값을 프로퍼티 키로 사용하려면 프로퍼티 키로 사용할 심벌 값에 대괄호를 사용해야 한다. 프로퍼티에 접근할 때도 마찬가지로 대괄호를 사용해야 한다.
+
+```js
+const obj = {
+  // 심벌 값으로 프로퍼티 키를 생성
+  [Symbol.for('mySymbol')]: 1
+});
+
+obj[Symbol.for('mySymbol')]; // 1
+```
+
+**심벌 값은 유일무이한 값이므로 심벌 값으로 프로퍼티 키를 만들면 다른 프로퍼티 키와 절대 충돌하지 않는다.** 기존 프로퍼티 키와 충돌하지 않는 것은 물론, 미래에 추가될 어떤 프로퍼티 키와도 충돌할 위험이 없다.
+
+---
+
+<h3> 심벌과 프로퍼티 은닉 </h3>
+
+심벌 값을 프로퍼티 키로 사용하여 생성한 프로퍼티는 for ... in 문이나 Object.keys, Object.getOwnPropertyNames 메서드로 찾을 수 없다. 이처럼 심벌 값을 프로퍼티 키로 사용하여 프로퍼티를 생성하면 외부에 노출할 필요가 없는 프로퍼티를 은닉할 수 있다.
+
+```js
+const obj = {
+  // 심벌 값으로 프로퍼티 키를 생성
+  [Symbol("mySymbol")]: 1,
+};
+
+for (const key in obj) {
+  console.log(key); // 아무것도 출력되지 않는다.
+}
+
+console.log(Object.keys(obj)); // []
+console.log(Object.getOwnPropertyNames(obj)); // []
+```
+
+하지만 프로퍼티를 완전하게 숨길 수 있는 것은 아니다. ES6에서 도입된 Object.getOwnpropertySymbols 메서드를 사용하면 심벌 값을 프로퍼티 키로 사용하여 생성한 프로퍼티를 찾을 수 있다.
+
+```js
+const obj = {
+  // 심벌 값으로 프로퍼티 키를 생성
+  [Symbol("mySymbol")]: 1,
+};
+
+// getOwnPropertySymbols 메서드는 인수로 전달한 객체의 심벌 프로퍼티 키를 배열로 반환한다.
+console.log(Object.getOwnPropertySymbols(obj)); // [Symbol(mySymbol)]
+
+// getOwnPropertySymbols 메서드로 심벌 값도 찾을 수 있다.
+const symbolKey1 = Object.getOwnPropertySymbols(obj)[0];
+console.log(obj[symbolKey1]); // 1
+```
+
+---
+
+<h3> 심벌과 표준 빌트인 객체 확장 </h3>
+
+일반적으로 표준 빌트인 객체에 사용자 정의 메서드를 직접 추가하여 확장하는 것은 권장하지 않는다. 표준 빌트인 객체는 읽기 전용으로 사용하는 것이 좋다.
+
+```js
+// 표준 빌트인 객체를 확장하는 것은 권장하지 않는다.
+Array.prototype.sum = function () {
+  return this.reduce((acc, cur) => acc + cur, 0);
+};
+
+[1, 2].sum(); // 3
+```
+
+---
+
+<h3> Well-known Symbol </h3>
+
+자바스크립트가 기본 제공하는 빌트인 심벌 값이 있다. 빌트인 심벌 값은 Symbol 함수의 프로퍼티에 할당되어 있다. 브라우저 콘솔에서 Symbol 함수를 참조하여 보자.
+
+![](https://images.velog.io/images/hang_kem_0531/post/499465d4-7855-4c9a-9f66-a8e0ce9d48d3/image.png)
+
+자바스크립트가 기본 제공하는 빌트인 심벌 값을 ECMAScript 사양에서는 **Well-known Symbol**이라 부른다. 이는 자바스크립트 엔진의 내부 알고리즘에 사용된다.
+
+예를 들어, Array, String, Map, Set, TypedArray, arguments, NodeList, HTMLCollection과 같이 for ... of 문으로 순회 가능한 빌트인 이터러블은 Well-known Symbol인 Symbol.iterator를 키로 갖는 메서드를 가지며, Symbol.iterator 메서드를 호출하면 이터레이터를 반환하도록 ECMAScript 사양에 규정되어 있다. 빌트인 이터러블은 이 규정 즉, 이터레이션 프로토콜을 준수한다.
+
+만약 빌트인 이터러블이 아닌 일반 객체를 이터러블처럼 동작하도록 구현하고 싶다면 이터레이션 프로토콜을 따르면 된다.
+
+```js
+// 1 ~ 5 범위의 정수로 이루어진 이터러블
+const iterable = {
+  // Symbol.iterator 메서드를 구현하여 이터러블 프로토콜을 준수
+  [Symbol.iterator]() {
+    let cur = 1;
+    const max = 5;
+    // Symbol.iterator 메서드는 next 메서드를 소유한 이터레이터를 반환
+    return {
+      next() {
+        return { value: cur++, done: cur > max + 1 };
+      },
+    };
+  },
+};
+
+for (const num of iterable) {
+  console.log(num); // 1 2 3 4 5
+}
+```
+
+이처럼 심벌은 중복되지 않는 상수 값을 생성하는 것은 물론 기존에 작성된 코드에 영향을 주지 않고 새로운 프로퍼티를 추가하기 위해, 즉 하위 호환성을 보장하기 위해 도입되었다.
