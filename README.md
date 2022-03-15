@@ -12178,11 +12178,11 @@ console.log(x, rest); // 1 { y: 2, z: 3 }
 
 **Set 객체는 중복되지 않는 유일한 값들의 집합이다.** Set 객체는 **배열과 유사**하지만 다음과 같은 차이가 있다.
 
-| 구분  | 배열  | Set 객체  |
-|---|---|---|
-| 동일한 값을 중복하여 포함할 수 있다.  | O  | X  |
-| 요소 순서에 의미가 있다.  | O  | X  |
-| 인덱스로 요소에 접근할 수 있다.  | O  | X  |
+| 구분                                 | 배열 | Set 객체 |
+| ------------------------------------ | ---- | -------- |
+| 동일한 값을 중복하여 포함할 수 있다. | O    | X        |
+| 요소 순서에 의미가 있다.             | O    | X        |
+| 인덱스로 요소에 접근할 수 있다.      | O    | X        |
 
 이러한 Set 객체의 특성은 수학적 집합의 특성과 일치한다. Set은 수학적 집합을 구현하기 위한 자료구조다. 따라서 Set을 통해 교집합, 합집합, 차집합, 여집합 등을 구현할 수 있다.
 
@@ -12201,7 +12201,7 @@ console.log(set); // Set(0) {}
 const set1 = new Set([1, 2, 3, 3]);
 console.log(set1); // Set(3) {1, 2, 3}
 
-const set2 = new Set('hello');
+const set2 = new Set("hello");
 console.log(set2); // Set(4) {"h", "e", "l", "o"}
 ```
 
@@ -12231,7 +12231,7 @@ size 프로퍼티는 setter 함수 없이 getter 함수만 존재하는 접근�
 ```js
 const set = new Set([1, 2, 3]);
 
-console.log(Object.getOwnPropertyDescriptor(Set.prototype, 'size'));
+console.log(Object.getOwnPropertyDescriptor(Set.prototype, "size"));
 // {set: undefined, enumerable: false, configurable: true, get: f}
 
 set.size = 10; // 무시된다.
@@ -12291,14 +12291,14 @@ Set 객체는 객체나 배열과 같이 자바스크립트의 모든 값을 요
 const set = new Set();
 
 set
-.add(1)
-.add('a')
-.add(true)
-.add(undefined)
-.add(null)
-.add({})
-.add([])
-.add(() => {});
+  .add(1)
+  .add("a")
+  .add(true)
+  .add(undefined)
+  .add(null)
+  .add({})
+  .add([])
+  .add(() => {});
 
 console.log(set); // Set(8) {1, "a", true, undefined, null, {}, [], () => {}}
 ```
@@ -12366,10 +12366,10 @@ console.log(set); // Set(0) {}
 
 Set 객체의 요소를 순회하려면 Set.prototype.forEach 메서드를 사용한다. Set.prototype.forEach 메서드는 Array.prototype.forEach 메서드와 유사하게 콜백 함수와 forEach 메서드의 콜백 함수 내부에서 this로 사용될 객체(옵션)를 인수로 전달한다. 이때 콜백 함수는 다음과 같이 3개의 인수를 전달받는다.
 
-	- 첫 번째 인수: 현재 순회 중인 요소 값
+    - 첫 번째 인수: 현재 순회 중인 요소 값
     - 두 번째 인수: 현재 순회 중인 요소 값
     - 세 번째 인수: 현재 순회 중인 Set 객체 자체
-   
+
 첫 번째 인수와 두 번째 인수는 같은 값이다. 이처럼 동작하는 이유는 Array.prototype.forEach 메서드와 인터페이스를 통일하기 위함이며 다른 의미는 없다. Array.prototype.forEach 메서드의 콜백 함수는 두 번째 인수로 현재 순회 중인 요소의 인덱스를 전달받는다. 하지만 Set 객체는 순서에 의미가 없어 배열과 같이 인덱스를 갖지 않는다.
 
 ```js
@@ -12402,7 +12402,7 @@ console.log([...set]); // [1, 2, 3]
 // 이터러블인 Set 객체는 배열 디스트럭처링 할당의 대상이 될 수 있다.
 const [a, ...rest] = set;
 console.log(a, rest); // 1, [2, 3]
-``` 
+```
 
 set 객체는 요소의 순서에 의미를 갖지 않지만 Set 객체를 순회하는 순서는 요소가 추가된 순서를 따른다. 이는 다른 이터러블의 순회와 호환성을 유지하기 위함이다.
 
@@ -12417,12 +12417,12 @@ Set 객체는 수학적 집합을 구현하기 위한 자료구조다. 따라서
 ```js
 Set.prototype.intersection = function (set) {
   const result = new Set();
-  
+
   for (const value of set) {
     // 2개의 set의 요소가 공통되는 요소이면 교집합의 대상이다.
     if (this.has(value)) result.add(value);
   }
-  
+
   return result;
 };
 
@@ -12437,21 +12437,21 @@ console.log(setB.intersection(setA)); // Set(2) {2, 4}
 
 **합집합**
 
-합집합  A ∪ B는 집합 A와 집합 B의 중복 없는 모든 요소로 구성된다.
+합집합 A ∪ B는 집합 A와 집합 B의 중복 없는 모든 요소로 구성된다.
 
 ```js
 Set.prototype.union = function (set) {
   // this(Set 객체)를 복사
   const result = new Set(this);
-  
+
   for(const value of set) {
     // 합집합은 2개의 Set 객체의 모든 요소로 구성된 집합이다. 중복된 요소는 포함되지 않는다.
    result.add(value);
   };
-  
+
   const setA = new Set([1, 2, 3, 4]);
   const setB = new Set([2, 4]);
-  
+
   // setA와 setB의 합집합
   console.log(setA.union(setB)); // Set(4) {1, 2, 3, 4}
   // setB와 setA의 합집합
@@ -12466,12 +12466,12 @@ Set.prototype.union = function (set) {
 Set.prototype.difference = function (set) {
   // this(Set 객체)를 복사
   const result = new Set(this);
-  
+
   for (const value of set) {
     // 차집합은 어느 한쪽 집합에는 존재하지만 다른 한쪽 집합에는 존재하지 않는 요소로 구성된 집합이다.
     result.delete(value);
   }
-  
+
   return result;
 };
 
@@ -12495,7 +12495,7 @@ Set.prototype.isSuperset = function (subset) {
     // superset의 모든 요소가 subset의 모든 요소를 포함하는지 확인
     if (!this.has(value)) return false;
   }
-  
+
   return true;
 };
 
@@ -12514,11 +12514,11 @@ console.log(setB.isSuperset(setA)); // false
 
 **Map 객체는 키와 값의 쌍으로 이루어진 컬렉션이다.** Map 객체는 **객체와 유사**하지만 다음과 같은 차이가 있다.
 
-|  구분 | 객체  | Map 객체  |
-|---|---|---|
-| 키로 사용할 수 있는 값  | 문자열 또는 심벌 값  | 객체를 포함한 모든 값  |
-| 이터러블  |  X | O  |
-| 요소 개수 확인  | Object.keys(obj).length  | map.size  |
+| 구분                   | 객체                    | Map 객체              |
+| ---------------------- | ----------------------- | --------------------- |
+| 키로 사용할 수 있는 값 | 문자열 또는 심벌 값     | 객체를 포함한 모든 값 |
+| 이터러블               | X                       | O                     |
+| 요소 개수 확인         | Object.keys(obj).length | map.size              |
 
 <h4> Map 객체의 생성 </h4>
 
@@ -12532,7 +12532,10 @@ console.log(map); // Map(0) {}
 **Map 생성자 함수는 이터러블을 인수로 전달받아 Map 객체를 생성한다. 이때 인수로 전달되는 이터러블은 키와 값의 쌍으로 이루어진 요소로 구성되어야 한다.**
 
 ```js
-const map1 = new Map([['key1', 'value1'], ['key2', 'value2']]);
+const map1 = new Map([
+  ["key1", "value1"],
+  ["key2", "value2"],
+]);
 console.log(map1); // Map(2) {"key1" => "value1", "key2" => "value2"}
 
 const map2 = new Map([1, 2]); // TypeError: Iterator value 1 is not an entry object
@@ -12541,7 +12544,10 @@ const map2 = new Map([1, 2]); // TypeError: Iterator value 1 is not an entry obj
 Map 생성자 함수의 인수로 전달한 이터러블에 중복된 키를 갖는 요소가 존재하면 값이 덮어써진다. 따라서 Map 객체에는 중복된 키를 갖는 요소가 존재할 수 없다.
 
 ```js
-const map = new Map([['key1', 'value1'], ['key1', 'value2']]);
+const map = new Map([
+  ["key1", "value1"],
+  ["key1", "value2"],
+]);
 console.log(map); // Map(1) {"key1" => "value2"}
 ```
 
@@ -12550,7 +12556,10 @@ console.log(map); // Map(1) {"key1" => "value2"}
 Map 객체의 요소 개수를 확인할 때는 Map.prototype.size 프로퍼티를 사용한다.
 
 ```js
-const { size } = new Map([['key1', 'value1'], ['key2', 'value2']]);
+const { size } = new Map([
+  ["key1", "value1"],
+  ["key2", "value2"],
+]);
 console.log(size); // 2
 ```
 
@@ -12564,7 +12573,7 @@ Map 객체에 요소를 추가할 때는 Map.prototype.set 메서드를 사용�
 const map = new Map();
 console.log(map); // Map(0) {}
 
-map.set('key1', 'value1'); 
+map.set("key1", "value1");
 console.log(map); // Map(1) {"key1" => "value1"}
 ```
 
@@ -12573,9 +12582,7 @@ set 메서드는 새로운 요소가 추가된 Map 객체를 반환한다. 따�
 ```js
 const map = new Map();
 
-map
-.set('key1', 'value1')
-.set('key2', 'value2');
+map.set("key1", "value1").set("key2", "value2");
 
 console.log(map); // Map(2) {"key1" => "value1", "key2" => "value2"}
 ```
@@ -12585,9 +12592,7 @@ Map 객체에는 중복된 키를 갖는 요소가 존재할 수 없기 때문�
 ```js
 const map = new Map();
 
-map
-.set('key1', 'value1')
-.set('key1', 'value2')
+map.set("key1", "value1").set("key1", "value2");
 
 console.log(map); // Map(1) {"key1" => "value2"}
 ```
@@ -12599,13 +12604,11 @@ console.log(map); // Map(1) {"key1" => "value2"}
 ```js
 const map = new Map();
 
-const kyeom = { name: 'Kyeom' };
-const kim = { name: 'Kim' };
+const kyeom = { name: "Kyeom" };
+const kim = { name: "Kim" };
 
 // 객체로 키로 사용할 수 있다.
-map
-.set(kyeom, 'developer')
-.set(kim, 'designer')
+map.set(kyeom, "developer").set(kim, "designer");
 
 console.log(map);
 // Map(2) { {name: "Kyeom"} => "developer", {name: "Kim"} => "designer" }
@@ -12618,15 +12621,13 @@ Map 객체에서 특정 요소를 취득하려면 Map.prototype.get 메서드를
 ```js
 const map = new Map();
 
-const lee = { name: 'Lee' };
-const kim = { name: 'Kim' };
+const lee = { name: "Lee" };
+const kim = { name: "Kim" };
 
-map
-.set(lee, 'developer')
-.set(kim, 'designer');
+map.set(lee, "developer").set(kim, "designer");
 
 console.log(map.get(lee)); // developer
-console.log(map.get('key')); // undefined
+console.log(map.get("key")); // undefined
 ```
 
 <h4> 요소 존재 여부 확인 </h4>
@@ -12634,13 +12635,16 @@ console.log(map.get('key')); // undefined
 Map 객체에 특정 요소가 존재하는지 확인하려면 Map.prototype.has 메서드를 사용한다. has 메서드는 특정 요소의 존재 여부를 나타내는 불리언 값을 반환한다.
 
 ```js
-const lee = { name: 'Lee' };
-const kim = { name: 'Kim' };
+const lee = { name: "Lee" };
+const kim = { name: "Kim" };
 
-const map = new Map([[lee, 'developer'], [kim, 'designer']]);
+const map = new Map([
+  [lee, "developer"],
+  [kim, "designer"],
+]);
 
 console.log(map.has(lee)); // true
-console.log(map.has('key')); // false
+console.log(map.has("key")); // false
 ```
 
 <h4> 요소 삭제 </h4>
@@ -12648,10 +12652,13 @@ console.log(map.has('key')); // false
 Map 객체의 요소를 삭제하려면 Map.prototype.delete 메서드를 사용한다. delete 메서드는 삭제 성공 여부를 나타내는 불리언 값을 반환한다.
 
 ```js
-const lee = { name: 'Lee' };
-const kim = { name: 'Kim' };
+const lee = { name: "Lee" };
+const kim = { name: "Kim" };
 
-const map = new Map([[lee, 'developer'], [kim, 'designer']]);
+const map = new Map([
+  [lee, "developer"],
+  [kim, "designer"],
+]);
 
 map.delete(kim);
 console.log(map); // Map(1) { {name: "Lee"} => "developer" }
@@ -12662,10 +12669,13 @@ console.log(map); // Map(1) { {name: "Lee"} => "developer" }
 Map 객체의 요소를 일괄 삭제하려면 Map.prototype.clear 메서드를 사용한다. clear 메서드는 언제나 undefined를 반환한다.
 
 ```js
-const lee = { name: 'Lee' };
-const kim = { name: 'Kim' };
+const lee = { name: "Lee" };
+const kim = { name: "Kim" };
 
-const map = new Map([[lee, 'developer'], [kim, 'designer']]);
+const map = new Map([
+  [lee, "developer"],
+  [kim, "designer"],
+]);
 
 map.clear();
 console.log(map); // Map(0) {}
@@ -12675,15 +12685,18 @@ console.log(map); // Map(0) {}
 
 Map 객체의 요소를 순회하려면 Map.prototype.forEach 메서드를 사용한다. Map.prototype.forEach 메서드는 Array.prototype.forEach 메서드와 유사하게 콜백 함수와 forEach 메서드의 콜백 함수 내부에서 this로 사용될 객체(옵션)를 인수로 전달한다. 이때 콜백 함수는 다음과 같이 3개의 인수를 전달받는다.
 
-	- 첫 번째 인수: 현재 순회 중인 요소값
+    - 첫 번째 인수: 현재 순회 중인 요소값
     - 두 번째 인수: 현재 순회 중인 요소키
     - 세 번째 인수: 현재 순회 중인 Map 객체 자체
 
 ```js
-const lee = { name: 'Lee' };
-const kim = { name: 'Kim' };
+const lee = { name: "Lee" };
+const kim = { name: "Kim" };
 
-const map = new Map([[lee, 'developer'], [kim, 'designer']]);
+const map = new Map([
+  [lee, "developer"],
+  [kim, "designer"],
+]);
 
 map.forEach((v, k, map) => console.log(v, k, map));
 /*
@@ -12701,10 +12714,13 @@ designer {name: "Kim"} Map(2) {
 **Map 객체는 이터러블이다.** 따라서 for ... of 문으로 순회할 수 있으며, 스프레드 문법과 배열 디스트럭처링 할당의 대상이 될 수도 있다.
 
 ```js
-const lee = { name: 'Lee' };
-const kim = { name: 'Kim' };
+const lee = { name: "Lee" };
+const kim = { name: "Kim" };
 
-const map = new Map([[lee, 'developer'], [kim, 'designer']]);
+const map = new Map([
+  [lee, "developer"],
+  [kim, "designer"],
+]);
 
 // Map 객체는 Map.prototype의 Symbol.iterator 메서드를 상속받는 이터러블이다.
 console.log(Symbol.iterator in map); // true
@@ -12725,11 +12741,11 @@ console.log(a, b); // [{name: "Lee"}, "developer"] [{name: "Kim"}, "designer"]
 
 Map 객체는 이터러블이면서 동시에 이터레이터인 객체를 반환하는 메서드를 제공한다.
 
-| Map 메서드  |  설명 |
-|---|---|
-| Map.prototype.keys  | Map 객체에서 요소키를 값으로 갖는 이터러블이면서 동시에 이터레이터인 객체를 반환한다.  |
-| Map.prototype.values  | Map 객체에서 요소값을 값으로 갖는 이터러블이면서 동시에 이터레이터인 객체를 반환한다.  |
-| Map.prototype.entries  | Map 객체에서 요소키와 요소값을 값으로 갖는 이터러블이면서 동시에 이터레이터인 객체를 반환한다.  |
+| Map 메서드            | 설명                                                                                           |
+| --------------------- | ---------------------------------------------------------------------------------------------- |
+| Map.prototype.keys    | Map 객체에서 요소키를 값으로 갖는 이터러블이면서 동시에 이터레이터인 객체를 반환한다.          |
+| Map.prototype.values  | Map 객체에서 요소값을 값으로 갖는 이터러블이면서 동시에 이터레이터인 객체를 반환한다.          |
+| Map.prototype.entries | Map 객체에서 요소키와 요소값을 값으로 갖는 이터러블이면서 동시에 이터레이터인 객체를 반환한다. |
 
 ---
 
@@ -12737,15 +12753,15 @@ Map 객체는 이터러블이면서 동시에 이터레이터인 객체를 반�
 
 구글의 V8 자바스크립트 엔진으로 빌드된 자바스크립트 런타임 환경인 Node.js의 등장으로 자바스크립트는 웹 브라우저를 벗어나 서버 사이드 애플리케이션 개발에서도 사용할 수 있는 범용 개발 언어가 되었다. 하지만 자바스크립트가 가장 많이 사용되는 분야는 역시 웹 브라우저 환경에서 동작하는 웹페이지/애플리케이션의 클라이언트 사이드다.
 
-대부분의 프로그래밍 언어는 운영체제나 가상 머신 위에서 실행되지만 웹 애플리케이션의 클라이언트 사이드 자바스크립트는 브라우저에서 HTML, CSS와 함께 실행된다. 따라서 브라우저 환경을 고려할 때 더 효율적인 클라이언트 사이드 자바스크립트 프로그래밍이 가능하다. 
+대부분의 프로그래밍 언어는 운영체제나 가상 머신 위에서 실행되지만 웹 애플리케이션의 클라이언트 사이드 자바스크립트는 브라우저에서 HTML, CSS와 함께 실행된다. 따라서 브라우저 환경을 고려할 때 더 효율적인 클라이언트 사이드 자바스크립트 프로그래밍이 가능하다.
 
 이를 위해 브라우저가 HTML, CSS, 자바스크립트로 작성된 텍스트 문서를 어떻게 파싱(해석)하여 브라우저에 렌더링하는지 살펴보자.
 
 > **파싱** <br>
-파싱(구문 분석)은 프로그래밍 언어의 문법에 맞게 작성된 텍스트 문서를 읽어 들여 실행하기 위해 텍스트 문서의 문자열을 토큰으로 분해(어휘 분석)하고, 토큰에 문법적 의미와 구조를 반영하여 트리 구조의 자료구조인 파스 트리를 생성하는 일련의 과정을 말한다. 일반적으로 파싱이 완료된 후에는 파스 트리를 기반으로 중간 언어인 바이트코드를 생성하고 실행한다.
+> 파싱(구문 분석)은 프로그래밍 언어의 문법에 맞게 작성된 텍스트 문서를 읽어 들여 실행하기 위해 텍스트 문서의 문자열을 토큰으로 분해(어휘 분석)하고, 토큰에 문법적 의미와 구조를 반영하여 트리 구조의 자료구조인 파스 트리를 생성하는 일련의 과정을 말한다. 일반적으로 파싱이 완료된 후에는 파스 트리를 기반으로 중간 언어인 바이트코드를 생성하고 실행한다.
 
 > **렌더링** <br>
-렌더링은 HTML, CSS, JS로 작성된 문서를 파싱하여 브라우저에 시각적으로 출력하는 것을 말한다.
+> 렌더링은 HTML, CSS, JS로 작성된 문서를 파싱하여 브라우저에 시각적으로 출력하는 것을 말한다.
 
 다음 그림은 브라우저의 렌더링 과정을 간략하게 표현한 것이다.
 
@@ -12773,7 +12789,7 @@ Map 객체는 이터러블이면서 동시에 이터레이터인 객체를 반�
 
 (사진 출처: https://hanseul-lee.github.io/2020/12/24/20-12-24-URL/)
 
-예를 들어, 
+예를 들어,
 
 1. 브라우저의 주소창에 https://poiemaweb.com을 입력하고 엔터 키를 누르면 루트 요청(/, 스킴과 호스트만으로 구성된 URI에 의한 요청)이 poiemaweb.com 서버로 전송된다. 루트 요청에는 명확히 리소스를 요청하는 내용이 없지만 일반적으로 서버는 루트 요청에 대해 암묵적으로 index.html을 응답하도록 기본 설정되어 있다.
 
@@ -12807,8 +12823,8 @@ HTTP/1.1은 기본적으로 커넥션 당 하나의 요청과 응답만 처리�
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <ul>
@@ -12865,13 +12881,13 @@ CSSOM은 CSS의 상속을 반영하여 생성된다. body 요소에 적용한 fo
 
 지금까지 살펴본 브라우저의 렌더링 과정은 반복해서 실행될 수 있다. 예를 들어, 다음과 같은 경우 반복해서 레이아웃 계산과 페인팅이 재차 실행된다.
 
-	- 자바스크립트에 의한 노드 추가 또는 삭제
-    
+    - 자바스크립트에 의한 노드 추가 또는 삭제
+
     - 브라우저 창의 리사이징에 의한 뷰포트 크기 변경
-    
-    - HTML 요소의 레이아웃(위치, 크기)에 변경을 발생시키는 width/heigth, margin, padding, border, display, 
+
+    - HTML 요소의 레이아웃(위치, 크기)에 변경을 발생시키는 width/heigth, margin, padding, border, display,
     position, top/right/bottom/left 등의 스타일 변경
-    
+
 레이아웃 계산과 페인팅을 다시 실행하는 리렌더링은 비용이 많이 드는, 즉 성능에 악영향을 주는 작업이다. 따라서 가급적 리렌더링이 빈번하게 발생하지 않도록 주의할 필요가 있다.
 
 ---
@@ -12900,7 +12916,7 @@ CSS 파싱 과정과 마찬가지로 렌더링 엔진은 HTML을 한 줄씩 순�
 
 <h4> 바이트코드 생성과 실행 </h4>
 
-파싱의 결과물로서 생성된 AST는 인터프리터가 실행할 수 있는 중간 코드인 바이트코드로 변환되고 인터프리터에 의해 실행된다. 
+파싱의 결과물로서 생성된 AST는 인터프리터가 실행할 수 있는 중간 코드인 바이트코드로 변환되고 인터프리터에 의해 실행된다.
 
 ---
 
@@ -12910,7 +12926,7 @@ CSS 파싱 과정과 마찬가지로 렌더링 엔진은 HTML을 한 줄씩 순�
 
 ![](https://images.velog.io/images/hang_kem_0531/post/1a333120-6efe-46cb-b7ed-e56d7a6fadf2/image.png)
 
-**리플로우**는 레이아웃 계산을 다시 하는 것을 말하며, 노드 추가/삭제, 요소의 크기/위치 변경, 윈도우 리사이징 등 레이아웃에 영향을 주는 변경이 발생한 경우에 한하여 실행된다. 
+**리플로우**는 레이아웃 계산을 다시 하는 것을 말하며, 노드 추가/삭제, 요소의 크기/위치 변경, 윈도우 리사이징 등 레이아웃에 영향을 주는 변경이 발생한 경우에 한하여 실행된다.
 
 **리페인트**는 재결합된 렌더 트리를 기반으로 다시 페인트를 하는 것을 말한다.
 
@@ -12920,33 +12936,32 @@ CSS 파싱 과정과 마찬가지로 렌더링 엔진은 HTML을 한 줄씩 순�
 
 ```html
 <!DOCTYPE html>
-<html> 
-  <head> 
-    <meta charset="UTF-8"> 
-    <link rel="stylesheet" href="style.css"> 
-    <script> 
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <script>
       /* 
       DOM API인 document.getElementById는 DOM에서 id가 'apple'인 HTML 요소를 취득한다. 
       아래 DOM API가 실행되는 시점에는 아직 id가 'apple'인 HTML 요소를 파싱하지 않았기 때문에 
       DOM에는 id가 'apple'인 HTML 요소가 포함되어 있지 않다. 
       따라서 아래 코드는 정상적으로 id가 'apple'인 HTML 요소를 취득하지 못한다. 
-      */ 
-      const $apple = document.getElementById('apple'); 
-      
-      // id가 'apple'인 HTML 요소의 css color 프로퍼티 값을 변경한다. 
-      // 이때 DOM에는 id가 'apple'인 HTML 요소가 포함되어 있지 않기 때문에 에러가 발생한다. 
-      $apple.style.color = 'red'; // TypeError: Cannot read property 'style' of null 
-    </script> 
-  </head> 
-  <body> 
-    <ul> 
-      <li id="apple">Apple</li> 
-      <li id="banana">Banana</li> 
-      <li id="orange">Orange</li> 
-    </ul> 
-  </body> 
-</html>
+      */
+      const $apple = document.getElementById("apple");
 
+      // id가 'apple'인 HTML 요소의 css color 프로퍼티 값을 변경한다.
+      // 이때 DOM에는 id가 'apple'인 HTML 요소가 포함되어 있지 않기 때문에 에러가 발생한다.
+      $apple.style.color = "red"; // TypeError: Cannot read property 'style' of null
+    </script>
+  </head>
+  <body>
+    <ul>
+      <li id="apple">Apple</li>
+      <li id="banana">Banana</li>
+      <li id="orange">Orange</li>
+    </ul>
+  </body>
+</html>
 ```
 
 DOM API인 document.getElementById('apple')은 DOM에서 id가 'apple'인 HTML 요소를 취득한다. 하지만 document.getElementById('apple')을 실행하는 시점에는 아직 id가 'apple'인 HTML 요소를 파싱하지 않았기 때문에 DOM에는 id가 'apple'인 HTML 요소가 포함되어 있지 않다. 따라서 위 예제는 정상적으로 동작하지 않는다.
@@ -12968,10 +12983,538 @@ HTML 파싱과 외부 자바스크립트 파일의 로드가 비동기적으로 
 
 ![](https://images.velog.io/images/hang_kem_0531/post/4a7c8cb5-997c-451a-9cf3-af2941ae5c65/image.png)
 
-여러 개의 script 태그에 async 어트리뷰트를 지정하면 script 태그의 순서와는 상관없이 로드가 완료된 자바스크립트부터 먼저 실행되므로 순서가 보장되지 않는다. 따라서 순서 보장이 필요한 script 태그에는 async 어트리뷰트를 지정하지 않아야 한다. 
+여러 개의 script 태그에 async 어트리뷰트를 지정하면 script 태그의 순서와는 상관없이 로드가 완료된 자바스크립트부터 먼저 실행되므로 순서가 보장되지 않는다. 따라서 순서 보장이 필요한 script 태그에는 async 어트리뷰트를 지정하지 않아야 한다.
 
 <h4> defer 어트리뷰트 </h4>
 
 async 어트리뷰트와 마찬가지로 HTML 파싱과 외부 자바스크립트 파일의 로드가 비동기적으로 동시에 진행된다. 단, 자바스크립트의 파싱과 실행은 HTML 파싱이 완료된 직후, 즉 DOM 생성이 완료된 직후 진행된다. 따라서 DOM 생성이 완료된 이후 실행되어야 할 자바스크립트에 유용하다.
 
 ![](https://images.velog.io/images/hang_kem_0531/post/ce5171f5-1297-4880-8433-1320fec48878/image.png)
+
+---
+
+<h2> 39장. DOM </h2>
+
+브라우저의 렌더링 엔진은 HTML 문서를 파싱하여 브라우저가 이해할 수 있는 자료구조인 DOM을 생성한다. **DOM(Document Object Model)은 HTML 문서의 계층적 구조와 정보를 표현하여 이를 제어할 수 있는 API, 즉 프로퍼티와 메서드를 제공하는 트리 자료구조다.** DOM에 대해 자세히 살펴보자.
+
+---
+
+<h3> 노드 </h3>
+
+<h4> HTML 요소와 노드 객체 </h4>
+
+HTML 요소는 HTML 문서를 구성하는 개별적인 요소를 의미한다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/af5a4c0a-2c67-477f-a4c2-ac45cbb4984d/image.png)
+
+(사진 출처: https://yung-developer.tistory.com/74)
+
+HTML 요소는 렌더링 엔진에 의해 파싱되어 DOM을 구성하는 요소 노드 객체로 변환된다. 이때 HTML 요소의 어트리뷰트는 어트리뷰트 노드로, HTML 요소의 텍스트 콘텐츠는 텍스트 노드로 변환된다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/13a3248c-13d8-4a5a-9e77-3c287ae3c053/image.png)
+
+HTML 문서는 HTML 요소들의 집합으로 이뤄지며, HTML 요소는 중첩 관계를 갖는다. 즉, HTML 요소의 콘텐츠 영역(시작 태그와 종료 태그 사이)에는 텍스트뿐만 아니라 다른 HTML 요소도 포함할 수 있다.
+
+이때 HTML 요소 간에는 중첩 관계에 의해 계층적인 부자 관계가 형성된다. 이러한 HTML 요소 간의 부자 관계를 반영하여 HTML 문서의 구성 요소인 HTML 요소를 객체화한 모든 노드 객체들을 트리 자료 구조로 구성한다.
+
+**트리 자료구조**
+
+트리 자료구조는 노드들의 계층 구조로 이뤄진다. 즉, 트리 자료구조는 부모 노드와 자식 노드로 구성되어 노드 간의 계층적 구조(부자, 형제 관계)를 표현하는 비선형 자료구조를 말한다. 트리 자료구조는 하나의 최상위 노드에서 시작한다. 최상위 노드는 부모 노드가 없으며, 루트 노드라 한다. 루트 노드는 0개 이상의 자식 노드를 갖는다. 자식 노드가 없는 노드를 리프 노드라 한다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/8c0153ae-d9b7-4d15-9d1a-464609c4f173/image.png)
+
+**노드 객체들로 구성된 트리 자료구조를 DOM이라 한다.** 노드 객체의 트리로 구조화되어 있기 때문에 DOM을 **DOM 트리**라고 부르기도 한다.
+
+<h4> 노드 객체의 타입 </h4>
+
+예를 들어, 다음 HTML 문서를 렌더링 엔진이 파싱한다고 생각해보자.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <ul>
+      <li id="apple">Apple</li>
+      <li id="banana">Banana</li>
+      <li id="orange">Orange</li>
+    </ul>
+    <script src="app.js"></script>
+  </body>
+</html>
+```
+
+렌더링 엔진은 위 HTML 문서를 파싱하여 다음과 같이 DOM을 생성한다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/d25d27d4-49c3-4862-8286-105bb06862ca/image.png)
+
+이처럼 DOM은 노드 객체의 계층적인 구조로 구성된다. 노드 객체는 종류가 있고 상속 구조를 갖는다. 노드 객체는 총 12개의 종류(노드 타입)가 있다. 이 중에서 중요한 노드 타입은 다음과 같이 4가지다.
+
+**문서 노드(Document node)**
+
+문서 노드는 DOM 트리의 최상위에 존재하는 루트 노드로서 document 객체를 가리킨다. document 객체는 브라우저가 렌더링한 HTML 문서 전체를 가리키는 객체로서 전역 객체 window의 document 프로퍼티에 바인딩되어 있다. 따라서 문서 노드는 window.document 또는 document로 참조할 수 있다.
+
+브라우저 환경의 모든 자바스크립트 코드는 script 태그에 의해 분리되어 있어도 하나의 전역 객체 window를 공유한다. 따라서 모든 자바스크립트 코드는 전역 객체 window의 document 프로퍼티에 바인딩 되어 있는 하나의 document 객체를 바라본다. 즉, HTML 문서당 document 객체는 유일하다.
+
+문서 노드, 즉 document 객체는 DOM 트리의 루트 노드이므로 DOM 트리의 노드들에 접근하기 위한 진입점 역할을 담당한다. 즉, 요소, 어트리뷰트, 텍스트 노드에 접근하려면 문서 노드를 통해야 한다.
+
+**요소 노드(Element node)**
+
+요소 노드는 HTML 요소를 가리키는 객체다. 요소 노드는 HTML 요소 간의 중첩에 의해 부자 관계를 가지며, 이 부자 관계를 통해 정보를 구조화한다. 따라서 요소 노드는 문서의 구조를 표현한다고 할 수 있다.
+
+**어트리뷰트 노드(Attribute node)**
+
+어트리뷰트 노드는 HTML 요소의 어트리뷰트를 가리키는 객체다. 어트리뷰트 노드는 어트리뷰트가 지정된 HTML 요소의 요소 노드와 연결되어 있다. 단, 요소 노드는 부모 노드와 연결되어 있지만 어트리뷰트 노드는 부모 노드와 연결되어 있지 않고 요소 노드에만 연결되어 있다. 즉, 어트리뷰트 노드는 부모 노드가 없으므로 요소 노드의 형제 노드는 아니다. 따라서 어트리뷰트 노드에 접근하여 어트리뷰트를 참조하거나 변경하려면 먼저 요소 노드에 접근해야 한다.
+
+**텍스트 노드(Text node)**
+
+텍스트 노드는 HTML 요소의 텍스트를 가리키는 객체다. 요소 노드가 문서의 구조를 표현한다면 텍스트 노드는 문서의 정보를 표현한다고 할 수 있다. 텍스트 노드는 요소 노드의 자식 노드이며, 자식 노드를 가질 수 없는 리프 노드다. 즉, 텍스트 노드는 DOM 트리의 최종단이다. 따라서 텍스트 노드에 접근하려면 먼저 부모 노드인 요소 노드에 접근해야 한다.
+
+위 4가지 노드 타입 외에도 주석을 위한 Comment 노드, DOCTYPE을 위한 DocumentType 노드, 복수의 노드를 생성하여 추가할 때 사용하는 DocumentFragment 노드 등 총 12개의 노드 타입이 있다.
+
+<h4> 노드 객체의 상속 구조 </h4>
+
+DOM은 HTML 문서의 계층적 구조와 정보를 표현하며, 이를 제어할 수 있는 API, 즉 프로퍼티와 메서드를 제공하는 트리 자료구조라고 했다. 즉, DOM을 구성하는 노드 객체는 자신의 구조와 정보를 제어할 수 있는 DOM API를 사용할 수 있다. 이를 통해 노드 객체는 자신의 부모, 형제, 자식을 탐색할 수 있으며, 자신의 어트리뷰트와 텍스트를 조작할 수도 있다.
+
+DOM을 구성하는 노드 객체는 ECMAScript 사양에 정의된 표준 빌트인 객체가 아니라 브라우저 환경에서 추가적으로 제공하는 호스트 객체다. 하지만 노드 객체도 자바스크립트 객체이므로 프로토타입에 의한 상속 구조를 갖는다. 노드 객체의 상속 구조는 다음과 같다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/a0998dd7-0008-43f8-9753-dc5932288b2c/image.png)
+
+위 그림과 같이 모든 노드 객체는 Object, EventTarget, Node 인터페이스를 상속받는다. 추가적으로 문서 노드는 Document, HTMLDocument 인터페이스를 상속받고 어트리뷰트 노드는 Attr, 텍스트 노드는 CharacterData 인터페이스를 각각 상속받는다.
+
+요소 노드는 Element 인터페이스를 상속받는다. 또한 요소 노드는 추가적으로 HTMLElement와 태그의 종류별로 세분화된 HTMLHtmlElement, HTMLHeadElement, HTMLBodyElement, HTMLUListElement 등의 인터페이스를 상속받는다.
+
+이를 프로토타입 체인 관점에서 살펴보자. 예를 들어, input 요소를 파싱하여 객체화한 input 요소 노드 객체는 HTMLInputElement, HTMLElement, Element, Node, EventTarget, Object의 prototype에 바인딩되어 있는 프로토타입 객체를 상속받는다. 즉, input 요소 노드 객체는 프로토타입 체인에 있는 모든 프로토타입의 프로퍼티나 메서드를 상속받아 사용할 수 있다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/879597c3-ae77-4cd7-b384-41e75ad2a590/image.png)
+
+배열이 객체인 동시에 배열인 것처럼 input 요소 노드 객체도 다음과 같이 다양한 특성을 갖는 객체이며, 이러한 특성을 나타내는 기능들을 상속을 통해 제공받는다.
+
+| input 요소 노드 객체의 특성                                                | 프로토타입을 제공하는 객체 |
+| -------------------------------------------------------------------------- | -------------------------- |
+| 객체                                                                       | Object                     |
+| 이벤트를 발생시키는 객체                                                   | EventTarget                |
+| 트리 자료구조의 노드 객체                                                  | Node                       |
+| 브라우저가 렌더링할 수 있는 웹 문서의 요소(HTML, XML, SVG)를 표현하는 객체 | Element                    |
+| 웹 문서의 요소 중에서 HTML 요소를 표현하는 객체                            | HTMLElement                |
+| HTML 요소 중에서 input 요소를 표현하는 객체                                | HTMLInputElement           |
+
+노드 객체에는 노드 객체의 종류, 즉 노드 타입에 상관없이 모든 노드 객체가 공통으로 갖는 기능도 있고, 노드 타입에 따라 고유한 기능도 있다. 예를 들어, 모든 노드 객체는 공통적으로 이벤트를 발생시킬 수 있다. 이벤트에 관련된 기능은 EventTarget 인터페이스가 제공된다. 또한 모든 노드 객체는 트리 자료의 노드로서 공통적으로 트리 탐색 기능이나 노드 정보 제공 기능이 필요하다. 이 같은 노드 관련 기능은 Node 인터페이스가 제공한다.
+
+HTML 요소가 객체화된 요소 노드 객체는 HTML 요소가 갖는 공통적인 기능이 있다. 예를 들어, input 요소 노드 객체와 div 요소 노드 객체는 모두 HTML 요소의 스타일을 나타내는 style 프로퍼티가 있다. 이처럼 HTML 요소가 갖는 공통적인 기능은 HTMLElement 인터페이스가 제공한다.
+
+하지만 요소 노드 객체는 HTML 요소 종류에 따라 고유한 기능도 있다. 예를 들어, input 요소 노드 객체는 value 프로퍼티가 필요하지만 div 요소 노드 객체는 value 프로퍼티가 필요하지 않다. 따라서 필요한 기능을 제공하는 인터페이스가 HTML 요소의 종류에 따라 각각 다르다.
+
+이처럼 노드 객체는 공통된 기능일수록 프로토타입 체인의 상위에, 개별적인 고유 기능일수록 프로토타입 체인의 하위에 프로토타입 체인을 구축하여 노드 객체에 필요한 기능, 즉 프로퍼티와 메서드를 제공하는 상속 구조를 갖는다.
+
+지금까지 살펴본 바와 같이 **DOM은 HTML 문서의 계층적 구조와 정보를 표현하는 것은 물론 노드 객체의 종류, 즉 노드 타입에 따라 필요한 기능을 프로퍼티와 메서드의 집합인 DOM API로 제공한다. 이 DOM API를 통해 HTML의 구조와 내용 또는 스타일 등을 동적으로 조작할 수 있다.**
+
+---
+
+<h3> 요소 노드 취득 </h3>
+
+HTML의 구조나 내용 또는 스타일 등을 동적으로 조작하려면 먼저 요소 노드를 취득해야 한다. 텍스트 노드는 요소 노드의 자식 노드이고, 어트리뷰트 노드는 요소 노드와 연결되어 있기 때문에 텍스트 노드나 어트리뷰트 노드를 조작하고자 할 때도 마찬가지다.
+
+예를 들어, HTML 문서 내의 h1 요소의 텍스트를 변경하고 싶은 경우를 생각해보자. 이 경우 먼저 DOM 트리 내에 존재하는 h1 요소 노드를 취득할 필요가 있다. 그리고 취득한 요소 노드의 자식 노드인 텍스트 노드를 변경하면 해당 h1 요소의 텍스트가 변경된다.
+
+이처럼 요소 노드의 취득은 HTML 요소를 조작하는 시작점이다. 이를 위해 DOM은 요소 노드를 취득할 수 있는 다양한 메서드를 제공한다.
+
+<h4> id를 이용한 요소 노드 취득 </h4>
+
+```js
+Document.prototype.getElementById;
+```
+
+<h4> 태그 이름을 이용한 요소 노드 취득 </h4>
+
+```js
+Document.prototype.getElementsByTagName;
+Element.prototype.getElementsByTagName;
+```
+
+```js
+document.getElementsByTagName('li') (o)
+$fruits..getElementsByTagName('li') (o)
+```
+
+<h4> class를 이용한 요소 노드 취득 </h4>
+
+```js
+Document.prototype.getElementsByClassName;
+Element.prototype.getElementsByClassName;
+```
+
+<h4> CSS 선택자를 이용한 요소 노드 취득 </h4>
+
+CSS 선택자는 스타일을 적용하고자 하는 HTML 요소를 특정할 때 사용하는 문법이다.
+
+```css
+/* 전체 선택자: 모든 요소를 선택 */
+* {
+  ...;
+}
+
+/* 태그 선택자: 모든 p 태그 요소를 모두 선택 */
+p {
+  ...;
+}
+
+/* id 선택자: id 값이 'foo'인 요소를 모두 선택 */
+#foo {
+  ...;
+}
+
+/* class 선택자: class 값이 'foo'인 요소를 모두 선택 */
+.foo {
+  ...;
+}
+
+/* 어트리뷰트 선택자: input 요소 중에 type 어트리뷰트 값이 'text'인 요소를 모두 선택 */
+input[type="text"] {
+  ...;
+}
+
+/* 후손 선택자: div 요소의 후손 요소 중 p 요소를 모두 선택 */
+div p {
+  ...;
+}
+
+/* 자식 선택자: div 요소의 자식 요소 중 p 요소를 모두 선택 */
+div > p {
+  ...;
+}
+
+/* 인접 형제 선택자: p 요소의 형제 요소 중에 p 요소 바로 뒤에 위치하는 ul 요소를 선택 */
+p + ul {
+  ...;
+}
+
+/* 일반 형제 선택자: p 요소의 형제 요소 중에 p 요소 뒤에 위치하는 ul 요소를 모두 선택 */
+p ~ ul {
+  ...;
+}
+
+/* 가상 클래스 선택자: hover 상태인 a 요소를 모두 선택 */
+a:hover {
+  ...;
+}
+
+/* 가상 요소 선택자: p 요소의 콘텐츠의 앞에 위치하는 공간을 선택 일반적으로 content 프로퍼티와 함께 사용된다. */
+p::before {
+  ...;
+}
+```
+
+<h4> HTMLCollection과 NodeList </h4>
+
+DOM 컬렉션 객체인 HTMLCollection과 NodeList는 DOM API가 여러 개의 결과값을 반환하기 위한 DOM 컬렉션 객체다. HTMLCollection과 NodeList는 모두 유사 배열 객체이면서 이터러블이다. 따라서 for ... of 문으로 순회할 수 있으며 스프레드 문법을 사용하여 간단히 배열로 변환할 수 있다.
+
+HTMLCollection과 NodeList의 중요한 특징은 노드 객체의 상태 변화를 실시간으로 반영하는 **살아 있는 객체**라는 것이다.
+
+---
+
+<h3> 노드 탐색 </h3>
+
+요소 노드를 취득한 다음, 취득한 요소 노드를 기점으로 DOM 트리의 노드를 옮겨 다니며 부모, 형제, 자식 노드 등을 탐색해야 할 때가 있다. 다음 예제를 살펴보자.
+
+```html
+<ul id="fruits">
+  <li class="apple">Apple</li>
+  <li class="banana">Banana</li>
+  <li class="orange">Orange</li>
+</ul>
+```
+
+ul#fruits 요소는 3개의 자식 요소를 갖는다. 이때 먼저 ul#fruits 요소 노드를 취득한 다음, 자식 노드를 모두 탐색하거나 자식 노드 중 하나만 탐색할 수 있다. li.banana 요소는 2개의 형제 요소와 부모 요소를 갖는다. 이때 먼저 li.banana 요소를 취득한 다음, 형제 노드를 탐색하거나 부모 노드를 탐색할 수 있다.
+
+이처럼 DOM 트리 상의 노드를 탐색할 수 있도록 Node, Element 인터페이스는 트리 탐색 프로퍼티를 제공한다.
+
+![](https://images.velog.io/images/hang_kem_0531/post/4046b3fb-d6fc-4117-a9ec-a00b33fa8eea/image.png)
+
+parentNode, previousSibling, firstChild, childNodes 프로퍼티는 Node.portotype이 제공하고, 프로퍼티키에 Element가 포함된 previousElementSibling, nextElementSibling과 children 프로퍼티는 Element.prototype이 제공한다.
+
+노드 탐색 프로퍼티는 모두 접근자 프로퍼티다. 단, 노드 탐색 프로퍼티는 setter 없이 getter만 존재하여 참조만 가능한 읽기 전용 접근자 프로퍼티다. 읽기 전용 접근자 프로퍼티에 값을 할당하면 아무런 에러 없이 무시된다.
+
+<h4> 공백 텍스트 노드 </h4>
+
+지금까지 언급하지 않았지만 HTML 요소 사이의 스페이스, 탭, 줄바꿈(개행) 등의 공백 문자는 텍스트 노드를 생성한다. 이를 공백 텍스트 노드라 한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul>
+      <li id="apple">Apple</li>
+      <li id="banana">Banana</li>
+      <li id="orange">Orange</li>
+    </ul>
+  </body>
+</html>
+```
+
+텍스트 에디터에서 HTML 문서에 스페이스 키, 탭 키, 엔터 키 등을 입력하면 공백 문자가 추가된다. 위 HTML 문서에도 공백 문서가 포함되어 있다. 따라서 노드를 탐색할 때는 공백 문자가 생성한 공백 텍스트 노드에 주의해야 한다. 인위적으로 HTML 문서의 공백 문자를 제거하면 공백 텍스트 노드를 생성하지 않지만, 가독성이 좋지 않으므로 권장하지 않는다.
+
+<h4> 자식 노드 탐색 </h4>
+
+| 프로퍼티                            | 설명                                                                                                                                                                          |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node.prototype.childNodes           | 자식 노드를 모두 탐색하여 DOM 컬렉션 객체인 NodeList에 담아 반환한다. **childNodes 프로퍼티가 반환한 NodeList에는 요소 노드뿐만 아니라 텍스트 노드도 포함되어 있을 수 있다.** |
+| Element.prototype.children          | 자식 노드 중에서 요소 노드만 모두 탐색하여 DOM 컬렉션 객체인 HTMLCollection에 담아 반환한다. **children 프로퍼티가 반환한 HTMLCollection에는 텍스트 노드가 포함되지 않는다.** |
+| Node.prototype.firstChild           | 첫 번째 자식 노드를 반환한다. 텍스트 노드이거나 요소 노드를 반환한다.                                                                                                         |
+| Node.prototype.lastChild            | 마지막 자식 노드를 반환한다. 텍스트 노드이거나 요소 노드를 반환한다.                                                                                                          |
+| Element.prototype.firstElementChild | 첫 번째 자식 요소 노드를 반환한다. 요소 노드를 반환한다.                                                                                                                      |
+| Element.prototype.lastElementChild  | 마지막 자식 요소 노드를 반환한다. 요소 노드를 반환한다.                                                                                                                       |
+
+<h4> 자식 노드 존재 확인 </h4>
+
+```js
+Node.prototype.hasChildNodes >> boolean;
+```
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+      <li class="banana">Banana</li>
+      <li class="orange">Orange</li>
+    </ul>
+  </body>
+  <script>
+    // 노드 탐색의 기점이 되는 #fruits 요소 노드를 취득한다.
+    const $fruits = document.getElementById("fruits");
+
+    // #fruits 요소의 모든 자식 노드를 탐색한다.
+    // childNodes 프로퍼티가 반환한 NodeList에는 요소 노드뿐만 아니라 텍스트 노드도 포함되어 있다.
+    console.log($fruits.childNodes);
+    // NodeList(7) [text, li.apple, text, li.banana, text, li.orange, text]
+    console.log($fruits.hasChildNodes());
+
+    // #fruits 요소의 모든 자식 노드를 탐색한다.
+    // children 프로퍼티가 반환한 HTMLCollection에는 요소 노드만 포함되어 있다.
+    console.log($fruits.children);
+    // HTMLCollection(3) [li.apple, li.banana, li.orange]
+
+    // #fruits 요소의 첫 번째 자식 노드를 탐색한다.
+    // firstChild 프로퍼티는 텍스트 노드를 반환할 수도 있다.
+    console.log($fruits.firstChild); // #text
+
+    // #fruits 요소의 마지막 자식 노드를 탐색한다.
+    // lastChild 프로퍼티는 텍스트 노드를 반환할 수도 있다.
+    console.log($fruits.lastChild); // #text
+
+    // #fruits 요소의 첫 번째 자식 노드를 탐색한다.
+    // firstElementChild 프로퍼티는 요소 노드만 반환한다.
+    console.log($fruits.firstElementChild); // li.apple
+
+    // #fruits 요소의 마지막 자식 노드를 탐색한다.
+    // lastElementChild 프로퍼티는 요소 노드만 반환한다.
+    console.log($fruits.lastElementChild); // li.orange
+  </script>
+</html>
+```
+
+<h4> 부모 노드 탐색 </h4>
+
+```js
+Node.prototype.parentNode;
+```
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+      <li class="banana">Banana</li>
+      <li class="orange">Orange</li>
+    </ul>
+  </body>
+  <script>
+    // 노드 탐색의 기점이 되는 .banana 요소 노드를 취득한다.
+    const $banana = document.querySelector(".banana");
+
+    // .banana 요소 노드의 부모 노드를 탐색한다.
+    console.log($banana.parentNode); // ul#fruits
+  </script>
+</html>
+```
+
+<h4> 형제 노드 탐색 </h4>
+
+| 프로퍼티                          | 설명                                                                                                                                                                       |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node.prototype.previousSibling    | 부모 노드가 같은 형제 노드 중에서 자신의 이전 형제 노드를 탐색하여 반환한다. previousSibling 프로퍼티가 반환하는 형제 노드는 요소 노드뿐만 아니라 텍스트 노드일 수도 있다. |
+| Node.prototype.nextSibling        | 부모 노드가 같은 형제 노드 중에서 자신의 다음 형제 노드를 탐색하여 반환한다. 요소 노드뿐만 아니라 텍스트 노드일 수도 있다.                                                 |
+| Element.prototype.previousSibling | 부모 노드가 같은 형제 노드 중에서 자신의 이전 형제 요소 노드를 탐색하여 반환한다. 요소 노드만 반환한다.                                                                    |
+| Element.prototype.nextSibling     | 부모 노드가 같은 형제 노드 중에서 자신의 다음 형제 요소 노드를 탐색하여 반환한다. 요소 노드만 반환한다.                                                                    |
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+      <li class="banana">Banana</li>
+      <li class="orange">Orange</li>
+    </ul>
+  </body>
+  <script>
+    // 노드 탐색의 기점이 되는 #fruits 요소 노드를 취득한다.
+    const $fruits = document.getElementById("fruits");
+
+    // #fruits 요소의 첫 번째 자식 노드를 탐색한다.
+    // firstChild 프로퍼티는 요소 노드뿐만 아니라 텍스트 노드를 반환할 수도 있다.
+    const { firstChild } = $fruits;
+    console.log(firstChild); // #text
+
+    // #fruits 요소의 첫 번째 자식 노드(텍스트 노드)의 다음 형제 노드를 탐색한다.
+    // nextSibling 프로퍼티는 요소 노드뿐만 아니라 텍스트 노드를 반환할 수도 있다.
+    const { nextSibling } = firstChild;
+    console.log(nextSibling); // li.apple
+
+    // li.apple 요소의 이전 형제 노드를 탐색한다.
+    // previousSibling 프로퍼티는 요소 노드뿐만 아니라 텍스트 노드를 반환할 수도 있다.
+    const { previousSibling } = nextSibling;
+    console.log(previousSibling); // #text
+
+    // #fruits 요소의 첫 번째 자식 요소 노드를 탐색한다.
+    // firstElementChild 프로퍼티는 요소 노드만 반환한다.
+    const { firstElementChild } = $fruits;
+    console.log(firstElementChild); // li.apple
+
+    // #fruits 요소의 첫 번째 자식 요소 노드(li.apple)의 다음 형제 노드를 탐색한다.
+    // nextElementSibling 프로퍼티는 요소 노드만 반환한다.
+    const { nextElementSibling } = firstElementChild;
+    console.log(nextElementSibling); // li.banana
+
+    // li.banana 요소의 이전 형제 요소 노드를 탐색한다.
+    // previousElementSibling 프로퍼티는 요소 노드만 반환한다.
+    const { previousElementSibling } = nextElementSibling;
+    console.log(previousElementSibling); // li.apple
+  </script>
+</html>
+```
+
+---
+
+<h3> 노드 정보 취득 </h3>
+
+노드 객체에 대한 정보를 취득하려면 다음과 같은 노드 정보 프로퍼티를 사용한다.
+
+| 프로퍼티                | 설명                                                                                                                                                                                                                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Node.prototype.nodeType | 노드 객체의 종류, 즉 노드 타입을 나타내는 상수를 반환한다. 노드 타입 상수는 Node에 정의되어 있다. <br> - Node.ELEMENT_NODE: 요소 노드 타입을 나타내는 상수 1을 반환 <br> - Node.TEXT_NODE: 텍스트 노드 타입을 나타내는 상수 3을 반환 <br> - Node.DOCUMENT_NODE: 문서 노드 타입을 나타내는 상수 9를 반환 |
+| Node.prototype.nodeName | 노드의 이름을 문자열로 반환한다. <br> - 요소 노드: 대문자 문자열로 태그 이름("UL", "LI"등)을 반환 <br> - 텍스트 노드: 문자열 "#text"를 반환 <br> - 문서 노드: 문자열 "#document"를 반환                                                                                                                 |
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+  </body>
+  <script>
+    // 문서 노드의 노드 정보를 취득한다.
+    console.log(document.nodeType); // 9
+    console.log(document.nodeName); // #document
+
+    // 요소 노드의 노드 정보를 취득한다.
+    const $foo = document.getElementById("foo");
+    console.log($foo.nodeType); // 1
+    console.log($foo.nodeName); // DIV
+
+    // 텍스트 노드의 노드 정보를 취득한다.
+    const $textNode = $foo.firstChild;
+    console.log($textNode.nodeType); // 3
+    console.log($textNode.nodeName); // #text
+  </script>
+</html>
+```
+
+---
+
+<h3> 요소 노드의 텍스트 조작 </h3>
+
+<h4> nodeValue </h4>
+
+지금까지 살펴본 노드 탐색, 노드 정보 프로퍼티는 모두 읽기 전용 접근자 프로퍼티다. 지금부터 살펴볼 Node.prototype.nodeValue 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티다. 따라서 nodeValue 프로퍼티는 참조와 할당 모두 가능하다.
+
+노드 객체의 nodeValue 프로퍼티를 참조하면 노드 객체의 값을 반환한다. 노드 객체의 값이란 텍스트 노드의 텍스트다. 따라서 텍스트 노드가 아닌 노드, 즉 문서 노드나 요소 노드의 nodeValue 프로퍼티를 참조하면 null을 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+  </body>
+  <script>
+    // 문서 노드의 nodeValue 프로퍼티를 참조한다.
+    console.log(document.nodeValue); // null
+
+    // 요소 노드의 nodeValue 프로퍼티를 참조한다.
+    const $foo = document.getElementById("foo");
+    console.log($foo.nodeValue); // null
+
+    // 텍스트 노드의 nodeValue 프로퍼티를 참조한다.
+    const $textNode = $foo.firstChild;
+    console.log($textNode.nodeValue); // Hello
+  </script>
+</html>
+```
+
+이처럼 텍스트 노드의 nodeValue 프로퍼티를 참조할 때만 텍스트 노드의 값, 즉 텍스트를 반환한다. 텍스트 노드가 아닌 노드 객체의 nodeValue 프로퍼티를 참조하면 null을 반환하므로 의미가 없다.
+
+텍스트 노드의 nodeValue 프로퍼티에 값을 할당하면 텍스트 노드의 값, 즉 텍스트를 변경할 수 있다. 따라서 요소 노드의 텍스트를 변경하려면 다음과 같은 순서의 처리가 필요하다.
+
+1. 텍스트를 변경할 요소 노드를 취득한 다음, 취득한 요소 노드의 텍스트 노드를 탐색한다. 텍스트 노드는 요소 노드의 자식 노드이므로 firstChild 프로퍼티를 사용하여 탐색한다.
+
+2. 탐색한 텍스트 노드의 nodeValue 프로퍼티를 사용하여 텍스트 노드의 값을 변경한다.
+
+```js
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+  </body>
+  <script>
+    // 1. #foo 요소 노드의 자식 노드인 텍스트 노드를 취득한다.
+    const $textNode = document.getElementById("foo").firstChild;
+
+    // 2. nodeValue 프로퍼티를 사용하여 텍스트 노드의 값을 변경한다.
+    $textNode.nodeValue = "World";
+
+    console.log($textNode.nodeValue); // World
+  </script>
+</html>
+```
+
+<h4> textContent </h4>
+
+Node.prototype.textContent 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 텍스트와 모든 자손 노드의 텍스트를 모두 취득하거나 변경한다.
+
+요소 노드의 textContent 프로퍼티를 참조하면 요소 노드의 콘텐츠 영역 내의 텍스트를 모두 반환한다. 다시 말해, 요소 노드의 childNodes 프로퍼티가 반환한 모든 노드들의 텍스트 노드의 값, 즉 텍스트를 모두 반환한다. 이때 HTML 마크업은 무시된다.
+
+자식 요소 노드가 없고 텍스트만 존재한다면 nodeValue와 textContext 프로퍼티는 같은 결과를 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+  </body>
+  <script>
+    // #foo 요소 노드의 텍스트를 모두 취득한다. 이때 HTML 마크업은 무시된다.
+    console.log(document.getElementById("foo").textContent); // Hello world!
+  </script>
+</html>
+```
+
+참고로 textContent 프로퍼티와 유사한 동작을 하는 innerText 프로퍼티가 있다. innerText 프로퍼티는 다음과 같은 이유로 사용하지 않는 것이 좋다.
+
+- innerText 프로퍼티는 CSS에 순종적이다. 예를 들어, innerText 프로퍼티는 CSS에 의해 비표시로 지정된 요소 노드의 텍스트를 반환하지 않는다.
+
+- innerText 프로퍼티는 CSS를 고려해야 하므로 textContent 프로퍼티보다 느리다.
