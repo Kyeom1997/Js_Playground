@@ -13518,3 +13518,804 @@ Node.prototype.textContent 프로퍼티는 setter와 getter 모두 존재하는 
 - innerText 프로퍼티는 CSS에 순종적이다. 예를 들어, innerText 프로퍼티는 CSS에 의해 비표시로 지정된 요소 노드의 텍스트를 반환하지 않는다.
 
 - innerText 프로퍼티는 CSS를 고려해야 하므로 textContent 프로퍼티보다 느리다.
+
+
+<h3> DOM 조작 </h3>
+
+DOM 조작은 새로운 노드를 생성하여 DOM에 추가하거나 기존 노드를 삭제 또는 교체하는 것을 말한다. DOM 조작에 의해 DOM에 새로운 노드가 추가되거나 삭제되면 리플로우와 리페인트가 발생하는 원인이 되므로 성능에 영향을 준다. 따라서 복잡한 콘텐츠를 다루는 DOM 조작은 성능 최적화를 위해 주의해서 다루어야 한다.
+
+<h4> innerHTML </h4>
+
+Element.prototype.innerHTML 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 HTML 마크업을 취득하거나 변경한다. 요소 노드의 innerHTML 프로퍼티를 참조하면 요소 노드의 콘텐츠 영역(시작 태그와 종료 태그 사이) 내에 포함된 모든 HTML 마크업을 문자열로 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world! </span></div>
+  </body>
+  <script>
+    // #foo 요소의 콘텐츠 영역 내의 HTML 마크업을 문자열로 취득한다.
+    console.log(document.getElemenyById("foo").innerHTML);
+    // "Hello <span>world!</span>"
+  </script>
+</html>
+```
+
+앞서 살펴본 textContent 프로퍼티를 참조하면 HTML 마크업을 무시하고 텍스트만 반환하지만 innerHTML 프로퍼티는 HTML 마크업이 포함된 문자열을 그대로 반환한다.
+
+요소 노드의 innerHTML 프로퍼티에 문자열을 할당하면 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열에 포함되어 있는 HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello <span>world!</span></div>
+  </body>
+  <script>
+    // HTML 마크업이 파싱되어 요소 노드의 자식 노드로 DOM에 반영된다.
+    document.getElementById("foo").innerHTML = "Hi <span>there!</span>";
+  </script>
+</html>
+```
+
+![](https://images.velog.io/images/hang_kem_0531/post/3931bb36-42bd-4e20-a941-673c490e7881/%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.png)
+
+이처럼 innerHTML 프로퍼티를 사용하면 HTML 마크업 문자열로 간단히 DOM 조작이 가능하다
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li class="apple">Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 노드 추가
+    $fruits.innerHTML += '<li class="banana">Banana</li>';
+
+    // 노드 교체
+    $fruits.innerHTML = '<li class="orange">Orange</li>';
+
+    // 노드 삭제
+    $fruits.innerHTML = "";
+  </script>
+</html>
+```
+
+요소 노드의 innerHTML 프로퍼티에 할당한 HTML 마크업 문자열은 렌더링 엔진에 의해 파싱되어 요소 노드의 자식으로 DOM에 반영된다. 이때 사용자로부터 입력받은 데이터를 그대로 innerHTML 프로퍼티에 할당하는 것은 **크로스 사이트 스크립팅 공격**에 취약하므로 위험하다. HTML 마크업 내에 자바스크립트 악성 코드가 포함되어 있다면 파싱 과정에서 그대로 실행될 가능성이 있기 때문이다.
+
+innerHTML 프로퍼티로 스크립트 태그를 삽입하여 자바스크립트가 실행되도록 하는 예제를 살펴보자.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+  </body>
+  <script>
+    // innerHTML 프로퍼티로 스크립트 태그를 삽입하여 자바스크립트가 실행되도록 한다.
+    // HTML5는 innerHTML 프로퍼티로 삽입된 script 요소 내의 자바스크립트 코드를 실행하지 않는다.
+    document.getElementById('foo').innerHTML
+      = '<script>alert(document.cookie)</script>';
+  </script>
+</html>
+```
+
+다음의 간단한 크로스 사이트 스크립팅 공격은 모던 브라우저에서도 동작한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="foo">Hello</div>
+  </body>
+  <script>
+    // 에러 이벤트를 강제로 발생시켜서 자바스크립트 코드가 실행되도록 한다.
+    document.getElementById(
+      "foo"
+    ).innerHTML = `<img src="x" onerror="alert(document.cookie)">`;
+  </script>
+</html>
+```
+
+이처럼 innerHTML 프로퍼티를 사용한 DOM 조작은 구현이 간단하고 직관적이라는 장점이 있지만 크로스 사이트 스크립팅 공격에 취약한 단점도 있다.
+
+> **HTML 새니티제이션** <br><br>
+HTML 새니티제이션은 사용자로부터 입력받은 데이터에 의해 발생할 수 있는 크로스 사이트 스크립팅 공격을 예방하기 위해 잠재적 위협을 제거하는 기능을 말한다. 새니티제이션 함수를 직접 구현할 수도 있겠지만 DOMPurify 라이브러리를 사용하는 것을 권장한다.
+
+```js
+DOMPurify.sanitize('<img src="x" onerror="alert(document.cookie)">');
+// => <img src="x">
+```
+
+<h4> insertAdjacentHTML 메서드 </h4>
+
+Element.prototype.insertAdjacentHTML (position, DOMString) 메서드는 기존 요소를 제거하지 않으면서 위치를 지정해 새로운 요소를 삽입한다.
+
+insertAdjacentHTML 메서드는 두 번째 인수로 전달한 HTML 마크업 문자열(DOMString)을 파싱하고 그 결과로 생성된 노드를 첫 번째 인수로 전달한 위치(position)에 삽입하여 DOM에 반영한다. 첫 번째 인수로 전달할 수 있는 문자열은 'beforebegin', 'afterbegin', 'beforeend', 'afterend'의 4가지다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- beforebegin -->
+    <div id="foo">
+      <!--afterbegin -->
+      text
+      <!--beforeend-->
+    </div>
+    <!--afterend-->
+  </body>
+  <script>
+    const $foo = document.getElementById('foo');
+
+    $foo.insertAdjacentHTML('beforebegin', '<p>beforebegin</p>');
+    $foo.insertAdjacentHTML('afterbegin', '<p>afterbegin</p>');
+    $foo.insertAdjacentHTML('beforeend', '<p>beforeend</p>');
+    $foo.insertAdjacentHTML('afterend', '<p>afterend</p>');
+  </script>
+</html>
+```
+
+insertAdjacentHTML 메서드는 기존 요소에는 영향을 주지 않고 새롭게 삽입될 요소만을 파싱하여 자식 요소를 추가하므로 기존의 자식 노드를 모두 제거하고 다시 처음부터 새롭게 자식 노드를 생성하여 자식 요소로 추가하는 innerHTMl 프로퍼티보다 효율적이고 빠르지만, 크로스 사이트 스크립팅 공격에 취약하다는 점은 동일하다.
+
+<h4> 노드 생성과 추가 </h4>
+
+지금까지 살펴본 innerHTML 프로퍼티와 insertAdjacentHTML 메서드는 HTML 마크업 문자열을 파싱하여 노드를 생성하고 DOM에 반영한다. DOM은 노드를 직접 생성/삽입/삭제/치환하는 메서드도 제공한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 1. 요소 노드 생성
+    const $li = document.createElement("li");
+
+    // 2. 텍스트 노드 생성
+    const textNode = document.createTextNode("Banana");
+
+    // 3. 텍스트 노드를 $li 요소 노드의 자식 노드로 추가
+    $li.appendChild(textNode);
+
+    // 4. $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+    $fruits.appendChild($li);
+  </script>
+</html>
+```
+
+<h4> 복수의 노드 생성과 추가 </h4>
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits"></ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    ["Apple", "Banana", "Orange"].forEach((text) => {
+      // 1. 요소 노드 생성
+      const $li = document.createElement("li");
+
+      // 2. 텍스트 노드 생성
+      const textNode = document.createTextNode(text);
+
+      // 3. 텍스트 노드를 $li 요소 노드의 자식 노드로 추가
+      $li.appendChild(textNode);
+
+      // 4. $li 요소 노드를 #fruits 요소 노드의 마지막 자식 노드로 추가
+      $fruits.appendChild($li);
+    });
+  </script>
+</html>
+```
+
+<h4> 노드 삽입 </h4>
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 요소 노드 생성
+    const $li = document.createElement("li");
+
+    // 텍스트 노드를 $li 요소 노드의 마지막 자식 노드로 추가
+    $li.appendChild(document.createTextNode("Orange"));
+
+    // $li 요소 노드를 #fruits 요소 노드의 마지막 자식 요소(Banana) 앞에 삽입
+    $fruits.insertBefore($li, $fruits.lastElementChild);
+    // Apple - Orange - Banana
+  </script>
+</html>
+```
+
+<h4> 노드 이동 </h4>
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Orange</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById('fruits');
+
+    // 이미 존재하는 요소 노드를 취득
+    const [$apple, $banana, ] = $fruits.children;
+
+    // 이미 존재하는 $apple 요소 노드를 #fruits 요소 노드의 마지막 노드로 이동
+    $fruits.appendChild($apple); // Banana - Orange - Apple
+
+    // 이미 존재하는 $banana 요소 노드를 #fruits 요소의 마지막 자식 노드 앞으로 이동
+    $fruits.insertBefore($banana, $fruits.lastElementChild);
+    // Orange - Banana - Apple
+  </script>
+</html>
+```
+
+<h4> 노드 복사 </h4>
+
+Node.prototype.cloneNode([deep: true | false]) 메서드는 노드의 사본을 생성하여 반환한다. 매개변수 deep에 true를 인수로 전달하면 노드를 깊은 복사하여 모든 자손 노드가 포함된 사본을 생성하고, false를 인수로 전달하거나 생략하면 노드를 얕은 복사하여 노드 자신만의 사본을 생성한다. 얕은 복사로 생성된 요소 노드는 자손 노드를 복사하지 않으므로 텍스트 노드도 없다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+    const $apple = $fruits.firstElementChild;
+
+    // $apple 요소를 얕은 복사하여 사본을 생성. 텍스트 노드가 없는 사본이 생성된다.
+    const $shallowClone = $apple.cloneNode();
+    // 사본 요소 노드에 텍스트 추가
+    $shallowClone.textContent = "Banana";
+    // 사본 요소 노드를 #fruits 요소 노드의 마지막 노드로 추가
+    $fruits.appendChild($shallowClone);
+
+    // #fruits 요소를 깊은 복사하여 모든 자손 노드가 포함된 사본을 생성
+    const $deepClone = $fruits.cloneNode(true);
+    // 사본 요소 노드를 #fruits 요소 노드의 마지막 노드로 추가
+    $fruits.appendChild($deepClone);
+  </script>
+</html>
+```
+
+<h4> 노드 교체 </h4>
+
+Node.prototype.replaceChild(newChild, oldChild) 메서드는 자신을 호출한 노드의 자식 노드를 다른 노드로 교체한다. 첫 번째 매개변수 newChild에는 교체할 새로운 노드를 인수로 전달하고, 두 번째 매개변수 oldChild에는 이미 존재하는 교체될 노드를 인수로 전달한다. oldChild 매개변수에 인수로 전달한 노드는 replaceChild 메서드를 호출한 노드의 자식 노드이어야 한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // 기존 노드와 교체할 요소 노드를 생성
+    const $newChild = document.createElement("li");
+    $newChild.textContent = "Banana";
+
+    // #fruits 요소 노드의 첫 번째 자식 요소 노드를 $newChild 요소 노드로 교체
+    $fruits.replaceChild($newChild, $fruits.firstElementChild);
+  </script>
+</html>
+```
+
+<h4> 노드 삭제 </h4>
+
+Node.prototype.removeChild(child) 메서드는 child 매개변수에 인수로 전달한 노드를 DOM에서 삭제한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id="fruits">
+      <li>Apple</li>
+      <li>Banana</li>
+    </ul>
+  </body>
+  <script>
+    const $fruits = document.getElementById("fruits");
+
+    // #fruits 요소 노드의 마지막 요소를 DOM에서 삭제
+    $fruits.removeChild($fruits.lastElementChild);
+  </script>
+</html>
+```
+
+---
+
+<h3> 어트리뷰트 </h3>
+
+<h4> 어트리뷰트 노드와 attributes 프로퍼티 </h4>
+
+HTML 문서의 구성 요소인 HTML 요소는 여러 개의 어트리뷰트(속성)를 가질 수 있다. HTML 요소의 동작을 제어하기 위한 추가적인 정보를 제공하는 HTML 어트리뷰트는 HTML 요소의 시작 태그에 `어트리뷰트 이름="어트리뷰트 값"`형식으로 정의한다.
+
+```html
+<input id="user" type="text" value="kyeom">
+```
+
+글로벌 어트리뷰트(id, class, style, title, lang, tabindex, draggable, hidden 등)과 이벤트 핸들러 어트리뷰트(onclick, onchange, onfocus, onblur, oninput, onkeypress, onkeydown, onkeyup, onmouseover, onsubmit, onload 등)는 모든 HTML 요소에서 공통적으로 사용할 수 있지만 특정 HTML 요소에만 한정적으로 사용 가능한 어트리뷰트도 있다. 예를 들어, id, class, style 어트리뷰트는 모든 HTML 요소에 사용할 수 있지만 type, value, checked 어트리뷰트는 input 요소에만 사용할 수 있다.
+
+HTML 문서가 파싱될 때 HTML 요소의 어트리뷰트(이하 HTML 어트리뷰트)는 어트리뷰트 노드로 변환되어 요소 노드와 연결된다. 이때 HTML 어트리뷰트당 하나의 어트리뷰트 노드가 생성된다. 즉, 위 input 요소는 3개의 어트리뷰트가 있으므로 3개의 어트리뷰트 노드가 생성된다.
+
+따라서 요소 노드의 모든 어트리뷰트 노드는 요소 노드의 Element.prototype.attributes 프로퍼티로 취득할 수 있다. attributes 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티이며, 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 NamedNodeMap 객체를 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="kyeom" />
+    <script>
+      // 요소 노드의 attribute 프로퍼티는 요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 NamedNodeMap 객체를 반환한다.
+      const { attributes } = document.getElementById("user");
+      console.log(attributes);
+      // NamedNodeMap {0: id, 1: type, 2: value, id: id, type: type, value: value, length: 3}
+
+      // 어트리뷰트 값 취득
+      console.log(attributes.id.value); // user
+      console.log(attributes.id); // id="user"
+
+      console.log(attributes.type.value); // text
+      console.log(attributes.type); // type="text"
+
+      console.log(attributes.value.value); // kyeom
+      console.log(attributes.value); // value="kyeom"
+    </script>
+  </body>
+</html>
+```
+
+<h4> HTML 어트리뷰트 조작 </h4>
+
+HTML 어트리뷰트 값을 참조하려면 Element.prototype.getAttribute(attributeName) 메서드를 사용하고, HTML 어트리뷰트 값을 변경하려면 Element.prototype.setAttribute(attributeName, attributeValue) 메서드를 사용한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="kyeom" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // value 어트리뷰트 값을 취득
+      const inputValue = $input.getAttribute("value");
+      console.log(inputValue); // kyeom
+
+      // value 어트리뷰트 값을 변경
+      $input.setAttribute("value", "foo");
+      console.log($input.getAttribute("value")); // foo
+    </script>
+  </body>
+</html>
+```
+
+<h4> HTML 어트리뷰트 vs DOM 프로퍼티 </h4>
+
+**HTML 어트리뷰트의 역할은 HTML 요소의 초기 상태를 지정하는 것이다. 즉, HTML 어트리뷰트 값은 HTML 요소의 초기 상태를 의미하며 이는 변하지 않는다.**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="kyeom" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // attributes 프로퍼티에 저장된 value 어트리뷰트 값
+      console.log($input.getAttribute("value")); // kyeom
+
+      // 요소 노드의 value 프로퍼티에 저장된 value 어트리뷰트 값
+      console.log($input.value); // kyeom
+    </script>
+  </body>
+</html>
+```
+
+하지만 첫 렌더링 이후 사용자가 input 요소에 무언가를 입력하기 시작하면 상황이 달라진다.
+
+**요소 노드는 상태(State)를 가지고 있다.** 예를 들어, input 요소 노드는 사용자가 입력 필드에 입력한 값을 상태로 가지고 있으며, checkbox 요소 노드는 사용자가 입력 필드에 입력한 체크 여부를 상태로 가지고 있다. input 요소 노드나 checkbox 요소 노드가 가지고 있는 상태는 사용자의 입력에 의해 변화하는, 살아있는 것이다.
+
+사용자가 input 요소의 입력 필드에 "foo"라는 값을 입력한 경우를 생각해보자. 이때 input 요소 노드는 사용자의 입력에 의해 변경된 **최신 상태("foo")**를 관리해야 하는 것은 물론, HTML 어트리뷰트로 지정한 **초기 상태("kyeom")**도 관리해야 한다. 초기 상태 값을 관리하지 않으면 웹 페이지를 처음 표시하거나 새로고침할 때 초기 상태를 표시할 수 없다.
+
+이처럼 **요소 노드는 2개의 상태, 즉 초기 상태와 최신 상태를 관리해야 한다. 요소 노드의 초기 상태는 어트리뷰트 노드가 관리하며, 요소 노드의 최신 상태는 DOM 프로퍼티가 관리한다.**
+
+<h4> 어트리뷰트 노드 </h4>
+
+**HTML 어트리뷰트로 지정한 HTML 요소의 초기 상태는 어트리뷰트 노드에서 관리한다.** 어트리뷰트 노드에서 관리하는 어트리뷰트 값은 사용자의 입력에 의해 상태가 변경되어도 변하지 않고 HTML 어트리뷰트로 지정한 HTML 요소의 초기 상태를 그대로 유지한다.
+
+어트리뷰트 노드가 관리하는 초기 상태 값을 취득하거나 변경하려면 getAttribute/setAttribute 메서드를 사용한다.
+
+```js
+// attributes 프로퍼티에 저장된 value 어트리뷰트 값을 취득한다. 결과는 언제나 동일하다.
+document.getElementById("user").getAttribute("value"); // kyeom
+```
+
+setAttribute 메서드는 어트리뷰트 노드에서 관리하는 HTML 요소에 지정한 어트리뷰트 값, 즉 초기 상태 값을 변경한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="kyeom" />
+    <script>
+      // HTML 요소에 지정한 어트리뷰트 값, 즉 초기 상태 값을 변경한다.
+      document.getElementById("user").setAttribute("value", "foo");
+    </script>
+  </body>
+</html>
+```
+
+<h4> DOM 프로퍼티 </h4>
+
+**사용자가 입력한 최신 상태는 HTML 어트리뷰트에 대응하는 요소 노드의 DOM 프로퍼티가 관리한다. DOM 프로퍼티는 사용자의 입력에 의한 상태 변화에 반응하여 언제나 최신 상태를 유지한다.**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input id="user" type="text" value="kyeom" />
+    <script>
+      const $input = document.getElementById("user");
+
+      // 사용자가 input 요소의 입력 필드에 값을 입력할 때마다 input 요소 노드의
+      // value 프로퍼티 값, 즉 최신 상태 값을 취득한다. value 프로퍼티 값은 사용자의 입력에
+      // 의해 동적으로 변경된다.
+      $input.oninput = () => {
+        console.log("value 프로퍼티 값", $input.value);
+      };
+
+      // getAttribute 메서드로 취득한 HTML 어트리뷰트 값, 즉 초기 상태 값은 변하지 않고 유지된다.
+      console.log("value 어트리뷰트 값", $input.getAttribute("value"));
+    </script>
+  </body>
+</html>
+```
+
+<h4> HTML 어트리뷰트와 DOM 프로퍼티의 대응 관계 </h4>
+
+대부분의 HTML 어트리뷰트는 HTML 어트리뷰트 이름과 동일한 DOM 프로퍼티와 1:1로 대응한다. 단, 다음과 같이 HTML 어트리뷰트와 DOM 프로퍼티가 언제나 1:1로 대응하는 것은 아니며, HTML 어트리뷰트 이름과 DOM 프로퍼티 키가 반드시 일치하는 것도 아니다.
+
+- id 어트리뷰트와 id 프로퍼티는 1:1 대응하며, 동일한 값으로 연동한다.
+
+- input 요소의 value 어트리뷰트는 value 프로퍼티와 1:1 대응한다. 하지만 value 어트리뷰트는 초기 상태를, value 프로퍼티는 최신 상태를 갖는다.
+
+- class 어트리뷰트는 className, classList 프로퍼티와 대응한다.
+
+- for 어트리뷰트는 htmlFor 프로퍼티와 1:1 대응한다.
+
+- td 요소의 colspan 어트리뷰트는 대응하는 프로퍼티가 존재하지 않는다.
+
+- textContent 프로퍼티는 대응하는 어트리뷰트가 존재하지 않는다.
+
+- 어트리뷰트 이름은 대소문자를 구별하지 않지만 대응하는 프로퍼티 키는 카멜 케이스를 따른다(maxLength -> maxLength).
+
+<h4> DOM 프로퍼티 값의 타입 </h4>
+
+getAttribute 메서드로 취득한 어트리뷰트 값은 언제나 문자열이다. 하지만 DOM 프로퍼티로 취득한 최신 상태 값은 문자열이 아닐 수도 잇따. 예를 들어, checkbox 요소의 checked 어트리뷰트 값은 문자열이지만 checked 프로퍼티 값은 불리언 타입이다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input type="checkbox" checked />
+    <script>
+      const $checkbox = document.querySelector("input[type=checkbox]");
+
+      // getAttribute 메서드로 취득한 어트리뷰트 값은 언제나 문자열이다.
+      console.log($checkbox.getAttribute("checked")); // ''
+
+      // DOM 프로퍼티로 취득한 최신 상태 값은 문자열이 아닐 수도 있다.
+      console.log($checkbox.checked); // true
+    </script>
+  </body>
+</html>
+```
+
+<h4> data 어트리뷰트와 dataset 프로퍼티 </h4>
+
+data 어트리뷰트와 dataset 프로퍼티를 사용하면 HTML 요소에 정의한 사용자 정의 어트리뷰트와 자바스크립트 간에 데이터를 교환할 수 있다. data 어트리뷰트는 data-user-id, data-role과 같이 data- 접두사 다음에 임의의 이름을 붙여 사용한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul class="users">
+      <li id="1" data-user-id="7621" data-role="admin">Lee</li>
+      <li id="2" data-user-id="9524" data-role="subscriber">Kim</li>
+    </ul>
+  </body>
+</html>
+```
+
+data 어트리뷰트의 값은 HTMLElement.dataset 프로퍼티로 취득할 수 있다. dataset 프로퍼티는 HTML 요소의 모든 data 어트리뷰트의 정보를 제공하는 DOMStringMap 객체를 반환한다. DOMStringMap 객체는 data 어트리뷰트의 data- 접두사 다음에 붙인 임의의 이름을 카멜 케이스로 변환한 프로퍼티를 가지고 있다. 이 프로퍼티로 data 어트리뷰트의 값을 취득하거나 변경할 수 있다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul class="users">
+      <li id="1" data-user-id="7621" data-role="admin">Lee</li>
+      <li id="2" data-user-id="9524" data-role="subscriber">Kim</li>
+    </ul>
+    <script>
+      const users = [...document.querySelector(".users").children];
+
+      // user-id가 '7621'인 요소 노드를 취득한다.
+      const user = users.find((user) => user.dataset.userId === "7621");
+      // user-id가 '7621'인 요소 노드에서 data-role의 값을 취득한다.
+      console.log(user.dataset.role); // "admin"
+
+      // user-id가 '7621'인 요소 노드의 data-role 값을 변경한다.
+      user.dataset.role = "subscriber";
+      // dataset 프로퍼티는 DOMStringMap 객체를 반환한다.
+      console.log(user.dataset); // DOMStringMap {userId: "7621", role: "subscriber"}
+    </script>
+  </body>
+</html>
+```
+
+data 어트리뷰트의 data- 접두사 다음에 존재하지 않는 이름을 키로 사용하여 dataset 프로퍼티에 값을 할당하면 HTML 요소에 data 어트리뷰트가 추가된다. 이때 dataset 프로퍼티에 추가한 카멜케이스(fooBar)의 프로퍼티 키는 data 어트리뷰트의 data- 접두사 다음에 케밥케이스로 자동 변경되어 추가된다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul class="users">
+      <li id="1" data-user-id="7621">Lee</li>
+      <li id="2" data-user-id="9524">Kim</li>
+    </ul>
+    <script>
+      const users = [...document.querySelector(".users").children];
+
+      // user-id가 '7621'인 요소 노드를 취득한다.
+      const user = users.find((user) => user.dataset.userId === "7621");
+
+      // user-id가 '7621'인 요소 노드에 새로운 data 어트리뷰트를 추가한다.
+      user.dataset.role = "admin";
+      console.log(user.dataset);
+      /*
+    DOMStringMap {userId: "7621", role: "admin"}
+    -> <li id="1" data-user-id="7621" data-role="admin">Lee</li>
+    */
+    </script>
+  </body>
+</html>
+```
+
+---
+
+<h3> 스타일 </h3>
+
+<h4> 인라인 스타일 조작 </h4>
+
+HTMLElement.prototype.style 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 요소 노드의 **인라인 스타일**을 취득하거나 추가 또는 변경한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div style="color: red">Hello World</div>
+    <script>
+      const $div = document.querySelector("div");
+
+      // 인라인 스타일 취득
+      console.log($div.style); // CSSStyleDeclaration { 0: "color", ... }
+
+      // 인라인 스타일 변경
+      $div.style.color = "blue";
+
+      // 인라인 스타일 추가
+      $div.style.width = "100px";
+      $div.style.height = "100px";
+      $div.style.backgroundColor = "yellow";
+    </script>
+  </body>
+</html>
+```
+
+CSS 프로퍼티는 케밥 케이스를 따른다. 이에 대응하는 CSSStyleDeclaration 객체의 프로퍼티는 카멜 케이스를 따른다. 케밥 케이스의 CSS 프로퍼티를 그대로 사용하려면 객체의 마침표 표기법 대신 대괄호 표기법을 사용한다.
+
+```css
+$div.style['background-color'] = 'yellow';
+```
+
+<h4> 클래스 조작 </h4>
+
+.으로 시작하는 클래스 선택자를 사용하여 CSS Class를 미리 정의한 다음, HTML 요소의 class 어트리뷰트 값을 변경하여 HTML 요소의 스타일을 변경할 수도 있다. 이때 HTML 요소의 class 어트리뷰트를 조작하려면 class 어트리뷰트에 대응하는 요소 노드의 DOM 프로퍼티를 사용한다.
+
+단, class 어트리뷰트에 대응하는 DOM 프로퍼티는 class가 아니라 className과 classList다. 자바스크립트에서 class는 예약어이기 때문이다.
+
+**className**
+
+Element.prototype.className 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티로서 HTML 요소의 class 어트리뷰트 값을 취득하거나 변경한다
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: antiquewhite;
+      }
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box red">Hello World</div>
+    <script>
+      const $box = document.querySelector(".box");
+
+      // .box 요소의 class 어트리뷰트 값을 취득
+      console.log($box.className); // 'box red'
+
+      // .box 요소의 class 어트리뷰트 값 중에서 'red'만 'blue'로 변경
+      $box.className = $box.className.replace("red", "blue");
+    </script>
+  </body>
+</html>
+```
+
+**classList**
+
+Element.prototype.classList 프로퍼티는 class 어트리뷰트의 정보를 담은 DOMTokenList 객체를 반환한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: antiquewhite;
+      }
+      .red {
+        color: red;
+      }
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box red">Hello World</div>
+    <script>
+      const $box = document.querySelector(".box");
+      // .box 요소의 class 어트리뷰트 정보를 담은 DOMTokenList 객체를 취득
+      // classList가 반환하는 DOMTokenList 객체는 HTMLCollection과 NodeList와 같이
+      // 노드 객체의 상태 변화를 실시간으로 반영하는 살아 있는(live) 객체다.
+      console.log($box.classList);
+      // DOMTokenList(2) [length: 2, value: "box blue", 0: "box", 1: "blue"]
+
+      // .box 요소의 class 어트리뷰트 값 중에서 'red'만 'blue'로 변경
+      $box.classList.replace("red", "blue");
+    </script>
+  </body>
+</html>
+```
+
+DOMTokenList 객체는 class 어트리뷰트의 정보를 나타내는 컬렉션 객체로서 유사 배열 객체이면서 이터러블이다. DOMTokenList 객체는 다음과 같이 유용한 메서드들을 제공한다.
+
+- add(...className)
+```js
+$box.classList.add("foo"); // -> class="box red foo"
+$box.classList.add("bar", "baz"); // -> class="box red foo bar baz"
+```
+
+- remove(...className)
+```js
+$box.classList.remove("foo"); // -> class="box red bar baz"
+$box.classList.remove("bar", "baz"); // -> class="box red"
+$box.classList.remove("x"); // -> class="box red"
+```
+
+- item(index)
+```js
+$box.classList.item(0); // -> "box"
+$box.classList.item(1); // -> "red"
+```
+
+- contains(className)
+```js
+$box.classList.contains("box"); // -> true
+$box.classList.contains("blue"); // -> false
+```
+
+- replace(oldClassName, newClassName)
+```js
+$box.classList.replace("red", "blue"); // -> class="box blue"
+```
+
+- toggle(className[, force])
+```js
+// class 어트리뷰트에 강제로 'foo' 클래스를 추가
+$box.classList.toggle("foo", true); // -> class="box blue foo"
+// class 어트리뷰트에서 강제로 'foo' 클래스를 제거
+$box.classList.toggle("foo", false); // -> class="box blue"
+```
+
+<h4> 요소에 적용되어 있는 CSS 스타일 참조 </h4>
+
+style 프로퍼티는 인라인 스타일만 반환한다. 따라서 클래스를 적용한 스타일이나 상속을 통해 암묵적으로 적용된 스타일은 style 프로퍼티로 참조할 수 없다. HTML 요소에 적용되어 있는 모든 CSS 스타일을 참조해야 할 경우 getComputedStyle 메서드를 사용한다.
+
+window.getComputedStyle(element[, pseudo]) 메서드는 첫 번째 인수(element)로 전달한 요소 노드에 적용되어 있는 평가된 스타일을 CSSStyleDeclaration 객체에 담아 반환한다. 평가된 스타일이란 요소 노드에 적용되어 있는 모든 스타일, 즉 링크 스타일, 임베딩 스타일, 인라인 스타일, 자바스크립트에서 적용한 스타일, 상속된 스타일, 기본(user agent) 스타일 등 모든 스타일이 조합되어 최종적으로 적용된 스타일을 말한다.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        color: red;
+      }
+      .box {
+        width: 100px;
+        height: 50px;
+        background-color: cornsilk;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">Box</div>
+    <script>
+      const $box = document.querySelector(".box");
+
+      // .box 요소에 적용된 모든 CSS 스타일을 담고 있는 CSSStyleDeclaration 객체를 취득
+      const computedStyle = window.getComputedStyle($box);
+      console.log(computedStyle); // CSSStyleDeclaration
+
+      // 임베딩 스타일
+      console.log(computedStyle.width); // 100px
+      console.log(computedStyle.height); // 50px
+      console.log(computedStyle.backgroundColor); // rgb(255, 248, 220)
+      console.log(computedStyle.border); // 1px solid rgb(0, 0, 0)
+
+      // 상속 스타일(body -> .box)
+      console.log(computedStyle.color); // rgb(255, 0, 0)
+
+      // 기본 스타일
+      console.log(computedStyle.display); // block
+    </script>
+  </body>
+</html>
+```
